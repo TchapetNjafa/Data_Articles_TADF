@@ -1,0 +1,149 @@
+ Multiwfn -- A Multifunctional Wavefunction Analyzer
+ Version 3.8(dev), update date: 2025-Jul-12
+ Developer: Tian Lu (Beijing Kein Research Center for Natural Sciences)
+ Multiwfn official website: http://sobereva.com/multiwfn
+ Multiwfn English forum: http://sobereva.com/wfnbbs
+ Multiwfn Chinese forum: http://bbs.keinsci.com/wfn
+ ( Number of parallel threads:  14  Current date: 2025-11-30  Time: 23:06:52 )
+ 
+ Both following papers ***MUST BE CITED IN MAIN TEXT*** if Multiwfn is used:
+  Tian Lu, Feiwu Chen, J. Comput. Chem., 33, 580 (2012) DOI: 10.1002/jcc.22885
+  Tian Lu, J. Chem. Phys., 161, 082503 (2024) DOI: 10.1063/5.0216272
+ See "How to cite Multiwfn.pdf" in Multiwfn binary package for more information
+ 
+ Now input file path, for example, E:\Otoboku\Mariya_Mikado.mwfn
+ (.wfn/wfn/wfx/fch/molden/pdb/xyz/mol2/cif/cub... see Section 2.5 of manual)
+ Hint: Pressing ENTER button directly can select a file in a GUI window. To reload the past file, inputting "o". Input such as ?miku.fch can open the miku.fch in the same folder as the past file
+ Please wait...
+ Loading various information of the wavefunction
+ Loading basis set definition...
+ The highest angular moment basis functions is P
+ All basis functions are Cartesian type
+ Loading orbitals...
+ The actual number of Alpha/Beta orbitals read:         4  /         0
+ Converting basis function information to GTF information...
+ Generating density matrix...
+ Generating overlap matrix...
+ 
+ Total/Alpha/Beta electrons:      4.0000      4.0000      0.0000
+ Net charge:   352.00000      Expected multiplicity:    5
+ Atoms:     90,  Basis functions:    600,  GTFs:   3120
+ This is an unrestricted single-determinant wavefunction
+ Orbitals from      1 to   600 are alpha, from     1 to     4 are occupied
+ Orbitals from    601 to  1200 are beta,  from   601 to   600 are occupied
+
+ Loaded nto001.molden successfully!
+ 
+ Formula: H40 C45 N2 O2 S1      Total atoms:      90
+ Molecule weight:       672.87775 Da
+ Point group: C1 
+ 
+ "q": Exit program gracefully          "r": Load a new file
+                    ************ Main function menu ************
+ 0 Show molecular structure and view orbitals
+ 1 Output all properties at a point       2 Topology analysis
+ 3 Output and plot specific property in a line
+ 4 Output and plot specific property in a plane
+ 5 Output and plot specific property within a spatial region (calc. grid data)
+ 6 Check & modify wavefunction
+ 7 Population analysis and calculation of atomic charges
+ 8 Orbital composition analysis           9 Bond order analysis
+ 10 Plot total DOS, PDOS, OPDOS, local DOS, COHP and photoelectron spectrum
+ 11 Plot IR/Raman/UV-Vis/ECD/VCD/ROA/NMR spectrum
+ 12 Quantitative analysis of molecular surface
+ 13 Process grid data (No grid data is presented currently)
+ 14 Adaptive natural density partitioning (AdNDP) analysis
+ 15 Fuzzy atomic space analysis
+ 16 Charge decomposition analysis (CDA) and plot orbital interaction diagram
+ 17 Basin analysis                       18 Electron excitation analysis
+ 19 Orbital localization analysis        20 Visual study of weak interaction
+ 21 Energy decomposition analysis        22 Conceptual DFT (CDFT) analysis
+ 23 ETS-NOCV analysis                    24 (Hyper)polarizability analysis
+ 25 Electron delocalization and aromaticity analyses
+ 26 Structure and geometry related analyses
+ 100 Other functions (Part 1)            200 Other functions (Part 2)
+ 300 Other functions (Part 3)
+ 
+               ============ Other functions (Part 2) ============
+ 0 Return
+ 1 Calculate core-valence bifurcation (CVB) index and related quantities
+ 2 Calculate atomic and bond dipole moments in Hilbert space
+ 3 Generate cube file for multiple orbital wavefunctions
+ 5 Plot radial distribution function for a real space function
+ 6 Analyze correspondence between orbitals in two wavefunctions
+ 9 Calculate average bond length and average coordinate number
+ 10 Output various kinds of integral between orbitals
+ 11 Calculate center, first/second moments and radius of gyration of a function
+ 12 Calculate energy index (EI) or bond polarity index (BPI)
+ 13 Evaluate orbital contributions to density difference or other grid data
+ 14 Domain analysis (Obtaining properties within isosurfaces of a function)
+ 15 Calculate electron correlation index (PCCP, 18, 24015)
+ 16 Generate natural orbitals based on the density matrix in .fch/.fchk file
+ 17 Calculate Coulomb and exchange integrals between two orbitals
+ 18 Calculate bond length/order alternation (BLA/BOA)
+ 19 Calculate spatial delocalization index (SDI) for orbitals or a function
+ 20 Bond order density (BOD) and natural adaptive orbital (NAdO) analyses
+ 21 Perform Lowdin orthogonalization between occupied orbitals
+ Output which kind of integral between orbitals?
+ 1: Electric dipole moment  2: Magnetic dipole moment  3: Velocity
+ 4: Kinetic energy   5: Overlap
+ Output the integrals between which orbitals?
+ 1 Between all occupied orbitals
+ 2 Between all occupied and all unoccupied orbitals
+ 3 Between all orbitals
+ 4 Between the same orbitals
+ 5 Between specific range of orbitals
+ 6 Between two specific orbitals
+ Input index for the two orbitals, e.g. 144,340
+ Input 0,0 can exit
+ Result:      0.0000000142
+ 
+ Input index for the two orbitals, e.g. 144,340
+ Input 0,0 can exit
+ 
+               ============ Other functions (Part 2) ============
+ 0 Return
+ 1 Calculate core-valence bifurcation (CVB) index and related quantities
+ 2 Calculate atomic and bond dipole moments in Hilbert space
+ 3 Generate cube file for multiple orbital wavefunctions
+ 5 Plot radial distribution function for a real space function
+ 6 Analyze correspondence between orbitals in two wavefunctions
+ 9 Calculate average bond length and average coordinate number
+ 10 Output various kinds of integral between orbitals
+ 11 Calculate center, first/second moments and radius of gyration of a function
+ 12 Calculate energy index (EI) or bond polarity index (BPI)
+ 13 Evaluate orbital contributions to density difference or other grid data
+ 14 Domain analysis (Obtaining properties within isosurfaces of a function)
+ 15 Calculate electron correlation index (PCCP, 18, 24015)
+ 16 Generate natural orbitals based on the density matrix in .fch/.fchk file
+ 17 Calculate Coulomb and exchange integrals between two orbitals
+ 18 Calculate bond length/order alternation (BLA/BOA)
+ 19 Calculate spatial delocalization index (SDI) for orbitals or a function
+ 20 Bond order density (BOD) and natural adaptive orbital (NAdO) analyses
+ 21 Perform Lowdin orthogonalization between occupied orbitals
+ 
+ "q": Exit program gracefully          "r": Load a new file
+                    ************ Main function menu ************
+ 0 Show molecular structure and view orbitals
+ 1 Output all properties at a point       2 Topology analysis
+ 3 Output and plot specific property in a line
+ 4 Output and plot specific property in a plane
+ 5 Output and plot specific property within a spatial region (calc. grid data)
+ 6 Check & modify wavefunction
+ 7 Population analysis and calculation of atomic charges
+ 8 Orbital composition analysis           9 Bond order analysis
+ 10 Plot total DOS, PDOS, OPDOS, local DOS, COHP and photoelectron spectrum
+ 11 Plot IR/Raman/UV-Vis/ECD/VCD/ROA/NMR spectrum
+ 12 Quantitative analysis of molecular surface
+ 13 Process grid data (No grid data is presented currently)
+ 14 Adaptive natural density partitioning (AdNDP) analysis
+ 15 Fuzzy atomic space analysis
+ 16 Charge decomposition analysis (CDA) and plot orbital interaction diagram
+ 17 Basin analysis                       18 Electron excitation analysis
+ 19 Orbital localization analysis        20 Visual study of weak interaction
+ 21 Energy decomposition analysis        22 Conceptual DFT (CDFT) analysis
+ 23 ETS-NOCV analysis                    24 (Hyper)polarizability analysis
+ 25 Electron delocalization and aromaticity analyses
+ 26 Structure and geometry related analyses
+ 100 Other functions (Part 1)            200 Other functions (Part 2)
+ 300 Other functions (Part 3)

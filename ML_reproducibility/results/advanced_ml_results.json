@@ -1,0 +1,95 @@
+{
+  "timestamp": "2025-11-30T23:51:32.246639",
+  "dataset": {
+    "total_samples": 2943,
+    "train_samples": 2354,
+    "test_samples": 589,
+    "n_features": 8,
+    "unique_molecules": 736
+  },
+  "models": {
+    "Random Forest (Optimized)": {
+      "mae": 0.02800093330242078,
+      "rmse": 0.057274407292826825,
+      "r2": 0.9365066062034577
+    },
+    "Gradient Boosting (Optimized)": {
+      "mae": 0.020140479125148155,
+      "rmse": 0.0316336022136808,
+      "r2": 0.9806311144728064
+    }
+  },
+  "cross_validation": {
+    "Random Forest": {
+      "mae": "0.0330 \u00b1 0.0023",
+      "rmse": "0.0610 \u00b1 0.0039",
+      "r2": "0.9287 \u00b1 0.0103",
+      "mae_mean": 0.032951017511158406,
+      "mae_std": 0.0023057470548378325,
+      "r2_mean": 0.9287064593760348,
+      "r2_std": 0.01025007234259826
+    },
+    "Gradient Boosting": {
+      "mae": "0.0260 \u00b1 0.0019",
+      "rmse": "0.0399 \u00b1 0.0027",
+      "r2": "0.9694 \u00b1 0.0051",
+      "mae_mean": 0.025951104723396574,
+      "mae_std": 0.0018507535593950122,
+      "r2_mean": 0.9693800959776147,
+      "r2_std": 0.005085929368376064
+    },
+    "SVR (RBF)": {
+      "mae": "0.0115 \u00b1 0.0008",
+      "rmse": "0.0282 \u00b1 0.0023",
+      "r2": "0.9848 \u00b1 0.0021",
+      "mae_mean": 0.011459656470997701,
+      "mae_std": 0.0008176292975568703,
+      "r2_mean": 0.9847797705332566,
+      "r2_std": 0.0021115083861316204
+    },
+    "Neural Network": {
+      "mae": "0.0138 \u00b1 0.0006",
+      "rmse": "0.0194 \u00b1 0.0015",
+      "r2": "0.9928 \u00b1 0.0009",
+      "mae_mean": 0.013823175949539948,
+      "mae_std": 0.0005598967826545111,
+      "r2_mean": 0.9928092819760865,
+      "r2_std": 0.0008670625232621187
+    },
+    "GPR (Matern)": {
+      "mae_test": 2.3378826203105127e-06,
+      "r2_test": 0.9999999996610692,
+      "mean_uncertainty": 0.0007402465826864046
+    }
+  },
+  "hyperparameter_optimization": {
+    "Random Forest": {
+      "best_params": {
+        "max_depth": 20,
+        "min_samples_leaf": 1,
+        "min_samples_split": 2,
+        "n_estimators": 200
+      },
+      "best_cv_mae": 0.039938789175164295
+    },
+    "Gradient Boosting": {
+      "best_params": {
+        "learning_rate": 0.2,
+        "max_depth": 3,
+        "min_samples_split": 2,
+        "n_estimators": 200
+      },
+      "best_cv_mae": 0.026133479909667596
+    }
+  },
+  "feature_importance": {
+    "S1_overlap": 0.003754945684452652,
+    "T1_overlap": 0.0019882608805080297,
+    "S1_energy_eV": 0.08331802989976676,
+    "T1_energy_eV": 0.12936620322187917,
+    "S1_osc_strength": 0.06350610821402808,
+    "HOMO_LUMO_gap_eV": 0.03969871393360102,
+    "environment": 0.00025915466952121884,
+    "method": 0.0008527360170860977
+  }
+}

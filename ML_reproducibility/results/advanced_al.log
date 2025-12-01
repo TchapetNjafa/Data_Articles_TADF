@@ -1,0 +1,131 @@
+======================================================================
+ADVANCED ACTIVE LEARNING EXPERIMENT
+======================================================================
+Start time: 2025-11-30 23:53:03.466645
+
+Loading data...
+  Dataset: 2943 samples
+
+Running experiments...
+  Seeds: 10
+  Initial samples: 50
+  Iterations: 40
+  Batch size: 10
+  Acquisition functions: 7
+
+  RANDOM:
+    Seed 1/10 done
+    Seed 2/10 done
+    Seed 3/10 done
+    Seed 4/10 done
+    Seed 5/10 done
+    Seed 6/10 done
+    Seed 7/10 done
+    Seed 8/10 done
+    Seed 9/10 done
+    Seed 10/10 done
+    Final MAE: 0.0724 ± 0.0051 eV
+    Final R²:  0.7608 ± 0.0377
+
+  UNCERTAINTY:
+    Seed 1/10 done
+    Seed 2/10 done
+    Seed 3/10 done
+    Seed 4/10 done
+    Seed 5/10 done
+    Seed 6/10 done
+    Seed 7/10 done
+    Seed 8/10 done
+    Seed 9/10 done
+    Seed 10/10 done
+    Final MAE: 0.0747 ± 0.0059 eV
+    Final R²:  0.7834 ± 0.0314
+
+  EXPECTED_IMPROVEMENT:
+    Seed 1/10 done
+    Seed 2/10 done
+    Seed 3/10 done
+    Seed 4/10 done
+    Seed 5/10 done
+    Seed 6/10 done
+    Seed 7/10 done
+    Seed 8/10 done
+    Seed 9/10 done
+    Seed 10/10 done
+    Final MAE: 0.0752 ± 0.0071 eV
+    Final R²:  0.7766 ± 0.0344
+
+  UCB:
+    Seed 1/10 done
+    Seed 2/10 done
+    Seed 3/10 done
+    Seed 4/10 done
+    Seed 5/10 done
+    Seed 6/10 done
+    Seed 7/10 done
+    Seed 8/10 done
+    Seed 9/10 done
+    Seed 10/10 done
+    Final MAE: 0.0939 ± 0.0091 eV
+    Final R²:  0.6575 ± 0.0725
+
+  QBC:
+    Seed 1/10 done
+    Seed 2/10 done
+    Seed 3/10 done
+    Seed 4/10 done
+    Seed 5/10 done
+    Seed 6/10 done
+    Seed 7/10 done
+    Seed 8/10 done
+    Seed 9/10 done
+    Seed 10/10 done
+    Final MAE: 0.0760 ± 0.0048 eV
+    Final R²:  0.7763 ± 0.0322
+
+  DIVERSITY:
+    Seed 1/10 done
+    Seed 2/10 done
+    Seed 3/10 done
+    Seed 4/10 done
+    Seed 5/10 done
+    Seed 6/10 done
+    Seed 7/10 done
+    Seed 8/10 done
+    Seed 9/10 done
+    Seed 10/10 done
+    Final MAE: 0.0690 ± 0.0040 eV
+    Final R²:  0.8083 ± 0.0307
+
+  HYBRID:
+    Seed 1/10 done
+    Seed 2/10 done
+    Seed 3/10 done
+    Seed 4/10 done
+    Seed 5/10 done
+    Seed 6/10 done
+    Seed 7/10 done
+    Seed 8/10 done
+    Seed 9/10 done
+    Seed 10/10 done
+    Final MAE: 0.0688 ± 0.0044 eV
+    Final R²:  0.8159 ± 0.0270
+
+======================================================================
+SUMMARY - IMPROVEMENT OVER RANDOM SAMPLING
+======================================================================
+
+Random baseline MAE: 0.0724 eV
+
+Improvement by acquisition function:
+  hybrid                   : +4.9%
+  diversity                : +4.6%
+  uncertainty              : -3.1%
+  expected_improvement     : -3.8%
+  qbc                      : -5.0%
+  ucb                      : -29.7%
+
+Best acquisition: hybrid
+
+Results saved to: /home/tchapet/Post-Doc/ARTICLES DOSSIERS DES ARTICLES EN REDACTION/NOUVELS AXES DE RECHERCHE A REGARDER URGEMMENT/ARTICLES EN REDACTIONS/ARTICLE1/redaction/Article3_ML/Article3/experiments/results_747mol/advanced_al_results.json
+End time: 2025-11-30 23:55:22.879667

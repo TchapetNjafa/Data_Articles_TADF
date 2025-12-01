@@ -1,0 +1,245 @@
+ load nto001.molden 
+ mo            1
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00001_00001.png"
+ mo            2
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00001_00002.png"
+ mo            3
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00001_00003.png"
+ mo            4
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00001_00004.png"
+ load nto002.molden 
+ mo            1
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00002_00001.png"
+ mo            2
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00002_00002.png"
+ mo            3
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00002_00003.png"
+ mo            4
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00002_00004.png"
+ load nto003.molden 
+ mo            1
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00003_00001.png"
+ mo            2
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00003_00002.png"
+ mo            3
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00003_00003.png"
+ mo            4
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00003_00004.png"
+ mo            5
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00003_00005.png"
+ mo            6
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00003_00006.png"
+ load nto004.molden 
+ mo            1
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00004_00001.png"
+ mo            2
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00004_00002.png"
+ mo            3
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00004_00003.png"
+ mo            4
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00004_00004.png"
+ mo            5
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00004_00005.png"
+ mo            6
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00004_00006.png"
+ load nto005.molden 
+ mo            1
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00005_00001.png"
+ mo            2
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00005_00002.png"
+ mo            3
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00005_00003.png"
+ mo            4
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00005_00004.png"
+ mo            5
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00005_00005.png"
+ mo            6
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00005_00006.png"
+ mo            7
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00005_00007.png"
+ mo            8
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00005_00008.png"
+ mo            9
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00005_00009.png"
+ mo           10
+ background white
+ mo titleformat ""
+ mo resolution 10
+ mo nomesh
+ mo fill
+ mo cutoff 0.04
+write image png "NTO_00005_00010.png"

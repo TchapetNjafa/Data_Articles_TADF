@@ -29,10 +29,15 @@ This dataset supports the following publications:
 ### Machine Learning Reproducibility
 
 - **`ML_reproducibility/`** - Complete code and data for reproducing ML/Active Learning results
-  - `scripts/` - Python scripts for data processing and ML experiments
-  - `features/` - Pre-computed feature tables
-  - `results/` - Model predictions and AL results
-  - `figures/` - Generated figures for publication
+
+### High-Level Theory Validation (OT-LC-PBE)
+
+- **`HLT_validation/`** - OT-LC-PBE validation calculations for benchmarking xTB methods
+  - `omega_tuning.py` - Automated IP-tuning script for range-separation parameter
+  - `extract_hlt_results.py` - Results extraction from ORCA output files
+  - `run_hlt_calculations.sh` - Batch calculation script
+  - `otlcpbe_validation_results.csv` - Summary of validation results
+  - `results/` - Per-molecule results (BACN, DMAC-TRZ, 4CzIPN)
 
 ## Computational Methods
 
@@ -202,6 +207,43 @@ python generate_al_figures.py
 | NTO overlap features | 8.0 |
 | Oscillator strength | 3.5 |
 
+## OT-LC-PBE High-Level Theory Validation
+
+To validate the xTB-based protocol against high-level DFT methods, we performed optimally-tuned LC-PBE (OT-LC-PBE) calculations on three representative molecules using ORCA 6.1.0.
+
+### Methodology
+
+- **Functional**: LC-PBE (range-separated hybrid)
+- **Basis set**: def2-TZVP
+- **IP-tuning criterion**: J = |ε_HOMO(ω) + IP(ω)| → 0
+- **TD-DFT**: Full TD-DFT (not TDA), 10 roots per spin
+
+### Validation Results
+
+| Molecule | ω (bohr⁻¹) | OT-LC-PBE | sTD-DFT-xTB | Exp. |
+|----------|------------|-----------|-------------|------|
+| BACN | 0.181 | 0.81 eV | 0.46 eV | -- |
+| DMAC-TRZ | 0.185 | 0.17 eV | 0.08 eV | 0.05 eV |
+| 4CzIPN | 0.147 | 0.19 eV | 0.08 eV | 0.08 eV |
+
+### Key Findings
+
+1. **ΔE_ST trends are reproduced**: Both methods correctly identify BACN as having the largest gap
+2. **xTB closer to experiment**: For molecules with experimental data, sTD-DFT-xTB shows better agreement than vertical OT-LC-PBE
+3. **Vertical vs adiabatic**: OT-LC-PBE gives vertical excitations; the larger values compared to experiment are expected
+
+### Running HLT Validation
+
+```bash
+cd HLT_validation
+
+# Run omega tuning for a molecule
+python omega_tuning.py MOLECULE_NAME path/to/geometry.xyz
+
+# Extract results from ORCA output
+python extract_hlt_results.py
+```
+
 ## Citation
 
 If you use this data in your research, please cite the associated publications:
@@ -220,4 +262,4 @@ If you use this data in your research, please cite the associated publications:
 
 ---
 
-*Last updated: 2025-12-01*
+*Last updated: 2025-12-02*

@@ -1,0 +1,20 @@
+Molecule: BACN
+Optimal omega: 0.1808 bohr^-1
+Final J value: 0.000104
+
+=== Tuning Summary ===
+Method: IP-tuning criterion |ε_HOMO + IP|
+Functional: LC-PBE
+Basis: def2-SVP
+
+Grid search (11 points): 0.10 - 0.30 bohr^-1
+Fine optimization: 6 additional points
+
+Best from fine optimization: omega = 0.1808, J = 0.000104
+
+=== Key Values at omega = 0.1808 ===
+ε(HOMO)     = -0.2516 Ha (-6.85 eV)
+IP          = 0.2518 Ha (6.85 eV)
+
+Date: 2025-12-02
+Total tuning time: ~50 min (17 omega values)

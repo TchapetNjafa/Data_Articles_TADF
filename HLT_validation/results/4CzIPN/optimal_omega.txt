@@ -1,0 +1,3 @@
+Molecule: 4CzIPN
+Optimal omega: 0.1471 bohr^-1
+Final J value: 0.000007

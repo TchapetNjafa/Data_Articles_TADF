@@ -4,7 +4,7 @@
  Multiwfn official website: http://sobereva.com/multiwfn
  Multiwfn English forum: http://sobereva.com/wfnbbs
  Multiwfn Chinese forum: http://bbs.keinsci.com/wfn
- ( Number of parallel threads:  14  Current date: 2025-09-17  Time: 20:23:42 )
+ ( Number of parallel threads:  14  Current date: 2025-12-11  Time: 22:42:42 )
  
  Both following papers ***MUST BE CITED IN MAIN TEXT*** if Multiwfn is used:
   Tian Lu, Feiwu Chen, J. Comput. Chem., 33, 580 (2012) DOI: 10.1002/jcc.22885
@@ -18,16 +18,16 @@
  The highest angular moment basis functions is D
  All basis functions are Cartesian type
  Loading orbitals...
- The actual number of orbitals read:       154
+ The actual number of orbitals read:       229
  Converting basis function information to GTF information...
  Generating density matrix...
  Generating overlap matrix...
  
- Total/Alpha/Beta electrons:    156.0000     78.0000     78.0000
+ Total/Alpha/Beta electrons:    232.0000    116.0000    116.0000
  Net charge:     0.00000      Expected multiplicity:    1
- Atoms:     56,  Basis functions:    155,  GTFs:    589
+ Atoms:     83,  Basis functions:    230,  GTFs:    878
  This is a restricted single-determinant wavefunction
- Orbitals from 1 to    78 are occupied
+ Orbitals from 1 to   116 are occupied
  Loading electron density functions (EDF) information from built-in EDF library
  (The library is available at https://github.com/zorkzou/Molden2AIM)
  C (    1)      Core electrons:  2     EDF primitive GTFs: 19
@@ -38,37 +38,53 @@
  C (    6)      Core electrons:  2     EDF primitive GTFs: 19
  C (    7)      Core electrons:  2     EDF primitive GTFs: 19
  C (    8)      Core electrons:  2     EDF primitive GTFs: 19
- C (    9)      Core electrons:  2     EDF primitive GTFs: 19
- N (   10)      Core electrons:  2     EDF primitive GTFs: 20
+ N (    9)      Core electrons:  2     EDF primitive GTFs: 20
+ C (   10)      Core electrons:  2     EDF primitive GTFs: 19
  C (   11)      Core electrons:  2     EDF primitive GTFs: 19
  C (   12)      Core electrons:  2     EDF primitive GTFs: 19
  C (   13)      Core electrons:  2     EDF primitive GTFs: 19
  C (   14)      Core electrons:  2     EDF primitive GTFs: 19
  C (   15)      Core electrons:  2     EDF primitive GTFs: 19
  C (   16)      Core electrons:  2     EDF primitive GTFs: 19
- O (   17)      Core electrons:  2     EDF primitive GTFs: 19
- S (   18)      Core electrons: 10     EDF primitive GTFs: 25
- O (   19)      Core electrons:  2     EDF primitive GTFs: 19
+ C (   17)      Core electrons:  2     EDF primitive GTFs: 19
+ C (   18)      Core electrons:  2     EDF primitive GTFs: 19
+ C (   19)      Core electrons:  2     EDF primitive GTFs: 19
  C (   20)      Core electrons:  2     EDF primitive GTFs: 19
  C (   21)      Core electrons:  2     EDF primitive GTFs: 19
- C (   22)      Core electrons:  2     EDF primitive GTFs: 19
- C (   23)      Core electrons:  2     EDF primitive GTFs: 19
- C (   24)      Core electrons:  2     EDF primitive GTFs: 19
+ S (   22)      Core electrons: 10     EDF primitive GTFs: 25
+ O (   23)      Core electrons:  2     EDF primitive GTFs: 19
+ O (   24)      Core electrons:  2     EDF primitive GTFs: 19
  C (   25)      Core electrons:  2     EDF primitive GTFs: 19
  C (   26)      Core electrons:  2     EDF primitive GTFs: 19
  C (   27)      Core electrons:  2     EDF primitive GTFs: 19
  C (   28)      Core electrons:  2     EDF primitive GTFs: 19
  C (   29)      Core electrons:  2     EDF primitive GTFs: 19
  C (   30)      Core electrons:  2     EDF primitive GTFs: 19
- C (   31)      Core electrons:  2     EDF primitive GTFs: 19
- The number of total inner-core electrons:    70
- The number of total EDF primitive GTFs:   596
+ N (   31)      Core electrons:  2     EDF primitive GTFs: 20
+ C (   32)      Core electrons:  2     EDF primitive GTFs: 19
+ C (   33)      Core electrons:  2     EDF primitive GTFs: 19
+ C (   34)      Core electrons:  2     EDF primitive GTFs: 19
+ C (   35)      Core electrons:  2     EDF primitive GTFs: 19
+ C (   36)      Core electrons:  2     EDF primitive GTFs: 19
+ C (   37)      Core electrons:  2     EDF primitive GTFs: 19
+ C (   38)      Core electrons:  2     EDF primitive GTFs: 19
+ C (   39)      Core electrons:  2     EDF primitive GTFs: 19
+ C (   40)      Core electrons:  2     EDF primitive GTFs: 19
+ C (   41)      Core electrons:  2     EDF primitive GTFs: 19
+ C (   42)      Core electrons:  2     EDF primitive GTFs: 19
+ C (   43)      Core electrons:  2     EDF primitive GTFs: 19
+ C (   44)      Core electrons:  2     EDF primitive GTFs: 19
+ C (   45)      Core electrons:  2     EDF primitive GTFs: 19
+ C (   46)      Core electrons:  2     EDF primitive GTFs: 19
+ C (   47)      Core electrons:  2     EDF primitive GTFs: 19
+ The number of total inner-core electrons:   102
+ The number of total EDF primitive GTFs:   901
  Loading EDF library finished!
 
- Loaded data2507/toluene/DMAC-DPS/DMAC-DPS_toluene_S0_finalOpt.molden successfully!
+ Loaded RebuildDMAC-DPS/toluene/DMAC-DPS/DMAC-DPS_toluene_S0_finalOpt.molden successfully!
  
- Formula: H25 C27 N1 O2 S1      Total atoms:      56
- Molecule weight:       427.55869 Da
+ Formula: H36 C42 N2 O2 S1      Total atoms:      83
+ Molecule weight:       632.81378 Da
  Point group: C1 
  
  "q": Exit program gracefully          "r": Load a new file
@@ -124,14 +140,14 @@
  To exit, input 0,0
  Note: The default integration grids in general should be sufficient. If you want to change, set "iautointgrid" in settings.ini to 0, and set "radpot" and "sphpot" to expected values
  Radial points:   20    Angular points:  170   Total:      3400 per center
- Progress: [--------------------------------------------------]     1.8 %     - Progress: [#-------------------------------------------------]     3.6 %     \ Progress: [##------------------------------------------------]     5.4 %     | Progress: [###-----------------------------------------------]     7.1 %     / Progress: [####----------------------------------------------]     8.9 %     - Progress: [#####---------------------------------------------]    10.7 %     \ Progress: [######--------------------------------------------]    12.5 %     | Progress: [#######-------------------------------------------]    14.3 %     / Progress: [########------------------------------------------]    16.1 %     - Progress: [########------------------------------------------]    17.9 %     \ Progress: [#########-----------------------------------------]    19.6 %     | Progress: [##########----------------------------------------]    21.4 %     / Progress: [###########---------------------------------------]    23.2 %     - Progress: [############--------------------------------------]    25.0 %     \ Progress: [#############-------------------------------------]    26.8 %     | Progress: [##############------------------------------------]    28.6 %     / Progress: [###############-----------------------------------]    30.4 %     - Progress: [################----------------------------------]    32.1 %     \ Progress: [################----------------------------------]    33.9 %     | Progress: [#################---------------------------------]    35.7 %     / Progress: [##################--------------------------------]    37.5 %     - Progress: [###################-------------------------------]    39.3 %     \ Progress: [####################------------------------------]    41.1 %     | Progress: [#####################-----------------------------]    42.9 %     / Progress: [######################----------------------------]    44.6 %     - Progress: [#######################---------------------------]    46.4 %     \ Progress: [########################--------------------------]    48.2 %     | Progress: [#########################-------------------------]    50.0 %     / Progress: [#########################-------------------------]    51.8 %     - Progress: [##########################------------------------]    53.6 %     \ Progress: [###########################-----------------------]    55.4 %     | Progress: [############################----------------------]    57.1 %     / Progress: [#############################---------------------]    58.9 %     - Progress: [##############################--------------------]    60.7 %     \ Progress: [###############################-------------------]    62.5 %     | Progress: [################################------------------]    64.3 %     / Progress: [#################################-----------------]    66.1 %     - Progress: [#################################-----------------]    67.9 %     \ Progress: [##################################----------------]    69.6 %     | Progress: [###################################---------------]    71.4 %     / Progress: [####################################--------------]    73.2 %     - Progress: [#####################################-------------]    75.0 %     \ Progress: [######################################------------]    76.8 %     | Progress: [#######################################-----------]    78.6 %     / Progress: [########################################----------]    80.4 %     - Progress: [#########################################---------]    82.1 %     \ Progress: [#########################################---------]    83.9 %     | Progress: [##########################################--------]    85.7 %     / Progress: [###########################################-------]    87.5 %     - Progress: [############################################------]    89.3 %     \ Progress: [#############################################-----]    91.1 %     | Progress: [##############################################----]    92.9 %     / Progress: [###############################################---]    94.6 %     - Progress: [################################################--]    96.4 %     \ Progress: [#################################################-]    98.2 %     | Progress: [##################################################]   100.0 %     / 
+ Progress: [--------------------------------------------------]     1.2 %     - Progress: [#-------------------------------------------------]     2.4 %     \ Progress: [#-------------------------------------------------]     3.6 %     | Progress: [##------------------------------------------------]     4.8 %     / Progress: [###-----------------------------------------------]     6.0 %     - Progress: [###-----------------------------------------------]     7.2 %     \ Progress: [####----------------------------------------------]     8.4 %     | Progress: [####----------------------------------------------]     9.6 %     / Progress: [#####---------------------------------------------]    10.8 %     - Progress: [######--------------------------------------------]    12.0 %     \ Progress: [######--------------------------------------------]    13.3 %     | Progress: [#######-------------------------------------------]    14.5 %     / Progress: [#######-------------------------------------------]    15.7 %     - Progress: [########------------------------------------------]    16.9 %     \ Progress: [#########-----------------------------------------]    18.1 %     | Progress: [#########-----------------------------------------]    19.3 %     / Progress: [##########----------------------------------------]    20.5 %     - Progress: [##########----------------------------------------]    21.7 %     \ Progress: [###########---------------------------------------]    22.9 %     | Progress: [############--------------------------------------]    24.1 %     / Progress: [############--------------------------------------]    25.3 %     - Progress: [#############-------------------------------------]    26.5 %     \ Progress: [#############-------------------------------------]    27.7 %     | Progress: [##############------------------------------------]    28.9 %     / Progress: [###############-----------------------------------]    30.1 %     - Progress: [###############-----------------------------------]    31.3 %     \ Progress: [################----------------------------------]    32.5 %     | Progress: [################----------------------------------]    33.7 %     / Progress: [#################---------------------------------]    34.9 %     - Progress: [##################--------------------------------]    36.1 %     \ Progress: [##################--------------------------------]    37.3 %     | Progress: [###################-------------------------------]    38.6 %     / Progress: [###################-------------------------------]    39.8 %     - Progress: [####################------------------------------]    41.0 %     \ Progress: [#####################-----------------------------]    42.2 %     | Progress: [#####################-----------------------------]    43.4 %     / Progress: [######################----------------------------]    44.6 %     - Progress: [######################----------------------------]    45.8 %     \ Progress: [#######################---------------------------]    47.0 %     | Progress: [########################--------------------------]    48.2 %     / Progress: [########################--------------------------]    49.4 %     - Progress: [#########################-------------------------]    50.6 %     \ Progress: [#########################-------------------------]    51.8 %     | Progress: [##########################------------------------]    53.0 %     / Progress: [###########################-----------------------]    54.2 %     - Progress: [###########################-----------------------]    55.4 %     \ Progress: [############################----------------------]    56.6 %     | Progress: [############################----------------------]    57.8 %     / Progress: [#############################---------------------]    59.0 %     - Progress: [##############################--------------------]    60.2 %     \ Progress: [##############################--------------------]    61.4 %     | Progress: [###############################-------------------]    62.7 %     / Progress: [###############################-------------------]    63.9 %     - Progress: [################################------------------]    65.1 %     \ Progress: [#################################-----------------]    66.3 %     | Progress: [#################################-----------------]    67.5 %     / Progress: [##################################----------------]    68.7 %     - Progress: [##################################----------------]    69.9 %     \ Progress: [###################################---------------]    71.1 %     | Progress: [####################################--------------]    72.3 %     / Progress: [####################################--------------]    73.5 %     - Progress: [#####################################-------------]    74.7 %     \ Progress: [#####################################-------------]    75.9 %     | Progress: [######################################------------]    77.1 %     / Progress: [#######################################-----------]    78.3 %     - Progress: [#######################################-----------]    79.5 %     \ Progress: [########################################----------]    80.7 %     | Progress: [########################################----------]    81.9 %     / Progress: [#########################################---------]    83.1 %     - Progress: [##########################################--------]    84.3 %     \ Progress: [##########################################--------]    85.5 %     | Progress: [###########################################-------]    86.7 %     / Progress: [###########################################-------]    88.0 %     - Progress: [############################################------]    89.2 %     \ Progress: [#############################################-----]    90.4 %     | Progress: [#############################################-----]    91.6 %     / Progress: [##############################################----]    92.8 %     - Progress: [##############################################----]    94.0 %     \ Progress: [###############################################---]    95.2 %     | Progress: [################################################--]    96.4 %     / Progress: [################################################--]    97.6 %     - Progress: [#################################################-]    98.8 %     \ Progress: [##################################################]   100.0 %     | 
  
  X/Y/Z of centroid of electron density (Angstrom)
- Orbital    78:    0.249536   -1.891574    0.280425
- Orbital    79:    1.471208   -1.511044   -0.579424
- Centroid distance between the two orbitals:    1.541631 Angstrom
- Overlap integral of norm of the two orbitals:    0.6394707012
- Overlap integral of square of the two orbitals:    0.0045823137
+ Orbital   116:    3.763760   -0.943549   -0.567880
+ Orbital   117:    0.019308    1.954190    0.030460
+ Centroid distance between the two orbitals:    4.772402 Angstrom
+ Overlap integral of norm of the two orbitals:    0.2182329733
+ Overlap integral of square of the two orbitals:    0.0001852719
  
  Do you want to add the two centroids as two dummy atoms? (y/n)
  Note: Then you may enter main function 0 to visualize them along with corresponding orbital isosurfaces

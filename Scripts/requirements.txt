@@ -1,0 +1,23 @@
+# Core dependencies for TADF calculation pipeline
+rdkit>=2022.9.1
+pandas>=1.5.0
+numpy>=1.23.0
+scipy>=1.9.0
+psutil>=5.9.0
+
+# For data analysis and visualization (optional, needed for DataAnalysis_Article.ipynb)
+matplotlib>=3.6.0
+seaborn>=0.12.0
+hvplot>=0.8.0
+holoviews>=1.15.0
+pyscf>=2.1.0
+
+# Jupyter notebook support (optional)
+jupyter>=1.0.0
+ipykernel>=6.0.0
+
+# Note: The following external programs must be installed separately:
+# - xTB (v6.5.0 or later): https://github.com/grimme-lab/xtb
+# - CREST (v2.12 or later): https://github.com/crest-lab/crest
+# - sTDA: https://github.com/grimme-lab/stda
+# - Multiwfn (optional): http://sobereva.com/multiwfn/

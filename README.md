@@ -18,6 +18,18 @@ This dataset supports the following publications:
 - **`Data_AllTol_results.csv`** - Physical properties and computational results for all 747 molecules calculated in toluene solvent
 - **`tadf_architecture_analysis.csv`** - Molecular architecture classification and structural analysis
 
+### Computational Scripts
+
+- **`Scripts/`** - Complete computational pipeline for reproducing calculations
+  - `tadf_calculation_pipeline.py` - Main orchestration script
+  - `rdkitGen_Mol.py` - Initial structure generation from SMILES
+  - `geo_Opt.py` - Geometry optimization with xTB and CREST
+  - `excitationEner_Calc.py` - Excitation energy calculations with sTDA
+  - `data_Extract.py` - Results extraction and processing
+  - `DataAnalysis_Article.ipynb` - Data analysis and visualization notebook
+  - `unique_subsidiary_database.csv` - Input database with SMILES
+  - See `Scripts/README.md` for detailed documentation
+
 ### Computational Output Files
 
 - **`Data_calculation_747Mol/`** - Directory containing raw computational output files from the high-throughput screening calculations and molecular structures
@@ -43,10 +55,22 @@ This dataset supports the following publications:
 
 All calculations were performed using the following computational tools:
 
-- **xTB** - Extended tight-binding semi-empirical quantum chemistry method
-- **CREST** - Conformer-Rotamer Ensemble Sampling Tool for automated conformational searches
+- **xTB** (v6.7.0+) - Extended tight-binding semi-empirical quantum chemistry method
+- **CREST** (v3.0.0+) - Conformer-Rotamer Ensemble Sampling Tool for automated conformational searches
 - **Multiwfn** - Wavefunction analysis program for post-processing and property calculations
 - **sTDA/sTD-DFT** - Simplified time-dependent DFT for excited state calculations
+- **RDKit** - Cheminformatics toolkit for initial structure generation
+
+### Computational Workflow
+
+The complete computational pipeline is available in the `Scripts/` directory:
+
+1. **Structure Generation**: SMILES → 3D coordinates (RDKit with MMFF94s)
+2. **Geometry Optimization**: Pre-opt → Conformer search (CREST) → Final opt (xTB GFN2)
+3. **Excitation Calculations**: sTDA and sTD-DFT for S0→S1 and S0→T1 transitions
+4. **Property Extraction**: Automated extraction of all TADF-relevant properties
+
+See `Scripts/README.md` for detailed usage instructions.
 
 ### Machine Learning Tools
 
@@ -68,6 +92,17 @@ Researchers can use this data to:
 - Develop machine learning models for TADF emitter prediction
 - Validate alternative computational methods
 - Design new TADF emitter molecules
+
+### Running Calculations
+
+To reproduce calculations or run on new molecules:
+
+```bash
+cd Scripts/
+python tadf_calculation_pipeline.py
+```
+
+See `Scripts/README.md` for detailed instructions and customization options.
 
 ## Machine Learning Reproducibility Guide
 
@@ -246,20 +281,54 @@ python extract_hlt_results.py
 
 ## Citation
 
-If you use this data in your research, please cite the associated publications:
+If you use this data or scripts in your research, please cite:
 
-```
-[Citation details to be added upon publication]
+```bibtex
+@article{tchapet2025validation,
+  title={Validation of Semi-Empirical xTB Methods for High-Throughput Screening of TADF Emitters: A 747-Molecule Benchmark Study},
+  author={Jean-Pierre Tchapet Njafa, Elvira Vanelle Kameni Tcheuffa, Aissatou Maghame Foumkpou, and Serge Guy Nana Engo},
+  journal={Journal of Chemical Information and Modeling},
+  year={2026},
+  doi={10.1021/acs.jcim.5c02978}
+}
 ```
 
 ## License
 
-[chosen license here]
+This work is licensed under the MIT License - see below for details.
+
+The computational tools used (xTB, CREST, Multiwfn, sTDA) are freely available under their respective licenses.
+
+### MIT License
+
+```
+MIT License
+
+Copyright (c) 2026 [University of Yaoundé 1]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
 
 ## Contact
 
-[To add]
+[jean-pierre.tchapet@facsciences-uy1.cm]
 
 ---
 
-*Last updated: 2025-12-02*
+*Last updated: 2026-02-05*

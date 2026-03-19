@@ -45,7 +45,7 @@ Both articles analyze the same dataset of 747 TADF molecules and share computati
 **If you want to:**
 - **Validate computational methods** for TADF screening → See Article 1
 - **Apply design guidelines** for new TADF molecules → See Article 2
-- **Access raw computational data** → Visit the [GitHub repository](https://github.com/TchapetNjafa/Result_article1_TADF_xTB)
+- **Access raw computational data** → Visit the [GitHub repository](https://github.com/TchapetNjafa/Data_Articles_TADF)
 - **Reproduce calculations** → See the computational pipeline in the GitHub repository
 - **Cite this work** → Use the BibTeX entries below for the relevant article(s)
 
@@ -53,7 +53,7 @@ Both articles analyze the same dataset of 747 TADF molecules and share computati
 
 The complete computational data, scripts, and results supporting both articles are available in the public GitHub repository:
 
-**Repository:** [smiEmpirical-TADF](https://github.com/TchapetNjafa/Result_article1_TADF_xTB)  
+**Repository:** [smiEmpirical-TADF](https://github.com/TchapetNjafa/Data_Articles_TADF)  
 **Data Location:** `Public_Results/Result_article1_TADF_xTB/`  
 **DOI:** [10.5281/zenodo.17436069](https://doi.org/10.5281/zenodo.17436069)
 
@@ -78,13 +78,13 @@ Department of Physics, Faculty of Science, University of Yaounde I, Cameroon
 A: If you use the computational methodology or validation results, cite Article 1. If you use the design guidelines or candidate molecules, cite Article 2. For comprehensive work, cite both.
 
 **Q: Where can I find the raw computational data?**  
-A: All data is in the [GitHub repository](https://github.com/TchapetNjafa/Result_article1_TADF_xTB) under `Public_Results/Result_article1_TADF_xTB/`.
+A: All data is in the [GitHub repository](https://github.com/TchapetNjafa/Data_Articles_TADF) under `Public_Results/Result_article1_TADF_xTB/`.
 
 **Q: Can I use the computational workflow for my own molecules?**  
 A: Yes! The complete pipeline is available in the GitHub repository with documentation.
 
 **Q: What software do I need to reproduce the calculations?**  
-A: See the [repository README](https://github.com/TchapetNjafa/Result_article1_TADF_xTB/blob/main/Public_Results/Result_article1_TADF_xTB/README.md) for complete software requirements and installation instructions.
+A: See the [repository README](https://github.com/TchapetNjafa/Data_Articles_TADF/blob/main/Public_Results/Result_article1_TADF_xTB/README.md) for complete software requirements and installation instructions.
 
 **Q: Are the 127 high-performance candidates available?**  
 A: Yes, they are identified in Article 2 and the data is available in the GitHub repository.

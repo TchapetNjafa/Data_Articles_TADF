@@ -53,7 +53,7 @@ This folder contains:
 
 All computational data, scripts, and reproducibility code are available in the companion GitHub repository:
 
-**Repository:** [smiEmpirical-TADF](https://github.com/TchapetNjafa/Result_article1_TADF_xTB)  
+**Repository:** [smiEmpirical-TADF](https://github.com/TchapetNjafa/Data_Articles_TADF)  
 **Data Location:** `Public_Results/Result_article1_TADF_xTB/`  
 **DOI:** [10.5281/zenodo.17436069](https://doi.org/10.5281/zenodo.17436069)
 
@@ -63,7 +63,7 @@ The repository includes:
 - Machine learning reproducibility code
 - High-level theory validation (OT-LC-PBE)
 
-For technical details on software requirements, hardware specifications, and troubleshooting, see the [repository README](https://github.com/TchapetNjafa/Result_article1_TADF_xTB/blob/main/Public_Results/Result_article1_TADF_xTB/README.md).
+For technical details on software requirements, hardware specifications, and troubleshooting, see the [repository README](https://github.com/TchapetNjafa/Data_Articles_TADF/blob/main/Public_Results/Result_article1_TADF_xTB/README.md).
 
 ## Computational Methods
 

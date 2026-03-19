@@ -1,0 +1,1174 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% This is a "template" model document for submission to the
+%% American Chemical Society (ACS).
+%%
+%% The guidance here contains information about how you may wish to
+%% modify it to match the requirements of various ACS journals. The
+%% ACS do *not* typeset accepted articles using LaTeX, so there is
+%% no specific class required.
+%%
+%% This template deliberately does *not* seek to reproduce
+%% the layout of the typeset journal: this is explicitly not
+%% required by the ACS for LaTeX submissions.
+%%
+%% Please report any issues with the template at
+%% https://github.com/josephwright/acs-template/issues
+%%
+%% Released under the Creative Commons 0 license
+%% https://creativecommons.org/public-domain/cc0/
+%% 
+%% Copyight (c) 2025 Joseph Wright
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter\def\input@path{
+{Figures/}
+}\makeatother%
+\documentclass[journal=jcisd8,manuscript=article,keywords=true]{achemso}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Font setup - delete if you are using LuaLaTeX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Adjust the margins and allow for line spacing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{geometry}
+\geometry{margin = 1in}
+\usepackage{setspace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Reference support
+%%
+%% The recommended method for producing the reference section is
+%% to use biblatex. If you wish to use a classical BibTeX
+%% approach, this is easiest to achieve using the achemso package.
+%% In that case, you should remove the biblatex lines.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% You can adjust the printing of DOI, article title, etc. using
+% package options, e.g. "doi = true"; see the biblatex manual for
+% details of adjusting the number of authors printed, e.g.
+% "maxnames = 15" to print no more than 15 authors.
+%\usepackage[style = chem-acs]{biblatex}
+%\addbibresource{TADF_Article_References.bib}
+% If you are using classical BibTeX, remove the above lines and 
+% uncomment:
+%\usepackage{achemso}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Graphic inclusion and scheme and chart support
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+\usepackage{float}
+\newfloat{scheme}{htbp}{los}
+\floatname{scheme}{Scheme}
+\floatname{chart}{Chart}
+\newfloat{graph}{htbp}{loh}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Common support packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{chemformula,chemfig}
+\setchemfig{atom style={scale=0.4}, double bond sep = 4pt}
+\usepackage[version=4,arrows=pgf-filled,textfontname=sffamily,
+mathfontname=mathsf]{mhchem}
+% Typesetting and Layout Utilities
+\usepackage{microtype}  % Improves typography (spacing, kerning)
+\usepackage[detect-all=true,group-minimum-digits=4]{siunitx}
+\sisetup{mode = math, propagate-math-font = true, reset-math-version = false, range-phrase = --}
+% siunitx setup
+%\usepackage{lscape}     % For landscape pages, if needed
+%\usepackage[labelformat=simple]{subcaption}
+\usepackage{tabularx, longtable}%
+\usepackage{booktabs, multirow,xcolor,cleveref,url}
+
+\usepackage{seqsplit}   % For splitting long sequences in text
+\usepackage{xr-hyper}  % Cross-reference to SI document
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section numbering enabled per Reviewer 1 Comment 1.5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\setcounter{secnumdepth}{3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Place any additional macros here.  Please use \newcommand* where
+%% possible, and avoid layout-changing macros (which are not used
+%% when typesetting).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\externaldocument{SI-Article1-Validation-of-Semi-Empirical-xTB-Methods}
+% Prefix SI- for all SI references
+
+\newcommand{\smiles}[1]{\parbox{6.5cm}{\seqsplit{\ttfamily#1}}}
+
+\newcommand{\deltaest}{$\Delta E_{\text{ST}}$}
+\newcommand{\risc}{rISC}
+\newcommand{\tict}{TICT}
+\DeclareSIUnit\calorie{cal}
+\DeclareSIUnit\kcal{\kilo\calorie}
+\DeclareSIUnit\atomicunit{a.u.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Author and title data:
+%% the authblk package is currently the simplest way to provide this
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage{authblk}
+\author{Jean-Pierre Tchapet Njafa}
+\email{jean-pierre.tchapet@facsciences-uy1.cm}
+\affiliation[University of Yaoundé 1]{Department of Physics, Faculty of Science,
+University of Yaounde I, P.O.Box
+812, Yaounde, Cameroon}
+%\orcid{0000-0002-1936-8353}
+
+\author{Elvira Vanelle Kameni Tcheuffa}
+\affiliation[University of Yaoundé 1]{Department of Physics, Faculty of Science,
+University of Yaounde I, P.O.Box
+812, Yaounde, Cameroon}
+
+\author{Aissatou Maghame Foumkpou}
+\affiliation[University of Yaoundé 1]{Department of Physics, Faculty of Science,
+University of Yaounde I, P.O.Box
+812, Yaounde, Cameroon}
+
+\author{Serge Guy Nana Engo}
+\affiliation[University of Yaoundé 1]{Department of Physics, Faculty of Science,
+University of Yaounde I, P.O.Box
+812, Yaounde, Cameroon}
+
+\title{xTB-Based High-Throughput Screening of TADF Emitters: 747-Molecule Benchmark}
+
+
+\keywords{TADF, semi-empirical methods, sTD-DFT, sTDA, high-throughput screening, excited
+states, OLEDs, computational chemistry}
+
+\pdfminorversion=7
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  We validate semi-empirical sTDA-xTB and sTD-DFT-xTB methods for high-throughput screening of thermally activated delayed fluorescence (TADF) emitters using \num{747} experimentally characterized molecules---the largest such benchmark to date. Our framework achieves $>\qty{99}{\percent}$ computational cost reduction versus TD-DFT while maintaining strong internal consistency (Pearson $r \approx \num{0.82}$) and reasonable agreement with \num{312} experimental singlet-triplet gaps (MAE $\approx \qty{0.17}{\electronvolt}$). Large-scale analysis statistically validates key design principles: D-A-D architectures outperform other motifs, and optimal torsional angles of \qtyrange{50}{90}{\degree} maximize TADF efficiency, while PCA confirms a low-dimensional property space. This work establishes xTB methods as cost-effective tools for accelerating TADF discovery.
+\end{abstract}
+
+%\section*{Keywords}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Start the main part of the manuscript here.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+\label{sec:introduction}
+
+Organic Light-Emitting Diodes (OLEDs) utilizing Thermally Activated Delayed Fluorescence
+(TADF) emitters have emerged as a third generation of optoelectronic devices, promising
+near 100\% internal quantum efficiency by effectively harvesting both singlet and triplet
+excitons via Reverse Intersystem Crossing (RISC) \cite{Uoyama2012, Adachi2014TADF,
+Liu2018}. The key photophysical prerequisite for efficient TADF is a small singlet-triplet
+energy gap ($\Delta E_{\text{ST}} \le \qty{0.3}{\electronvolt}$), typically achieved
+through molecular designs that promote a spatial separation of the highest occupied
+molecular orbital (HOMO) and the lowest unoccupied molecular orbital (LUMO), leading to
+excited states with substantial Charge-Transfer (CT) character \cite{Dias2017, Chen2018}.
+
+The rational computational design and discovery of novel TADF emitters, however, face significant theoretical challenges \cite{Olivier2018, Gomez-Bombarelli2016}. Conventional \textit{ab initio} methods, such as high-level state function theory (e.g., SCS-CC2 or STEOM-DLPNO-CCSD), often required for quantitative accuracy, especially for complex Multi-Resonance (MR-TADF) systems) \cite{Kang2024, Wu2025}, are computationally prohibitive for the high-throughput screening (HTS) of the vast chemical space relevant to OLED materials \cite{Olivier2017a}. Time-Dependent Density Functional Theory (TD-DFT), while more efficient, suffers from well-documented limitations, particularly its tendency to underestimate the energy of highly delocalized CT states and its known failures in contexts requiring multireference character or the consideration of environmental polarization effects \cite{Dreuw2004, Mewes2018, Jacquemin2009, Froitzheim2022}. 
+
+Calculating the precise \deltaest in solution, a critical metric for TADF performance, ideally requires computationally expensive approaches like the State-Specific Polarizable Continuum Model (SS-PCM) or Restricted Open-shell Kohn-Sham (ROKS) methods, which account for the differential stabilization of $S_1$ and $T_1$ states in polar environments \cite{Loos2020STGABS27, Laurent2013TDDFT}. Solution-phase calculations are critical because experimental TADF photophysics are predominantly measured in solution (e.g., toluene), providing fundamental molecular properties that correlate with thin-film device performance. Validation against these solution measurements represents standard practice in the field and establishes confidence in computational predictions for large-scale screening applications.
+
+To address this fundamental dilemma—the need for robust predictions across thousands of molecules constrained by the cost and accuracy shortcomings of current 
+methods—Simplified Quantum Chemistry (sQC) approaches have gained traction \cite{bannwarth2021extended}. The combination of eXtended 
+Tight-Binding (xTB) methods with simplified response theory offers a compelling pathway forward. The simplified Tamm-Dancoff approximation 
+(sTDA), introduced by Grimme and Bannwarth \cite{Grimme2016}, and simplified TD-DFT (sTD-DFT), when coupled with the efficient xTB Hamiltonian, provide 
+a highly scalable framework capable of treating systems with hundreds to thousands of atoms. The sTDA-xTB method has been validated against high-level reference 
+methods with typical mean absolute errors of 0.3--0.5~eV for excitation energies, while reducing computational cost by over 99\% \cite{Grimme2016}. This 
+approach builds upon the well-validated GFN2-xTB ground-state method \cite{Bannwarth2019_GFN2xTB}, which has been extensively benchmarked for molecular 
+geometries and energetics across diverse chemical systems. This capability is achieved by approximating two-electron integrals and truncating the configuration 
+interaction (CI) space, leading to computational cost reductions often exceeding 99\% compared to conventional TD-DFT calculations.
+
+
+Machine learning (ML) has emerged as a powerful complementary approach for accelerating the discovery of TADF emitters and organic electronic materials. Recent studies have demonstrated that ML algorithms, when integrated with quantum chemical calculations, can efficiently predict critical photophysical properties and enable high-throughput virtual screening of molecular candidates \cite{ML_xTB_MaterialsScreening2022}. Physics-informed machine learning frameworks have been specifically developed for TADF design, achieving high accuracy in predicting singlet-triplet energy gaps and oscillator strengths while providing mechanistic insights into structure-property relationships \cite{PhysicsGuidedML_TADF2024}. More broadly, ML-driven approaches are transforming OLED materials development by reducing the time required for identifying promising candidates from vast chemical spaces \cite{Abroshan2022ML_OLED}. However, ML methods require substantial training datasets and may lack transparency in their predictions. In contrast, the direct computational approach employed in this work using semi-empirical xTB methods offers several advantages: it requires no training data, provides physics-based predictions with interpretable results, and generates the large, consistent datasets that can subsequently train more sophisticated ML models. Thus, direct computation and machine learning represent complementary strategies in the broader landscape of computational materials discovery for next-generation TADF emitters.
+
+This work presents a rigorous, large-scale validation of the semi-empirical sTDA-xTB and
+sTD-DFT-xTB methods as tools for the high-throughput virtual screening (HTVS) of TADF
+emitters. We leverage a uniquely extensive dataset comprising \num{747} experimentally
+characterized TADF molecules \cite{Huang_2024}, moving significantly beyond the
+limitations of small datasets previously assessed
+\cite{Moral2015, deSilva2019TADF}. In doing so, we compare the performance of
+these methods against each other and experimental data, assess their ability to capture
+solvent effects relevant to device environments, and evaluate the computational
+cost-benefit ratio relative to conventional approaches.
+
+We systematically evaluate the fidelity of sTDA-xTB and sTD-DFT-xTB by comparison against
+experimental data, including \num{312} experimental \deltaest~values and \num{213}
+emission wavelengths ($\lambda_{\text{PL}}$) \cite{Huang_2024}. This massive validation
+effort establishes the strengths and limitations of sQC methods for predicting key TADF
+properties. We confirm the strong internal consistency of the sTDA-xTB and sTD-DFT-xTB
+variants ($\text{Pearson } r \approx 0.82$ for \deltaest), demonstrating their equivalence
+for the critical task of relative molecular ranking essential for HTS, despite
+acknowledging known quantitative inaccuracies for absolute values ($\text{MAE } \sim
+\qty{0.17}{\electronvolt}$ against experiment for \deltaest) \cite{Zhao2021}. We
+explicitly investigate the impact of the approximations inherent to the sQC approach,
+including the hybrid use of GFN2-xTB geometries (optimized for ground-state properties)
+and the implicit solvent model GBSA (a generalized Born (GB) model with solvent
+accessable surface (SASA)) for calculating
+excited-state properties in toluene \cite{Bannwarth2019, Ehlert2021}. We quantify the
+statistically significant, albeit modest, influence of solvent effects on photophysical
+properties. Our analysis confirms that the computational efficiency achieved enables the
+processing of hundreds of molecules rapidly, providing essential benchmarking data and
+methodological guidelines for accelerating TADF emitter discovery pipelines
+\cite{Perez‐Jimenez2025}. We show that the vast majority of property variance can be
+captured by a few components, suggesting a low-dimensional and targetable design space.
+
+The manuscript is organized as follows: Section \textbf{Computational methods} %\ref{sec:Comp_Meth}
+details the computational methodology, including the protocols for geometry optimization (GFN2-xTB)
+\cite{Grimme2017}, excited-state calculation (sTDA/sTD-DFT-xTB), and the definition of
+molecular and photophysical metrics. Section \textbf{Results and discussion} %\ref{sec:Res_Disc}
+presents the results of the comprehensive benchmarking study, discussing the method consistency, predictive
+accuracy against experimental data, and the influence of solvent effects. Finally,
+Section \textbf{Conclusions} %\ref{sec:Concl}
+summarizes the findings and proposes future research directions,
+particularly the integration of these validated sQC methods with Machine Learning
+techniques for predictive modeling of TADF dynamics.
+
+\section{Computational methods}\label{sec:Comp_Meth}
+
+The aim of this work is to establish a robust and computationally efficient methodology for the high-throughput virtual screening of Thermally Activated Delayed Fluorescence (TADF) emitters. This protocol integrates accelerated semi-empirical methods from the extended tight-binding (xTB) family for geometry optimization and subsequent excited-state property calculations, enabling the analysis of a large and diverse chemical space.   A schematic representation of the workflow is presented in \Cref{fig:workflow}.
+
+\begin{figure}[!htbp]
+\centering
+ \includegraphics[width=\textwidth]{workflow.png}
+\caption{Overview of the simulation workflow. Starting with a SMILES string, the code
+performs conformer search and geometry optimisation via xTB for the singlet ground state
+$S_0$ and the triplet state $T_1$. It allows the extraction of the relaxed triplet
+excitation energy. Simplified time-dependent DFT calculation with sTDA/sTD-DFT extracts
+the vertical singlet-triplet gap, the oscillator strength, the vertical excitation
+energy and the fluorescence absorption and emission spectra, while incorporating solvent
+effects to enhance the realism of our simulations. The Stokes shift is evaluated and then
+allows the relaxed singlet-triplet gap to be estimated.}
+\label{fig:workflow}
+\end{figure}
+
+\subsection{Dataset and conformational sampling}\label{sec:geom_opt}
+
+Our benchmark dataset comprises \num{747} TADF emitters extracted from the literature
+using automated text mining \cite{Huang_2024}. The set spans diverse molecular
+architectures, including donor-acceptor (D-A), multiple donor-acceptor, and
+multi-resonance (MR) systems. Initial 3D structures were generated from SMILES strings
+using RDKit \cite{rdkit}. The complete molecular list with SMILES representations is provided in the Table S1 of the Supporting Information.
+
+A systematic conformational search for each molecule was performed using the
+Conformer-Rotamer Ensemble Sampling Tool (CREST version 3.0.2) \cite{pracht2020automated,
+crest2} coupled with the GFN2-xTB semi-empirical Hamiltonian using the xTB program
+(version 6.7.1) \cite{Bannwarth2019, grimme2019exploration}. GFN2-xTB is a
+second-generation tight-binding quantum chemical method specifically parameterized for
+accurate molecular structures, conformational energies, and noncovalent interactions,
+making it highly suitable for describing the complex geometries of TADF emitters
+\cite{bannwarth2021extended}. The lowest-energy conformer identified by CREST was then
+subjected to a final, tight geometry optimization at the GFN2-xTB level to obtain the
+equilibrium structure on the singlet electronic ground state ($S_0$).
+
+\subsection{Excited-state calculations and hybrid protocol}\label{sec:excited_state}
+
+Excited-state properties were calculated using the geometries optimized at the $S_0$ GFN2-xTB level through two highly efficient quantum chemistry methods based on the extended tight-binding (xTB) framework: the simplified Tamm-Dancoff approximation (sTDA-xTB) \cite{Grimme2016} and simplified time-dependent density functional theory (sTD-DFT-xTB) \cite{Grimme2021, Wergifosse2024}. These excited-state calculations employ a non-self-consistent extended tight-binding Hamiltonian, distinct from the GFN2-xTB Hamiltonian used for ground-state geometry optimization \cite{Grimme2017}. The sTDA-xTB and sTD-DFT-xTB methods utilize a specialized Hamiltonian and an extended atomic orbital (AO) basis set parameterized for robust and rapid prediction of absorption and emission spectra \cite{bannwarth2021extended}.
+
+This hybrid protocol, which adopts GFN2-xTB optimized geometries for a single-point
+sTDA/sTD-DFT-xTB calculation, represents a pragmatic approximation enabling the high
+computational efficiency necessary for high-throughput screening (HTS). While
+excited-state optimized geometries would be preferable for accurately modeling adiabatic
+properties \cite{Froitzheim2022, Mewes2018}, this approach preserves the relative rankings
+and qualitative trends critical for virtual screening, achieving computational speed-ups
+exceeding \qty{99}{\percent} compared to conventional TD-DFT \cite{Konidena_2021}.
+
+We explicitly acknowledge that the GFN2-xTB and the xTB Hamiltonian used for sTDA/sTD-DFT
+(denoted as \texttt{xTB4sTDA}) stem from distinct parametrizations and basis sets
+\cite{Ma_2019, Wei_2022, Zeng_2019}. The workflow’s key assumption is that the GFN2-xTB
+optimized ground-state geometry provides a sufficiently accurate vertical approximation
+($S_0$ geometry) to support rapid and reliable single-point excited-state computations.
+This separation is justified as the main goal is qualitative trend screening and relative
+molecular ranking across hundreds of compounds, delivering a remarkable computational cost
+reduction of roughly \qty{99}{\percent} relative to conventional TD-DFT
+\cite{Konidena_2021, Gomez-Bombarelli2016}. For precise absolute energies or adiabatic
+excited-state geometries, higher-level, more computationally demanding methods would be
+necessary \cite{Wang_2021}.
+
+Our protocol employs geometry optimization for two distinct purposes.
+(i) The $S_0$ ground-state geometry is fully optimized using GFN2-xTB and serves as the
+reference structure for all vertical excited-state calculations (sTDA/sTD-DFT).
+(ii) The $T_1$ triplet geometry is independently optimized at the GFN2-xTB level to obtain
+the relaxed triplet excitation energy, which is subsequently used to estimate the Stokes
+shift and emission properties (Subsection \textbf{Electronic structure and property analysis}).
+(iii) Vertical $S_1$ and $T_1$ excitation energies for calculating the singlet-triplet
+gap are obtained at the optimized $S_0$ geometry using sTDA/sTD-DFT, following the
+Condon approximation standard in computational spectroscopy.
+
+
+\subsection{Solvent effects modeling}\label{sec:solvation}
+
+To model the influence of the molecular environment, all calculations were performed in
+both the gas phase and in solution. We employed the generalized Born model with
+solvent accessable surface (GBSA) implicit solvation model \cite{Ehlert2021}, with
+toluene
+($\varepsilon = \num{2.38}$) selected as a representative low-polarity solvent commonly
+used in experimental studies of TADF emitters. We acknowledge that this model relies on
+the ground-state electronic density and does not fully capture dynamic solvent
+reorganization effects pertinent to charge-transfer states. For more accurate solvation modeling,
+state-specific polarizable continuum models (SS-PCM) would be necessary to properly account for
+differential stabilization of excited states by the solvent \cite{Hait2016}. Separately,
+for excited-state calculations themselves, restricted open-shell Kohn-Sham (ROKS) methods provide
+an alternative approach to calculating triplet states \cite{Northey2017}. However, the GBSA model provides a computationally
+tractable and consistent approach for assessing solvent-induced trends across our large
+dataset.
+
+\subsection{Electronic structure and property analysis}\label{sec:analysis}
+
+From the excited-state calculations, we directly obtained the vertical excitation energies
+of the lowest singlet ($E_{S_1}$) and triplet ($E_{T_1}$) states, from which the vertical
+singlet-triplet energy gap was calculated:
+\begin{equation}
+    \Delta E_{v}\left(S_1-T_1\right) = E_{S_1} - E_{T_1}.
+\end{equation}
+The dimensionless oscillator strength ($f_{S_1}$) for the $S_0 \to S_1$ transition was
+also computed as a proxy for the radiative decay rate.
+
+Given that direct geometry optimization of the $S_1$ state is not implemented in the
+employed semi-empirical framework, an approximation was necessary to estimate emission
+properties and then the singlet-triplet energy gap $\Delta E_\text{ST}$. We first
+calculated the relaxed triplet excitation energy by optimizing the
+$T_1$ state geometry at the GFN2-xTB level. The geometric relaxation energy for the
+triplet state, $\Delta E_{\text{relax}}(T_1)$, was then assumed to be equal to the Stokes
+shift of the $S_1$ state. This physically-grounded approximation allowed for the
+estimation of the relaxed $S_1$ energy, and consequently, the emission wavelength
+($\lambda_{\text{PL}}$). The detailed equations for this estimation are provided in the
+Supporting Information.% (Section \ref{sec:SI-stokes}).
+
+To gain physical insight into the electronic structure, particularly the degree of
+charge-transfer (CT) character, we analyzed the frontier molecular orbitals. Using the
+Multiwfn package \cite{lu2024multiwfn}, we quantified the spatial separation between the
+highest occupied (HOMO) and lowest unoccupied (LUMO) molecular orbitals via two key
+descriptors: the overlap integral ($S'_{\text{HL}}$) and the centroid distance between
+their respective electron densities ($D_{\text{HL}}$) \cite{Etienne2014, LeBahers2011}.
+These metrics provide a quantitative measure of the electronic decoupling central to the
+TADF mechanism.
+
+\subsection{Validation, statistical analysis, and computational
+cost}\label{sec:validation_and_cost}
+
+To validate our computational protocol, we benchmarked the performance of the sTDA-xTB and
+sTD-DFT-xTB methods against a large set of experimental and computational reference data extracted from the
+literature. The validation set consisted of \num{312} reference \deltaest values and
+\num{213} reference emission wavelengths ($\lambda_{\text{PL}}$), standardized to eV
+and nm units, respectively. The majority of these values are from experimental measurements performed in solution (primarily toluene, with some measurements in 
+dichloromethane or other low-polarity solvents) at room temperature. A small subset of reference values (\qty{<10}{\percent}) are from high-level computational 
+studies (e.g., TD-DFT with large basis sets or wavefunction-based methods) where experimental data were unavailable. All data sources, measurement conditions 
+(solvent, temperature), and whether each value is experimental or computational are documented in detail in Supporting Information Table S2 (for emission 
+wavelengths) and Table S3 (for singlet-triplet gaps). The performance of the semi-empirical methods was rigorously
+assessed by comparing their predictions to these reference values, as well as by
+comparing the two xTB variants against each other.
+
+The statistical analysis employed a suite of standard metrics to quantify accuracy and
+correlation, including Pearson ($r$) and Spearman ($\rho$) correlation coefficients to
+assess linear and monotonic trends, respectively. Predictive accuracy was evaluated using
+mean absolute error (MAE) and root mean square error (RMSE). Systematic differences
+between methods or against experimental data were examined with paired Student's $t$-tests
+and non-parametric Wilcoxon signed-rank tests. Distribution normality was assessed using
+Shapiro-Wilk tests, while solvent effects were analyzed through paired comparisons with
+Cohen's $d$ effect sizes. Additionally, principal component analysis (PCA) was performed
+on standardized property vectors to identify dominant variance components. All statistical
+analyses were conducted using Python with the SciPy and scikit-learn libraries.
+
+All calculations were performed on a workstation equipped with an Intel Xeon Gold 6136 CPU
+and \qty{128}{\giga\byte} of RAM. The semi-empirical protocol demonstrated exceptional
+efficiency, with the total computational time for all \num{747} molecules amounting to
+approximately \num{614} CPU hours. A representative breakdown per molecule includes
+conformational search (approximately 20–27 minutes), GFN2-xTB geometry optimization
+(approximately \qty{1}{\minute}), and excited-state calculations (\qty{11}{\second} for
+sTDA-xTB; 33 seconds for sTD-DFT-xTB). For comparison, a conventional TD-DFT calculation
+(e.g., CAM-B3LYP/def2-TZVP) for a single molecule is estimated to require approximately 50
+CPU hours. Our hybrid approach thus represents a computational cost reduction of over
+\qty{99}{\percent}, a critical enabling factor for high-throughput screening.
+
+To ensure full reproducibility and facilitate future research, the complete computational dataset, including all molecular structures (SMILES), optimized geometries, calculated properties, and the analysis scripts used in this study, are made publicly available at [Repository URL, to be added upon publication].
+
+
+\section{Results and discussion}\label{sec:Res_Disc}
+
+The large-scale application of the hybrid GFN2-xTB/sTDA(sTD-DFT)-xTB protocol to \num{747} experimentally characterized Thermally Activated Delayed Fluorescence (TADF) emitters constitutes the core validation of this work. With 747 molecules, this dataset exceeds previous semi-empirical benchmarks in the TADF field. Such scale permits statistical analysis that smaller studies cannot support.
+
+\subsection{Overview of the computational dataset}
+
+The architectural diversity of the \num{747}-molecule set yields substantial variability
+in the computed photophysical properties, as summarized in \Cref{tab:descriptive_stats}.
+The singlet-triplet energy gap (\deltaest) calculated with sTDA-xTB in the gas phase shows
+a mean of \qty{0.328}{\electronvolt} with a large standard deviation of
+\qty{0.204}{\electronvolt}, indicating the presence of both highly efficient TADF
+candidates and molecules with large gaps. The dataset spans a wide spectral range, with
+predicted photoluminescence wavelengths ($\lambda_{\text{PL}}$) from the deep-blue to the
+near-infrared region (\qtyrange{343}{2565}{\nano\meter}). Oscillator strengths ($f_{12}$)
+are broadly dispersed, with a median of \num{0.27}, which is consistent with the
+significant charge-transfer character typical of many TADF systems. Overall, the dataset
+captures a comprehensive spectrum of TADF molecular architectures and photophysical
+behaviors, making it highly suitable for robustly benchmarking the computational methods.
+
+\begin{table}[!ht]
+\centering
+\caption{Descriptive statistics of key TADF properties for the \num{747}-molecule dataset, calculated using sTDA-xTB and sTD-DFT-xTB methods in both gas phase 
+and in toluene solution.}
+\label{tab:descriptive_stats}
+\begin{tabular}{l l *{4}{S[table-format=4.3]}}
+	\toprule
+	{Property}                         & {Phase} & {Mean} & {Std Dev} & {Min}  & {Max}
+\\ \midrule
+	\deltaest (sTDA) [\unit{\electronvolt}]              & Gas     & 0.328  & 0.204     & -0.013 &
+2.638   \\
+	\deltaest (sTD-DFT) [\unit{\electronvolt}]           & Gas     & 0.316  & 0.190     & -0.301 &
+1.658   \\
+	$\lambda_{\text{PL}}$ (sTDA) [\unit{\nano\meter}]    & Gas     & 566.61 & 201.55    & 342.96 &
+2565.30 \\
+	$\lambda_{\text{PL}}$ (sTD-DFT) [\unit{\nano\meter}] & Gas     & 573.09 & 255.60    & 342.00 &
+4987.21 \\
+	$f_{12}$ (sTDA)                    & Gas     & 0.457  & 0.563     & 0.000  & 5.169
+\\
+	$f_{12}$ (sTD-DFT)                 & Gas     & 0.393  & 0.491     & 0.000  & 4.724
+\\ \midrule
+	\deltaest (sTDA) [\unit{\electronvolt}]              & Toluene & 0.352  & 0.280     & -0.024 &
+5.649   \\
+	\deltaest (sTD-DFT) [\unit{\electronvolt}]           & Toluene & 0.334  & 0.203     & -0.348 &
+1.502   \\ \bottomrule
+\end{tabular}
+\end{table}
+
+Several observations from \Cref{tab:descriptive_stats} warrant discussion. First, negative $\Delta E_{\text{ST}}$ values appear in the dataset (minimum values 
+ranging from \qty{-0.013}{\electronvolt} to \qty{-0.348}{\electronvolt}, depending on method and phase). These negative values indicate cases where the 
+computed $T_1$ triplet state lies energetically above the $S_1$ singlet state, which can arise from computational artifacts in the vertical approximation or 
+from molecules with unusual electronic structures. While such cases are rare in our dataset (representing less than \qty{2}{\percent} of molecules), they 
+highlight the limitations of the semi-empirical approach for systems with complex excited-state ordering. Second, the maximum $\Delta E_{\text{ST}}$ values 
+(ranging from \qty{1.502}{\electronvolt} to \qty{5.649}{\electronvolt}) correspond to molecules with large singlet-triplet gaps that are unsuitable for 
+efficient TADF, as the reverse intersystem crossing (RISC) rate becomes prohibitively slow. For context, experimental $\Delta E_{\text{ST}}$ values for 
+efficient TADF emitters typically fall in the range of \qtyrange{0.05}{0.30}{\electronvolt}, with optimal performance often observed for gaps below 
+\qty{0.20}{\electronvolt} \cite{Adachi2014TADF, Uoyama2012}. The computational values span a broader range, reflecting both the diversity of the dataset and the 
+quantitative limitations of the high-throughput protocol.
+
+\subsection{Validation against experimental data}\label{sec:validation}
+
+To assess the predictive capability of our semi-empirical framework for real-world
+applications, we performed an extensive validation study comparing the sTDA-xTB and
+sTD-DFT-xTB predictions against a large, curated dataset of experimental literature
+values. This external validation is the most critical test of the methodology's utility
+for high-throughput virtual screening (HTVS). Our validation dataset comprises \num{213}
+molecules with reported emission wavelengths ($\lambda_{\text{PL}}$) and \num{296}
+molecules with reported singlet-triplet energy gaps (\deltaest). Representative examples were selected to illustrate the range of predictive accuracy across 
+the dataset, covering molecules with diverse emission wavelengths (from \qty{347}{\nano\meter} to \qty{706}{\nano\meter}) and varying levels of agreement 
+between computational predictions and experimental values. These examples are shown in \Cref{tab:validation-examples} to demonstrate typical performance.
+
+\begin{table}[!ht]
+\centering
+\caption{Representative examples from the emission wavelength validation dataset, selected to illustrate the range of predictive accuracy. All wavelengths are 
+given in \unit{\nano\meter} and singlet-tripletenergy gaps in \unit{\electronvolt}. The full dataset is provided in the Supporting Information.}
+\label{tab:validation-examples}
+\small
+\setlength{\tabcolsep}{1.8pt}
+\begin{tabular}{l *{5}{S[table-format=4.1]} *{4}{S[table-format=-1.3]} c}
+	\toprule
+	{Molecule}   & \multicolumn{2}{c}{$\underset{sTDA}{\lambda_{\text{PL}}}$ [\unit{\nano\meter}]} & 
+\multicolumn{2}{c}{$\underset{sTD-DFT}{\lambda_{\text{PL}}}$ [\unit{\nano\meter}]} & {Ref. $\lambda_{\text{PL}}$ [\unit{\nano\meter}]} & 
+	\multicolumn{2}{c}{$\underset{sTDA}{\Delta E_{\text{ST}}}$ [\unit{\electronvolt}]} & 
+	\multicolumn{2}{c}{$\underset{sTD-DFT}{\Delta E_{\text{ST}}}$ [\unit{\electronvolt}]} & {Citation} 
+\\
+	& {(Gas)} & {(Tol)} & {(Gas)} & {(Tol)} & {} & {(Gas)} & {(Tol)} & {(Gas)} & {(Tol)} & \\ 
+	\midrule
+	DCzBNPh-1    & 472.4  & 442.1  & 475.7  & 445.7  & 472.5 & 0.256 & 0.321 & 0.238 & 0.298 & \citenum{Yan_2022} \\
+	BACH         & 433.6  & 409.9  & 439.5  & 415.7  & 427.7 & 0.511 & 0.547 & 0.473 & 0.505 & \citenum{Li_2022_10_1016_j_dyepig_2021_110030} \\
+	PyDCN–DMAC   & 508.7  & 496.9  & 504.4  & 493.2  & 494.2 & 0.246 & 0.318 & 0.266 & 0.336 & \citenum{Dong_2022} \\
+	tCTM         & 483.8  & 483.3  & 487.0  & 483.5  & 459.0 & 0.270 & 0.262 & 0.254 & 0.261 & \citenum{Tan_2020} \\
+	t-DABNA      & 431.1  & 418.4  & 438.5  & 425.5  & 464.0 & 0.448 & 0.461 & 0.399 & 0.411 &
+\citenum{Lee_2019_10_1039_c9tc02746g} \\
+	TPBPPI-PBI   & 472.9  & 461.4  & 473.4  & 462.6  & 429.0 & 0.224 & 0.230 & 0.221 & 0.223 & \citenum{Zhu_2020} \\
+	2Cz-DMAC-BTB & 474.2  & 535.1  & 471.3  & 531.4  & 529.0 & 0.266 & 0.128 & 0.282 & 0.144 & \citenum{Zhang_2022_10_1016_j_cclet_2021_08_064} \\
+	TBPe         & 542.6  & 500.3  & 553.7  & 510.7  & 471.0 & 0.712 & 0.774 & 0.666 & 0.723 & \citenum{Yao_2019} \\
+	DPCN         & 511.7  & 508.0  & 511.6  & 508.3  & 424.0 & 0.288 & 0.307 & 0.288 & 0.306 & \citenum{Xiao_2022_10_1016_j_dyepig_2022_110451} \\
+	TRZ-3SO2     & 577.4  & 540.6  & 572.9  & 539.9  & 706.0 & 0.035 & -0.010 & 0.052 & -0.007 & \citenum{Zhang_2022_10_1039_d2tc02694e} \\
+	SBDBQ-PXZ    & 843.2  & 751.8  & 845.7  & 753.8  & 594.0 & 0.109 & 0.120 & 0.105 & 0.115 & \citenum{Yu_2018} \\
+	{[2,1-b]IF}  & 1031.9 & 770.2  & 586.3  & 571.9  & 347.0 & 0.745 & 0.944 & 1.658 & 1.502 & \citenum{Romain_2016} \\ 
+	\bottomrule
+\end{tabular}
+\end{table}
+
+% \begin{table}[!ht]
+% \centering
+% \caption{Representative examples from the emission wavelength validation dataset, selected to illustrate the range of predictive accuracy. All wavelengths are 
+% given in \unit{\nano\meter} and singlet-tripletenergy gaps in \unit{\electronvolt}. The full dataset is provided in the Supporting Information.}
+% \label{tab:validation-examples}
+% \footnotesize
+% \setlength{\tabcolsep}{1.8pt}
+% \begin{tabular}{l *{5}{S[table-format=4.1]} *{5}{S[table-format=-1.3]} c}
+% 	\toprule
+% 	{Molecule}   & \multicolumn{2}{c}{$\underset{sTDA}{\lambda_{\text{PL}}}$ [\unit{\nano\meter}]} & 
+% \multicolumn{2}{c}{$\underset{sTD-DFT}{\lambda_{\text{PL}}}$ [\unit{\nano\meter}]} & {Ref. $\lambda_{\text{PL}}$ [\unit{\nano\meter}]} & 
+% 	\multicolumn{2}{c}{$\underset{sTDA}{\Delta E_{\text{ST}}}$ [\unit{\electronvolt}]} & 
+% 	\multicolumn{2}{c}{$\underset{sTD-DFT}{\Delta E_{\text{ST}}}$ [\unit{\electronvolt}]} & {Ref. \deltaest\, [\unit{\electronvolt}]} & {Citation} 
+% \\
+% 	& {(Gas)} & {(Tol)} & {(Gas)} & {(Tol)} & {} & {(Gas)} & {(Tol)} & {(Gas)} & {(Tol)} & &\\ 
+% 	\midrule
+% 	DCzBNPh-1    & 472.4  & 442.1  & 475.7  & 445.7  & 472.5 & 0.256 & 0.321 & 0.238 & 0.298 & 0.500 & \citenum{Yan_2022} \\
+% 	BACH         & 433.6  & 409.9  & 439.5  & 415.7  & 427.7 & 0.511 & 0.547 & 0.473 & 0.505 &  & \citenum{Li_2022_10_1016_j_dyepig_2021_110030} \\
+% 	PyDCN–DMAC   & 508.7  & 496.9  & 504.4  & 493.2  & 494.2 & 0.246 & 0.318 & 0.266 & 0.336 & 0.010 & \citenum{Dong_2022} \\
+% 	tCTM         & 483.8  & 483.3  & 487.0  & 483.5  & 459.0 & 0.270 & 0.262 & 0.254 & 0.261 &  & \citenum{Tan_2020} \\
+% 	t-DABNA      & 431.1  & 418.4  & 438.5  & 425.5  & 464.0 & 0.448 & 0.461 & 0.399 & 0.411 & {0.150; 0.170} & 
+% \citenum{Lee_2019_10_1039_c9tc02746g,Kim_2021,Han_2019_10_1039_c8tc06575f} \\
+% 	TPBPPI-PBI   & 472.9  & 461.4  & 473.4  & 462.6  & 429.0 & 0.224 & 0.230 & 0.221 & 0.223 & & \citenum{Zhu_2020} \\
+% 	2Cz-DMAC-BTB & 474.2  & 535.1  & 471.3  & 531.4  & 529.0 & 0.266 & 0.128 & 0.282 & 0.144 & 0.020 & \citenum{Zhang_2022_10_1016_j_cclet_2021_08_064} \\
+% 	TBPe         & 542.6  & 500.3  & 553.7  & 510.7  & 471.0 & 0.712 & 0.774 & 0.666 & 0.723 & 0.120 & \citenum{Yao_2019, Duan_2022_10_1039_d1sc05753g} \\
+% 	DPCN         & 511.7  & 508.0  & 511.6  & 508.3  & 424.0 & 0.288 & 0.307 & 0.288 & 0.306 & & \citenum{Xiao_2022_10_1016_j_dyepig_2022_110451} \\
+% 	TRZ-3SO2     & 577.4  & 540.6  & 572.9  & 539.9  & 706.0 & 0.035 & -0.010 & 0.052 & -0.007 & & \citenum{Zhang_2022_10_1039_d2tc02694e} \\
+% 	SBDBQ-PXZ    & 843.2  & 751.8  & 845.7  & 753.8  & 594.0 & 0.109 & 0.120 & 0.105 & 0.115 & 0.070 & \citenum{Yu_2018} \\
+% 	{[2,1-b]IF}  & 1031.9 & 770.2  & 586.3  & 571.9  & 347.0 & 0.745 & 0.944 & 1.658 & 1.502 & & \citenum{Romain_2016} \\ 
+% 	\bottomrule
+% \end{tabular}
+% \end{table}
+
+\subsubsection{Emission wavelength predictions}
+
+The statistical performance for $\lambda_{\text{PL}}$ predictions is summarized in
+\Cref{tab:emission-wavelength-metrics}. The methods demonstrate a moderate-to-strong
+correlation with experimental values, with Pearson coefficients ranging from $r =
+\num{0.56}$ to $r = \num{0.69}$. The best overall performance is achieved by sTD-DFT in
+toluene, with an MAE of \qty{78.8}{\nano\meter} and a Pearson $r$ of \num{0.692}. The
+negative $R^2$ values indicate that a simple linear model does not perfectly capture the
+absolute values, which is expected for a high-throughput method using several
+approximations. However, the strong and statistically significant ($p < \num{e-18}$)
+Pearson correlations confirm that both methods reliably capture the relative trends in
+emission wavelengths across the diverse molecular set.
+
+The correlation plots in \Cref{fig:pl-corr} visualize this trend, showing that while there
+is scatter, the data generally follows the identity line. The linear regression slopes,
+consistently greater than 1, suggest a systematic overestimation of emission energies
+(underestimation of wavelengths), particularly for long-wavelength emitters, a known
+challenge for simplified methods describing CT states. The error distributions shown in
+\Cref{fig:pl-err} are approximately Gaussian and centered near zero, confirming the
+absence of a strong directional bias.
+
+\begin{table}[!ht]
+\centering
+\caption{Statistical performance metrics for emission wavelength ($\lambda_{\text{PL}}$)
+predictions comparing sTDA and sTD-DFT methods in gas and toluene phases against
+experimental/computational literature values (N=\num{213} molecules).}
+\label{tab:emission-wavelength-metrics}
+\begin{tabular}{l *{5}{S[table-format=2.2]}}
+	\toprule
+	{Method}          & {MAE (nm)} & {RMSE (nm)} & {$R^2$} & {Pearson $r$} & {$p$-value}
+ \\ \midrule
+	sTDA (Gas)        & 89.2       & 149.0       & -2.54   & 0.561         &
+\num{4.50e-19} \\
+	sTD-DFT (Gas)     & 85.3       & 135.4       & -1.93   & 0.630         &
+\num{5.94e-25} \\
+	sTDA (Toluene)    & 80.7       & 124.0       & -1.45   & 0.663         &
+\num{2.48e-28} \\
+	sTD-DFT (Toluene) & 78.8       & 118.8       & -1.25   & 0.692         &
+\num{1.02e-31} \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\textwidth]{photoluminescence_correlation.pdf}
+\caption{Correlation between predicted and reference emission wavelengths
+($\lambda_{\text{PL}}$) for \num{213} TADF molecules. Predictions from sTDA and sTD-DFT
+methods in gas and toluene phases are compared against experimental literature values.
+Black dashed lines represent perfect agreement (identity line); red solid lines show
+linear regression fits. The strong, positive correlations ($r > 0.56$) demonstrate the
+methods' capability to reliably predict relative emission wavelength trends, which is
+pivotal for virtual screening.}
+\label{fig:pl-corr}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\textwidth]{photoluminescence_error_dist.pdf}
+\caption{Error distributions for emission wavelength predictions
+($\lambda_{\text{predicted}} - \lambda_{\text{reference}}$). The histograms show
+approximately Gaussian error patterns centered near zero for all four method/phase
+combinations. This indicates an absence of strong systematic bias, with the standard
+deviations of \qtyrange{118}{149}{\nano\meter} reflecting the typical prediction
+uncertainties of the high-throughput protocol.}
+\label{fig:pl-err}
+\end{figure}
+
+\subsubsection{Singlet--triplet gap predictions}
+
+Predicting the singlet-triplet gap, the most critical parameter for TADF, is inherently
+more challenging due to the small energy scales involved. As detailed in
+\Cref{tab:st-gap-metrics}, the quantitative accuracy is modest, with an MAE of
+approximately \qty{0.17}{\electronvolt}. The Pearson correlation with experimental data is
+weak but statistically significant ($r \approx \num{0.18}$, $p < 0.002$ for gas-phase
+methods).
+
+This weaker quantitative performance is an expected consequence of the vertical
+approximation and the semi-empirical nature of the methods, which struggle to capture the
+subtle balance of exchange and correlation effects that define the \deltaest. The
+correlation plot in \Cref{fig:st-corr} reveals considerable scatter, particularly for
+molecules with very small experimental gaps ($< \qty{0.1}{\electronvolt}$), a regime where
+both computational and experimental uncertainties are high. The error distributions in
+\Cref{fig:st-err} are centered near zero but are broad, highlighting the challenge of
+quantitative prediction. However, the statistically significant positive correlation
+confirms that the methods still provide a better-than-random capability to identify trends
+and rank molecules by their relative \deltaest, which is the primary goal of the screening
+protocol.
+
+To systematically identify outliers in our validation dataset, we employed the Median Absolute Deviation (MAD) method, which is robust to the presence of 
+outliers themselves. Outliers were defined as molecules with prediction errors (residuals) exceeding $3 \times \text{MAD}$ from the median residual, where 
+$\text{MAD} = \text{median}(|x_i - \text{median}(x)|)$. This criterion corresponds approximately to residuals beyond $\pm 2.5\sigma$ for normally distributed 
+data. For emission wavelength predictions, this identified \num{12} outliers out of \num{213} molecules (\qty{5.6}{\percent}), while for singlet-triplet gap 
+predictions, \num{8} outliers were identified out of \num{296} molecules (\qty{2.7}{\percent}). A complete list of outliers, including molecular identifiers, 
+experimental values, predicted values, residuals, and structural classifications, is provided in Supporting Information Table S4. Analysis of these outliers 
+reveals no systematic structural patterns—they span diverse architectures (D-A, D-A-D, multi-donor systems) and do not cluster in specific molecular weight or 
+complexity ranges. This suggests that prediction failures are largely random rather than systematic, likely arising from the inherent limitations of the 
+vertical approximation for molecules with complex excited-state character or unusual electronic structures.
+
+\begin{table}[!ht]
+\centering
+\caption{Statistical metrics for singlet-triplet energy gap (\deltaest) predictions
+comparing sTDA and sTD-DFT methods in gas and toluene phases against experimental
+literature values (N=\num{296} molecules).}
+\label{tab:st-gap-metrics}
+\begin{tabular}{l *{2}{S[table-format=1.3]} S[table-format=-1.2] S[table-format=1.3]
+S[table-format=1.2e-1]}
+	\toprule
+	{Method}          & {MAE (eV)} & {RMSE (eV)} & {$R^2$} & {Pearson $r$} & {$p$-value}
+ \\ \midrule
+	sTDA (Gas)        & 0.174      & 0.367       & -0.07   & 0.181         &
+\num{1.80e-03} \\
+	sTD-DFT (Gas)     & 0.168      & 0.364       & -0.05   & 0.183         &
+\num{1.60e-03} \\
+	sTDA (Toluene)    & 0.188      & 0.376       & -0.12   & 0.161         &
+\num{5.39e-03} \\
+	sTD-DFT (Toluene) & 0.183      & 0.377       & -0.13   & 0.147         &
+\num{1.11e-02} \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\textwidth]{singlet_triplet_correlation.pdf}
+\caption{Correlation between predicted and reference singlet-triplet energy gaps
+(\deltaest)
+for TADF molecules. One physically
+unrealistic outlier (Spiro-CN, reference \deltaest~ $= \qty{5.50}{\electronvolt}$) was
+excluded from regression analysis.
+Statistics show Theil-Sen robust regression with 95\% bootstrap confidence intervals for
+slope. Despite moderate scatter, the
+correlations indicate that semi-empirical methods capture qualitative trends in
+\deltaest.}
+\label{fig:st-corr}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\textwidth]{singlet_triplet_error_dist.pdf}
+\caption{Error distributions for singlet--triplet gap predictions. The residuals are
+approximately centered at zero, but their large standard deviations
+(\qtyrange{0.36}{0.38}{\electronvolt}) reflect the inherent difficulty in quantitatively
+predicting small energy differences between nearly degenerate electronic states with a
+high-throughput method.}
+\label{fig:st-err}
+\end{figure}
+
+\subsubsection{Comparative analysis and implications for high-throughput screening}
+
+A direct comparison of the methods is summarized in \Cref{tab:comparative-summary} and
+\Cref{fig:method-comparison}. For $\lambda_{\text{PL}}$, sTD-DFT in toluene offers the
+best correlation with experiment, while for \deltaest, sTD-DFT in the gas phase performs
+marginally better. The phase-dependent behavior suggests that the two methods respond
+differently to the implicit solvation model. However, given their strong internal
+consistency and comparable performance against experimental trends, both sTDA-xTB and
+sTD-DFT-xTB are validated as suitable tools for large-scale TADF screening. sTDA's lower
+computational cost makes it particularly attractive for exploring vast chemical spaces,
+while sTD-DFT may be preferred when slightly higher fidelity for \deltaest is desired.
+
+This large-scale validation demonstrates that the semi-empirical protocol,
+despite its quantitative limitations, successfully achieves its primary objective: it
+provides a computationally affordable means for coarse screening and ranking of large numbers of candidate
+molecules and identify promising structural motifs. This capability is essential for
+guiding experimental synthesis and accelerating the discovery cycle of new,
+high-performance TADF materials.
+
+\begin{table}[!ht]
+\centering
+\caption{Summary of the best-performing computational method for each property and
+statistical metric, based on validation against experimental data.}
+\label{tab:comparative-summary}
+\begin{tabular}{l *{4}{c}}
+	\toprule
+	{Property}                 & {Best MAE}    &  {Best RMSE}  & {Best $R^2$}  & {Best
+Pearson $r$} \\ \midrule
+	$\lambda_{\text{PL}}$ [\unit{\nano\meter}] & sTD-DFT (Tol) & sTD-DFT (Tol) & sTD-DFT (Tol) &
+sTD-DFT (Tol)    \\
+	                           & (78.8)        &    (118.8)    &    (-1.25)    &
+(0.692)       \\ \midrule
+	\deltaest [\unit{\electronvolt}]             & sTD-DFT (Gas) & sTD-DFT (Gas) & sTD-DFT (Gas) &
+sTD-DFT (Gas)    \\
+	                           & (0.168)       &    (0.364)    &    (-0.05)    &
+(0.183)       \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.95\textwidth]{method_comparison.pdf}
+\caption{Comparative performance analysis of the sTDA and sTD-DFT methods. The bar charts
+display mean absolute errors (MAE) and coefficients of determination ($R^2$) for both
+emission wavelength and singlet--triplet gap predictions relative to experimental data.
+The figure visually confirms that while sTD-DFT in toluene is superior for predicting
+$\lambda_{\text{PL}}$, the performance differences between the methods for \deltaest are
+marginal.}
+\label{fig:method-comparison}
+\end{figure}
+
+\subsection{Internal consistency and screening reliability}
+
+A primary requirement for a high-throughput screening method is internal consistency. We
+compared the predictions from sTDA-xTB and sTD-DFT-xTB across the entire dataset to ensure
+their interchangeability for relative molecular ranking. The results, summarized in
+\Cref{tab:method_comparison} and \Cref{tab:method_comparisonTol}, and visualized in
+\Cref{fig:method_comparison}, confirm a strong correlation between the two methods.
+
+For the key metric \deltaest, the methods show a Pearson correlation of $r = \num{0.82}$
+in the gas phase with a mean absolute error (MAE) of only \qty{0.023}{\electronvolt}. This
+small deviation is well within typical experimental or higher-level theoretical
+uncertainties, confirming that either method provides equivalent relative predictions
+suitable for a virtual screening campaign. The singlet oscillator strengths ($f_{12}$)
+show exceptional agreement ($r > \num{0.98}$), indicating that both methods consistently
+capture the magnitude of transition dipole moments. This high internal consistency
+validates the use of these computationally inexpensive methods for the primary goal of
+this work: identifying trends and ranking candidate molecules.
+
+\begin{table}[!ht]
+\centering
+\caption{Statistical comparison between sTDA-xTB and sTD-DFT-xTB predictions for key
+photophysical properties in the gas phase (N = \num{747} molecules).}
+\label{tab:method_comparison}
+\begin{tabular}{l S[table-format=2.4] S[table-format=3.4]
+S[table-format=1.4]}
+	\toprule
+	{Property}               & {MAE}   & {RMSE}   & {Pearson $r$} \\ \midrule
+	\deltaest [\unit{\electronvolt}]           & 0.0229  & 0.1197   & 0.8192        \\
+	$\lambda_{\text{PL}}$ [\unit{\nano\meter}] & 11.1690 & 169.9449 & 0.7481        \\
+	$f_{12}$                 & 0.0743  & 0.1183   & 0.9915        \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[!ht]
+\centering
+\caption{Statistical comparison between sTDA-xTB and sTD-DFT-xTB predictions for key
+photophysical properties in toluene solvent (N = \num{747} molecules).}
+\label{tab:method_comparisonTol}
+\begin{tabular}{l S[table-format=2.4] S[table-format=3.4]
+S[table-format=1.4]}
+	\toprule
+	{Property}               & {MAE}   & {RMSE}   & {Pearson $r$} \\ \midrule
+	\deltaest [\unit{\electronvolt}]           & 0.0280  & 0.2237   & 0.6131        \\
+	$\lambda_{\text{PL}}$ [\unit{\nano\meter}] & 11.0028 & 180.4780 & 0.6953        \\
+	$f_{12}$                 & 0.0761  & 0.1260   & 0.9870        \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure*}[!ht]
+\centering
+\leavevmode
+\begin{minipage}{0.9\textwidth}
+\includegraphics[width=\textwidth]{method_comparison_gas.pdf}
+\caption*{(a) In gas phase}
+\end{minipage}
+\\
+\begin{minipage}{0.9\textwidth}
+\includegraphics[width=\textwidth]{method_comparison_toluene.pdf}
+\caption*{(b) In toluene solvent}
+\end{minipage}
+\caption{Internal consistency between sTDA and sTD-DFT predictions for 747 TADF emitters
+in (a) gas phase and (b) toluene solvent. Left
+  panels: singlet-triplet energy gaps (\deltaest); right panels: photoluminescence
+wavelengths ($\lambda_{\text{PL}}$). Both methods yield highly correlated
+  results (Pearson $r > 0.99$, slopes $\approx 0.94$ for \deltaest~ and $\approx 0.99$
+for $\lambda_{\text{PL}}$), confirming their equivalence for high-throughput screening.
+  Insets show the full wavelength range including outliers with anomalously large computed
+$\lambda_{\text{PL}}$ values. MAD-detected outliers (red crosses)
+   are excluded from regression analysis}
+\label{fig:method_comparison}
+\end{figure*}
+
+\subsection{Benchmarking against high-level TD-DFT calculations}\label{sec:tddft_benchmark}
+
+To address concerns about the absolute accuracy of xTB-based methods and establish their validity for high-throughput screening applications, we performed a 
+benchmark study comparing sTDA-xTB and sTD-DFT-xTB predictions against high-level TD-DFT calculations. A representative subset of 8 TADF emitters spanning 
+diverse donor-acceptor architectures (carbazole-based, acridine/phenoxazine donors, triazine/benzonitrile acceptors) was selected. Vertical excitation energies 
+($S_1$, $T_1$) and singlet-triplet gaps (\deltaest) were calculated at the $\omega$B97X-D/def2-TZVP level of theory using ORCA 6.1.0 \cite{Neese2020}, with 
+CPCM 
+solvation in toluene. All TD-DFT calculations were performed on GFN2-xTB/GBSA(toluene) optimized geometries to maintain consistency with the xTB-based 
+excited-state protocol (vertical approximation).
+
+The complete benchmarking results are presented in Table S5 (Supporting Information). The key finding is that both sTDA-xTB and sTD-DFT-xTB exhibit a 
+\textit{systematic underestimation} of \deltaest\ compared to TD-DFT, with mean absolute errors (MAE) of \qty{0.77}{\electronvolt} and 
+\qty{0.79}{\electronvolt}, respectively. This bias is remarkably consistent across all molecules in the benchmark set: TD-DFT predicts \deltaest\ values in the 
+range \qtyrange{0.84}{1.28}{\electronvolt} (mean: \qty{1.05}{\electronvolt}), while xTB methods predict \qtyrange{0.05}{0.40}{\electronvolt} (mean: 
+\qty{0.28}{\electronvolt} for sTDA, \qty{0.26}{\electronvolt} for sTD-DFT).
+
+Despite this systematic offset, the xTB methods correctly preserve the \textit{relative ranking} of molecules. For example, Px2BP and 4CzIPN exhibit the 
+smallest \deltaest\ values in both TD-DFT (\qty{0.84}{\electronvolt} and \qty{0.88}{\electronvolt}) and xTB calculations (\qty{0.23}{\electronvolt} and 
+\qty{0.23}{\electronvolt}), while PSPCz and CzS2 show the largest gaps in both approaches (\qtyrange{1.26}{1.28}{\electronvolt} TD-DFT vs. \qtyrange{0.35}{0.40}{\electronvolt} xTB). This 
+behavior validates the primary use case of xTB methods: identifying trends and ranking candidate molecules in high-throughput screening campaigns, rather than 
+providing quantitatively accurate absolute values.
+
+The origin of this systematic underestimation is multi-factorial. The semi-empirical nature of xTB methods, combined with the simplified response theory 
+(sTDA/sTD-DFT), leads to a compressed range of predicted excitation energies. Additionally, the vertical approximation—calculating excited states on 
+ground-state geometries—neglects excited-state relaxation effects that can significantly alter \deltaest, particularly for CT-dominated states characteristic 
+of TADF emitters. Higher-level methods such as state-optimized geometries or multi-reference approaches would be required for quantitative accuracy, but at a 
+computational cost incompatible with screening 747 molecules.
+
+From a practical TADF screening perspective, the systematic underestimation is actually \textit{favorable}: it reduces the risk of false negatives 
+(overlooking molecules with small experimental gaps). Molecules predicted to have very small \deltaest\ by xTB methods should be prioritized for experimental 
+validation or higher-level theoretical refinement. The computational cost differential is dramatic: TD-DFT calculations required 2--6 hours per molecule on 8 
+CPU cores, while xTB methods complete in 2--5 minutes, representing a speed-up factor of 100--1000$\times$. This efficiency enables the exploration of chemical 
+space at a scale impossible with conventional methods.
+
+In summary, the TD-DFT benchmark confirms that xTB-based methods are well-suited for the initial discovery phase of TADF emitter development, where relative 
+ranking and trend identification are paramount. The systematic bias should be acknowledged in interpreting absolute values, but does not impair the methods' 
+utility for guiding experimental synthesis priorities and accelerating materials discovery workflows.
+
+\subsection{Computational efficiency and scalability for HTS}
+
+A central justification for employing the semi-empirical protocol is its computational
+efficiency, which is a prerequisite for any HTS campaign. Our analysis demonstrates a
+dramatic reduction in computational cost of over \qty{99}{\percent} compared to
+conventional TD-DFT approaches (e.g., CAM-B3LYP/def2-TZVP).
+
+The total computational cost for the entire \num{747}-molecule dataset, including
+conformational searches and excited-state calculations in both gas phase and solvent, was
+approximately \qty{614}{CPU~hours} on modest hardware. In contrast, performing equivalent
+calculations with TD-DFT would be conservatively estimated at over \qty{37000}{CPU~hours}.
+The practical consequence is significant: screening campaigns covering thousands of
+molecules become feasible. While first-principles methods can in principle be applied to large datasets with sufficient resources, the efficiency advantage of 
+xTB is substantial. Entire
+regions of TADF chemical space, previously inaccessible, can now be systematically
+explored.
+
+\subsection{Impact of implicit solvation on excited states}
+
+The inclusion of an implicit solvent model (GBSA for toluene) allows for a first-order
+approximation of environmental effects. The shift from gas phase to toluene is
+statistically significant for all properties, including \deltaest ($p < \num{e-6}$), as
+shown in \Cref{tab:solvent_effects}. However, the magnitude of these shifts is modest
+(Cohen's $d$ effect sizes of \numrange{0.2}{0.3}), suggesting that the linear-response,
+ground-state solvation model is insufficient to capture the full stabilization of the
+highly polarized $S_1$ charge-transfer state. This is a recognized methodological
+compromise, accepted to maintain the high efficiency required for a large-scale screening.
+Analysis of the solvent-induced electron density redistribution
+(\Cref{fig:solvent_density_stats}) confirms this picture: while the net charge transfer is
+minimal, the internal electronic reorganization and the change in dipole moment are
+substantial, underscoring that solvation is a key factor, even if its effect is only
+qualitatively captured here.
+
+\begin{table}[!ht]
+\centering
+\caption{Analysis of solvent effects (Gas $\to$ Toluene) on calculated TADF properties (N
+= \num{747}). Mean difference ($\Delta$), standard deviation, $p$-value, and Cohen's $d$
+effect size are reported.}
+\label{tab:solvent_effects}
+\begin{tabular}{l S[table-format=-2.4] S[table-format=2.4]
+S[table-format=1.2e-2] S[table-format=-1.3]}
+	\toprule
+	{Property}                         & {Mean $\Delta$} & {Std Dev} & {$p$-value} &
+{Cohen's $d$} \\ \midrule
+	\deltaest (sTDA) [\unit{\electronvolt}]              & 0.0235          & 0.1225    & 2.19e-07
+& 0.192         \\
+	\deltaest (sTD-DFT) [\unit{\electronvolt}]           & 0.0184          & 0.0588    & 7.03e-17
+& 0.313         \\
+	$\lambda_{\text{PL}}$ (sTDA) [\unit{\nano\meter}]    & -19.1867        & 92.2778   & 1.94e-08
+  & -0.208        \\
+	$\lambda_{\text{PL}}$ (sTD-DFT) [\unit{\nano\meter}] & -18.1175        & 91.4998   & 8.58e-08
+  & -0.198        \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\textwidth]{densityGlobalSummaryArticle.pdf}
+\caption{Statistical analysis of solvation-induced changes for \num{747} TADF emitters
+when moving from vacuum to a toluene solvent model (GBSA/GFN2-xTB). (Top row) Histograms
+showing the distribution of net electron variation, total internal electron density
+redistribution, and change in dipole moment. (Bottom row) Scatter plot and Pearson
+correlation matrix illustrating the strong correlation between internal charge
+redistribution and the change in dipole moment, a key indicator of CT state stabilization
+by the solvent.}
+\label{fig:solvent_density_stats}
+\end{figure}
+
+\subsection{Global property correlations and dimensionality reduction}
+
+To uncover the fundamental variables governing TADF properties, Principal Component
+Analysis (PCA) was employed to distill the high-dimensional property space of the
+\num{747} TADF emitters into its most significant underlying variables. The analysis
+incorporated the following calculated properties: singlet-triplet energy gaps
+($\Delta E_{\text{ST}}$) from both sTDA and sTD-DFT methods, emission wavelengths
+($\lambda_{\text{PL}}$), oscillator strengths ($f_{12}$), HOMO-LUMO energy gaps,
+HOMO-LUMO spatial overlap, donor-acceptor torsional angles, and dipole moments. The analysis
+reveals a remarkably low-dimensional design space, as detailed in
+\Cref{tab:pca} and \Cref{tab:pcaTol}. In both gas and toluene phases, the first three principal
+components (PCs) collectively capture approximately \qty{88}{\percent} of the total
+variance. The dominance of these few components is significant: the first two alone
+account for over \qty{68}{\percent} of the variance (\Cref{fig:pca_analysis}), confirming
+that the vast majority of photophysical behavior is governed by a limited set of
+orthogonal factors.
+
+This low-dimensional structure is a consequence of strong underlying correlations between
+the calculated properties, which are visualized directly in the correlation heatmaps shown
+in \Cref{fig:corr_gas} and \Cref{fig:corr_toluene}. These maps provide a detailed visualization of
+the pairwise relationships that underpin the principal components. Several key chemical
+and physical trends are immediately apparent. For instance, a strong negative correlation
+is observed between the D-A torsional angle and HOMO-LUMO overlap, quantitatively
+confirming that twisting the molecular backbone is an effective strategy for spatially
+separating the frontier orbitals. The expected inverse relationship between \deltaest and
+$\lambda_{\text{PL}}$ is also clearly visible. A comparison between the gas phase
+and toluene simulations shows a general attenuation of correlation strengths in the
+solvent phase, indicating that the polarizable environment modulates these intrinsic
+electronic relationships. Together, the PCA and heatmap analyses confirm that the complex,
+multi-parameter challenge of TADF emitter design can be rationalized by focusing on a few
+key properties related to energy gaps, charge separation, and radiative coupling
+efficiency.
+
+\begin{table}[!ht]
+\centering
+\caption{Principal Component Analysis (PCA) of the calculated properties for \num{747}
+TADF emitters in the \textbf{gas phase}. The first three components capture
+\qty{88.8}{\percent} of the total variance.}
+\label{tab:pca}
+\begin{tabular}{l*{2}{S[table-format=1.4]}S[table-format=2.1]}
+	\toprule
+	{PC} & {Explained Variance} & {Cumulative Variance} & {\unit{\percent} Total} \\
+\midrule
+	PC1  & 0.4382               & 0.4382                & 43.8       \\
+	PC2  & 0.2813               & 0.7194                & 71.9       \\
+	PC3  & 0.1689               & 0.8883                & 88.8       \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[!ht]
+\centering
+\caption{Principal Component Analysis (PCA) of the calculated properties for \num{747}
+TADF emitters in \textbf{toluene solvent}. The first three components capture
+\qty{86.8}{\percent} of the total variance.}
+\label{tab:pcaTol}
+\begin{tabular}{l*{2}{S[table-format=1.4]}S[table-format=2.1]}
+	\toprule
+	{PC} & {Explained Variance} & {Cumulative Variance} & {\unit{\percent} Total} \\
+\midrule
+	PC1  & 0.3981               & 0.3981                & 39.8       \\
+	PC2  & 0.2861               & 0.6842                & 68.4       \\
+	PC3  & 0.1846               & 0.8688                & 86.8       \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[!ht]
+\centering
+\leavevmode
+\begin{minipage}{0.9\textwidth}
+\includegraphics[width=\textwidth]{pca_analysis_gas.pdf}
+\centering
+(a) In gas phase
+\end{minipage}
+\\
+\begin{minipage}{0.9\textwidth}
+\includegraphics[width=\textwidth]{pca_analysis_toluene.pdf}
+\centering
+(b) In toluene solvent
+\end{minipage}
+\caption{Principal Component Analysis (PCA) score plots for the \num{747} TADF emitters.
+\textbf{Panel (a)} shows the distribution of molecules in the gas phase along the first
+two principal components (PC1 and PC2), which capture \qty{43.8}{\percent} and
+\qty{28.1}{\percent} of the variance, respectively. \textbf{Panel (b)} shows the
+corresponding distribution in toluene, with PC1 and PC2 accounting for
+\qty{39.8}{\percent} and \qty{28.6}{\percent} of the variance. In both cases, the data
+points form a single, dense cluster, illustrating the low intrinsic dimensionality of the
+TADF property space. The slightly broader distribution in the toluene phase (b) reflects
+the solvent-induced modulation of molecular properties, but the overall structure of the
+design space is preserved.}
+\label{fig:pca_analysis}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.9\textwidth]{correlation_heatmap_gas.pdf}
+\caption{Correlation heatmap of key TADF properties for \num{747} molecules in the gas
+phase. The color scale denotes the Pearson correlation coefficient. The map highlights
+several key relationships: (i) the strong positive correlation ($r \approx 0.82$) between
+\deltaest values predicted by sTDA and sTD-DFT, confirming their internal consistency;
+(ii) the strong negative correlation between torsional angle and HOMO-LUMO overlap,
+validating the geometric basis for electronic decoupling; and (iii) the moderate negative
+correlation between \deltaest and $\lambda_{\text{PL}}$, reflecting the fundamental energy
+gap law.}
+\label{fig:corr_gas}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.9\textwidth]{correlation_heatmap_toluene.pdf}
+\caption{Correlation heatmap of key TADF properties for \num{747} molecules in toluene
+solvent. When compared with the gas phase results (\Cref{fig:corr_gas}), this map reveals
+a general attenuation of correlation strengths (e.g., the sTDA vs sTD-DFT \deltaest
+correlation drops to $r \approx \num{0.61}$). This indicates that the polarizable solvent
+environment introduces additional complexity and modulates the intrinsic electronic and
+photophysical property relationships observed in vacuum.}
+\label{fig:corr_toluene}
+\end{figure}
+
+\subsection{Structure-property relationships: architecture and torsional angles}
+
+Having established the reliability and efficiency of our protocol for relative ranking, we
+leveraged the \num{747}-molecule dataset to extract statistically robust
+structure-property relationships. Our analysis focused on two key structural levers: the
+overall molecular architecture and the donor-acceptor (D-A) torsional geometry.
+
+First, a clear hierarchy of performance emerges when molecules are categorized by their
+architecture (\Cref{tab:architecture_performance} and \Cref{fig:architecture_analysis}).
+Donor–Acceptor–Donor (D-A-D) systems demonstrate statistically superior potential,
+exhibiting a mean $\Delta E_{\text{ST}}$ of \qty{0.304}{\electronvolt}, which is
+significantly lower than that of simple D-A (\qty{0.369}{\electronvolt}) or pure donor
+systems (\qty{>0.4}{\electronvolt}). This confirms that architectural designs promoting
+charge delocalization across multiple donor sites are highly effective at minimizing the
+exchange integral, a cornerstone of TADF theory \cite{Moral2015, Olivier2018}.
+
+\begin{table}[!ht]
+\centering
+\caption{TADF performance stratified by molecular architecture. The mean \deltaest and
+standard deviation highlight the superior and more consistent performance of D-A-D
+systems.}
+\label{tab:architecture_performance}
+\begin{tabular}{l S[table-format=3] S[table-format=1.3] S[table-format=1.3]}
+	\toprule
+	{Architecture}     & {Count} & {Mean \deltaest [\unit{\electronvolt}]} & {Std Dev} \\ \midrule
+	D-A-D              & 38      & 0.304                 & 0.129     \\
+	D-A                & 20      & 0.369                 & 0.128     \\
+	Multi-D/A          & 181     & 0.376                 & 0.141     \\
+	Pure Donor Systems & 272     & 0.425                 & 0.167     \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.9\textwidth]{tadf_architecture_performance.pdf}
+\caption{TADF performance stratified by molecular architecture. D-A-D and simple D-A architectures demonstrate superior characteristics (lower mean \deltaest) 
+compared to systems lacking a distinct acceptor, confirming the efficacy of the donor-acceptor design principle.}
+\label{fig:architecture_analysis}
+\end{figure}
+
+Second, our large-scale analysis provides statistical validation for the widely held 'design rule' that an optimal D-A torsional angle exists. The torsional angle distribution across our dataset spans a continuous range from near-planar (\qty{<10}{\degree}) to highly twisted (\qty{>90}{\degree}) configurations. To test the optimal angle hypothesis, we grouped molecules into two categories: those within the proposed optimal range (\qtyrange{50}{90}{\degree}) and those outside this range. This binary grouping was chosen to clearly distinguish between optimal and suboptimal configurations based on established TADF design principles, where angles below \qty{50}{\degree} typically exhibit insufficient HOMO-LUMO separation and angles above \qty{90}{\degree} risk excessive decoupling. As shown in \Cref{fig:tadf_design_rules}, molecules with torsional angles between \qty{50}{\degree} and \qty{90}{\degree} have a 4.2 percentage point higher probability of being efficient TADF emitters (defined as $\Delta E_{\text{ST}} < \qty{0.3}{\electronvolt}$) compared to those outside this range—a statistically significant improvement ($p < \num{0.001}$). This optimal range represents a critical compromise: the twist is large enough to enforce HOMO-LUMO separation and minimize the exchange energy, but not so extreme as to completely decouple the donor and acceptor, which would diminish the oscillator strength.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.7\textwidth]{optimal_range_validation.pdf}
+\caption{Validation of the optimal torsional angle design rule. The bar chart shows the percentage of molecules that are efficient TADF emitters ($\Delta E_{\text{ST}} < \qty{0.3}{\electronvolt}$) within the optimal (\qtyrange{50}{90}{\degree}) versus suboptimal torsional angle ranges. Molecules in the optimal range exhibit a statistically significant increase in TADF efficiency.}
+\label{fig:tadf_design_rules}
+\end{figure}
+
+However, the correlation between torsional angle alone and \deltaest is weak across the entire dataset (\Cref{fig:torsion_delta_est_correlations}). This indicates that while torsional geometry is a critical tuning parameter, the overall molecular architecture is the primary determinant of TADF potential. For instance, the superior D-A-D architecture performs well across a broad range of torsional angles, underscoring its robustness. This highlights that the most effective design strategy involves first selecting a high-performance architecture (e.g., D-A-D) and then fine-tuning its properties through geometric modifications that enforce an optimal torsional angle.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.9\textwidth]{torsion_delta_est_correlations.pdf}
+\caption{Correlation between D-A torsional angles and the calculated \deltaest for all \num{747} molecules. The lack of a strong linear trend (Pearson $r \approx \num{-0.007}$) illustrates that while an optimal range for the torsional angle exists, it is not the sole determinant of the singlet-triplet gap. Molecular architecture and electronic factors play a dominant, confounding role.}
+\label{fig:torsion_delta_est_correlations}
+\end{figure}
+
+
+\section{Conclusions}\label{sec:Concl}
+
+This study benchmarks semi-empirical xTB methods on 747 TADF emitters—substantially larger than previous validation sets. The protocol we establish is validated for high-throughput screening of TADF candidates. By applying a hybrid computational protocol to \num{747} experimentally known molecules, we have moved beyond case-by-case analysis to extract statistically robust, quantitative design principles.
+
+Our key findings can be summarized as follows:
+\begin{itemize}
+    \item \textbf{Methodological validation.} The sTDA-xTB and sTD-DFT-xTB methods are validated as reliable and computationally efficient tools for the relative ranking of TADF candidates. They exhibit strong internal consistency (MAE for \deltaest $< \qty{0.03}{\electronvolt}$ between methods) and achieve a transformative cost reduction of over \qty{99}{\percent} compared to conventional TD-DFT, making large-scale screening feasible on modest computational resources.
+
+    \item \textbf{Predictive accuracy and limitations.} While the methods successfully capture qualitative trends, their quantitative accuracy for absolute prediction is limited by the inherent approximations of the HTS protocol, particularly the vertical approximation. The mean absolute error against experimental \deltaest values is approximately \qty{0.17}{\electronvolt}, reinforcing that the primary strength of this framework lies in screening and trend analysis, not in yielding quantitatively precise spectroscopic data.
+
+    \item \textbf{Data-driven design rules.} Our large-scale analysis provides statistical
+validation for key design principles. We confirm that D-A-D architectures are
+statistically superior to simple D-A and other motifs. Additionally, we identify an optimal
+D-A torsional angle window of \qtyrange{50}{90}{\degree} that effectively balances the
+competing requirements of small \deltaest~ and high oscillator strength.
+
+    \item \textbf{Low-dimensional design space.} Principal Component Analysis demonstrates that the vast chemical diversity of TADF emitters can be described by a low-dimensional property space, where nearly \qty{90}{\percent} of the variance is captured by just three principal components. This suggests that the design challenge is highly constrained and can be effectively navigated by optimizing a few key orthogonal properties.
+\end{itemize}
+
+The broader impact of this study is the provision of a scalable and validated protocol that bridges the gap between slow, high-accuracy methods and the practical need to explore vast chemical spaces. This work not only provides essential benchmarking data and methodological guidelines for the community but also identifies a curated list of high-priority molecular candidates for future experimental synthesis.
+
+Future work should build upon this foundation. The immediate next step is the experimental validation of the most promising candidates identified herein. From a theoretical perspective, future refinements should focus on developing more accurate yet efficient models for solvation (e.g., state-specific approaches) and incorporating explicit calculations of spin-orbit coupling on representative subsets to refine the mechanistic understanding of the RISC process. Finally, the extensive and well-characterized dataset generated in this study provides an ideal training ground for developing machine learning models capable of further accelerating the discovery of novel, high-performance TADF materials.
+
+The validated protocol, design rules, and candidate list presented here provide practical tools for TADF discovery. We hope these resources prove useful to experimentalists seeking new emitter architectures.
+
+\section*{Author Contributions}
+J.-P.T.N.: Conceptualization, Methodology, Software, Formal Analysis, 
+Investigation, Data Curation, Writing – Original Draft, Visualization.\\ 
+E.V.K.T.: Writing – Review \& Editing. \\
+A.M.:  Writing – Review \& Editing. \\
+S.G.N.E.: Supervision, Writing – Review \& Editing.
+
+\section*{Acknowledgements}
+
+We gratefully acknowledge \textbf{Dr. Benjamin Panebei Samafou} for his generous support
+and provision of computational resources, which were instrumental in enabling the
+numerical simulations and data analyses presented in this work.
+
+\textbf{AI Assistance Disclosure:} An AI language model (Claude, Anthropic) was used
+to assist with manuscript formatting, including condensing the abstract and title
+to meet journal length requirements. All AI-generated suggestions were critically
+reviewed, modified, and approved by the authors. The scientific content, data
+analysis, methodology, and interpretation are entirely the work of the authors.
+
+\section*{Data and Software Availability}
+The computational dataset of 747 TADF emitters, including optimized 
+geometries, excited-state properties, and analysis scripts, is freely 
+available at [Zenodo DOI: 10.5281/zenodo.17436069] / [GitHub:
+\url{https://github.com/TchapetNjafa/Result_article1_TADF_xTB/tree/main}].
+All calculations used the xtb package (version 6.7.1) available at 
+\url{https://github.com/grimme-lab/xtb}, the CREST package (version 3.0.2) available at
+\url{https://github.com/crest-lab/crest},
+the xtb4stda package (version 1.0) available at
+\url{https://github.com/grimme-lab/xtb4stda}, the stda package (version 1.6.3) available
+at \url{https://github.com/grimme-lab/std2}
+and Multiwfn package (version 3.8(dev)) available at \url{http://sobereva.com/multiwfn}.
+
+\section*{Conflicts of Interest}
+The authors declare no competing financial interests.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Supporting Information Description (Editor Requirement)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Supporting Information}
+Stokes shift approximation methodology for estimating relaxed singlet-triplet energy gaps; singlet-triplet correlation plot including Spiro-CN outlier (Figure 
+S1); complete molecular architecture table with SMILES representations for all 747 molecules (Table S1); detailed emission wavelength validation data (Table 
+S2, 213 molecules) including experimental $\lambda_{\text{PL}}$ values, measurement conditions, data type classification (experimental 
+vs computational reference), and literature citations; singlet-triplet gap validation data (Table S3, 296 molecules) with experimental \deltaest\, values, 
+measurement methods, data type indicators, and literature references; systematic outlier analysis (Table S4, 20 molecules) comprising 12 emission wavelength 
+outliers (|residual| > 130 nm, MAD-based threshold) and 8 singlet-triplet gap outliers (|residual| > 0.32 eV), each with experimental values, predicted values, 
+residuals, structural classifications (carbazole-based, acridine/phenoxazine, triazine acceptor, polycyclic acceptor, heteroatom-containing), and literature 
+citations; TD-DFT benchmarking study (Table S5, 8 representative molecules) presenting $\omega$B97X-D/def2-TZVP calculations (ORCA 6.1.0) including $S_1$ and 
+$T_1$ energies, \deltaest\, values, oscillator strengths, comparison with sTDA-xTB and sTD-DFT-xTB predictions, systematic deviation analysis ($MAE\approx 
+\qtyrange{0.77}{0.79}{\electronvolt}$), and validation of relative ranking preservation.
+
+% computational methodology details; complete bibliographic referencesules; 
+% complete molecular structures and SMILES identifiers; additional validation figures and correlation plots; computational methodology detailsgy details and 
+% analysis scripts
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% If you are using classical BibTeX rather than biblatex,
+%% remove the \printbibliography and uncomment the \bibliograpy one
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\printbibliography
+\bibliography{TADF_Article_References.bib}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %% TOC Graphic (Editor Requirement)
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[!p]
+\centering
+\includegraphics{GraphicalTOC-Article1.pdf}
+\caption{TOC Graphic}\label{fig:TOC}
+\end{figure}
+
+\end{document}

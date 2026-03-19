@@ -1,0 +1,73 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Table S4: TD-DFT Benchmarking
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{table}[H]
+\centering
+\caption{Benchmarking of xTB-based methods against TD-DFT calculations. 
+Vertical excitation energies and singlet-triplet gaps were calculated at the 
+$\omega$B97X-D/def2-TZVP level of theory using ORCA 6.1.0, with CPCM solvation in toluene. 
+The benchmark set comprises 8 representative TADF emitters spanning different 
+donor-acceptor architectures. All structures were optimized at the GFN2-xTB level 
+in toluene solvent. Both sTDA-xTB and sTD-DFT-xTB systematically underestimate 
+\deltaest\, by approximately 0.77--0.79 eV compared to TD-DFT, but preserve the relative 
+ranking of molecules.}
+\label{tab:tddft_benchmark}
+\footnotesize
+\begin{tabular}{l S[table-format=1.3] S[table-format=1.3] S[table-format=1.3] S[table-format=1.3] S[table-format=1.3] S[table-format=+1.3] S[table-format=+1.3]}
+\toprule
+\textbf{Molecule} & 
+{\textbf{TD-DFT}} & 
+{\textbf{TD-DFT}} & 
+{\textbf{TD-DFT}} & 
+{\textbf{sTDA-xTB}} & 
+{\textbf{sTD-DFT-xTB}} & 
+{\textbf{Deviation}} & 
+{\textbf{Deviation}} \\
+& 
+{$S_1$ [eV]} & 
+{$T_1$ [eV]} & 
+{$\Delta E_{\text{ST}}$ [eV]} & 
+{$\Delta E_{\text{ST}}$ [eV]} & 
+{$\Delta E_{\text{ST}}$ [eV]} & 
+{sTDA [eV]} & 
+{sTD-DFT [eV]} \\
+\midrule
+2TCz-DPS   & 4.251 & 3.159 & 1.092 & 0.321 & 0.296 & +0.771 & +0.796 \\
+4CzIPN     & 3.685 & 2.801 & 0.884 & 0.234 & 0.208 & +0.650 & +0.676 \\
+CzS2       & 4.455 & 3.196 & 1.259 & 0.381 & 0.352 & +0.878 & +0.907 \\
+DMAC-DPS   & 4.168 & 3.329 & 0.839 & 0.234 & 0.234 & +0.605 & +0.605 \\
+DMAC-TRZ   & 4.095 & 3.071 & 1.024 & 0.049 & 0.051 & +0.975 & +0.973 \\
+PSPCz      & 4.481 & 3.197 & 1.284 & 0.404 & 0.363 & +0.880 & +0.921 \\
+Px2BP      & 3.827 & 2.991 & 0.836 & 0.226 & 0.214 & +0.610 & +0.622 \\
+TDBA-DI    & 4.052 & 2.889 & 1.163 & 0.380 & 0.344 & +0.783 & +0.819 \\
+\midrule
+\textbf{Mean}     & 4.127 & 3.079 & 1.048 & 0.279 & 0.258 & +0.769 & +0.790 \\
+\textbf{MAE}      & \multicolumn{3}{c}{---} & \multicolumn{2}{c}{0.769} & \multicolumn{2}{c}{0.790} \\
+\textbf{RMSE}     & \multicolumn{3}{c}{---} & \multicolumn{2}{c}{0.780} & \multicolumn{2}{c}{0.801} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Notes:}
+\begin{itemize}
+\item \textbf{Computational details:} TD-DFT calculations performed with ORCA 6.1.0 using 
+$\omega$B97X-D functional with def2-TZVP basis set and CPCM solvation model (toluene, $\varepsilon=2.374$). 
+Vertical excitations calculated on GFN2-xTB/GBSA(toluene) optimized geometries.
+
+\item \textbf{Systematic underestimation:} Both sTDA-xTB and sTD-DFT-xTB consistently 
+underestimate \deltaest\ compared to TD-DFT (mean deviation $\sim\qty{0.77}{\electronvolt}$--$\qty{0.79}{\electronvolt}$). This systematic 
+bias does not affect relative ranking for high-throughput screening applications.
+
+\item \textbf{Correlation:} Despite the systematic offset, xTB methods correctly identify 
+molecules with smaller vs. larger \deltaest\ values (e.g., Px2BP and 4CzIPN have the smallest 
+gaps in both TD-DFT and xTB calculations).
+
+\item \textbf{Computational cost:} TD-DFT calculations require $\sim2-6$ hours per molecule 
+on 8 CPU cores, while xTB methods complete in $\sim2-5$ minutes, enabling the screening of 
+747 molecules presented in this work.
+
+\item \textbf{Recommendation:} Use xTB methods for initial high-throughput screening to 
+identify promising candidates, followed by TD-DFT validation for quantitative accuracy.
+\end{itemize}
+

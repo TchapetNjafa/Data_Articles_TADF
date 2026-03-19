@@ -1,0 +1,210 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% This is a "template" model document for submission to the
+%% American Chemical Society (ACS).
+%%
+%% The guidance here contains information about how you may wish to
+%% modify it to match the requirements of various ACS journals. The
+%% ACS do *not* typeset accepted articles using LaTeX, so there is
+%% no specific class required.
+%%
+%% This template deliberately does *not* seek to reproduce
+%% the layout of the typeset journal: this is explicitly not
+%% required by the ACS for LaTeX submissions.
+%%
+%% Please report any issues with the template at
+%% https://github.com/josephwright/acs-template/issues
+%%
+%% Released under the Creative Commons 0 license
+%% https://creativecommons.org/public-domain/cc0/
+%% 
+%% Copyight (c) 2025 Joseph Wright
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter\def\input@path{
+{Figures/}
+}\makeatother%
+\documentclass[journal=jcisd8,manuscript=suppinfo,
+keywords=true]{achemso}
+
+% Page numbering for SI: S1, S2, S3, etc. (ACS requirement)
+\pagenumbering{arabic}
+\renewcommand{\thepage}{S\arabic{page}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Font setup - delete if you are using LuaLaTeX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[T1]{fontenc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Adjust the margins and allow for line spacing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{geometry}
+\geometry{margin = 1in}
+\usepackage{setspace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Reference support
+%%
+%% The recommended method for producing the reference section is
+%% to use biblatex. If you wish to use a classical BibTeX
+%% approach, this is easiest to achieve using the achemso package.
+%% In that case, you should remove the biblatex lines.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% You can adjust the printing of DOI, article title, etc. using
+% package options, e.g. "doi = true"; see the biblatex manual for
+% details of adjusting the number of authors printed, e.g.
+% "maxnames = 15" to print no more than 15 authors.
+%\usepackage[style = chem-acs]{biblatex}
+%\addbibresource{TADF_Article_References.bib}
+% If you are using classical BibTeX, remove the above lines and 
+% uncomment:
+%\usepackage{achemso}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Graphic inclusion and scheme and chart support
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+\usepackage{float}
+\newfloat{scheme}{htbp}{los}
+\floatname{scheme}{Scheme}
+\floatname{chart}{Chart}
+\newfloat{graph}{htbp}{loh}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Common support packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{chemformula,chemfig}
+\setchemfig{atom style={scale=0.4}, double bond sep = 4pt}
+\usepackage[version=4,arrows=pgf-filled,textfontname=sffamily,
+mathfontname=mathsf]{mhchem}
+% Typesetting and Layout Utilities
+\usepackage{microtype}  % Improves typography (spacing, kerning)
+\usepackage[detect-all=true,group-minimum-digits=4]{siunitx}
+\sisetup{mode = math, propagate-math-font = true, reset-math-version = false, range-phrase = --}
+% siunitx setup
+%\usepackage{lscape}     % For landscape pages, if needed
+%\usepackage[labelformat=simple]{subcaption}
+\usepackage{tabularx, longtable}%
+\usepackage{booktabs, multirow,xcolor,cleveref,url}
+
+\usepackage{seqsplit}   % For splitting long sequences in text
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Many journals require that sections are unnumbered: this 
+%% is activated here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{secnumdepth}{-1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Place any additional macros here.  Please use \newcommand* where
+%% possible, and avoid layout-changing macros (which are not used
+%% when typesetting).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\smiles}[1]{\parbox{5.5cm}{\seqsplit{\ttfamily#1}}}
+
+\newcommand{\deltaest}{$\Delta E_{\text{ST}}$}
+\newcommand{\risc}{rISC}
+\newcommand{\tict}{TICT}
+\DeclareSIUnit\calorie{cal}
+\DeclareSIUnit\kcal{\kilo\calorie}
+\DeclareSIUnit\kcal{Kcal}
+\DeclareSIUnit\atomicunit{a.u.}
+
+%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Author and title data:
+%% the authblk package is currently the simplest way to provide this
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage{authblk}
+\author{Jean-Pierre Tchapet Njafa}
+\email{jean-pierre.tchapet@facsciences-uy1.cm}
+\affiliation[University of Yaoundé 1]{Department of Physics, Faculty of Science,
+University of Yaounde I, P.O.Box
+812, Yaounde, Cameroon}
+
+\author{Elvira Vanelle Kameni Tcheuffa}
+\affiliation[University of Yaoundé 1]{Department of Physics, Faculty of Science,
+University of Yaounde I, P.O.Box
+812, Yaounde, Cameroon}
+
+\author{Aissatou Maghame Foumkpou}
+\affiliation[University of Yaoundé 1]{Department of Physics, Faculty of Science,
+University of Yaounde I, P.O.Box
+812, Yaounde, Cameroon}
+
+\author{Serge Guy Nana Engo}
+\affiliation[University of Yaoundé 1]{Department of Physics, Faculty of Science,
+University of Yaounde I, P.O.Box
+812, Yaounde, Cameroon}
+
+\title{xTB-Based High-Throughput Screening of TADF Emitters: 747-Molecule Benchmark}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Title and Author Information (ACS SI Requirement - Point 3) voir au dessus
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Stokes Shifts and Estimation of Relaxed Singlet-Triplet Excitation
+Energies}\label{sec:SI-stokes}
+Direct geometry optimization of the $S_1$ state is not straightforward with the current
+xTB~ implementation used. Therefore, an estimation for the relaxed
+singlet-triplet gap, $\Delta E_\text{ST,relaxed}$, was made.
+The geometric energy relaxation for the $T_1$ state is $\Delta E_\text{relax}(T_1) =
+\Delta E_v(S_0\to T_1)_{\text{xTB}} - \Delta E_r(S_0\to T_1)_{\text{xTB}}$.
+The Stokes shift for fluorescence ($S_1 \rightarrow S_0$) is approximated by assuming a
+similar geometric relaxation energy for $S_1$ as for $T_1$, i.e.,
+$S_{shift} \approx \Delta E_\text{relax}(T_1)$. This is a strong approximation.
+Then, the relaxed $S_1$ energy is $E_r(S_1) \approx E_v(S_1)_{\text{sTDA/sTD-DFT}} -
+S_{shift}$.
+And $\Delta E_\text{ST,relaxed} \approx E_r(S_1) - E_r(T_1)_\text{xTB}$.
+
+\newpage
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\textwidth]{singlet_triplet_with_outliers.pdf}
+\caption{Correlation between predicted and reference singlet-triplet energy gaps
+(\deltaest)
+for TADF molecules. One physically
+unrealistic outlier (Spiro-CN, reference \deltaest~ $= \qty{5.50}{\electronvolt}$, shown
+as red X) was
+excluded from regression analysis.
+Statistics show Theil-Sen robust regression with 95\% bootstrap confidence intervals for
+slope. Despite moderate scatter, the
+correlations indicate that semi-empirical methods capture qualitative trends in
+\deltaest.}
+\label{fig:st-corrSI}
+\end{figure}
+\newpage
+
+\section{Dataset}
+
+\input{tables/supplementary_table_SMILES.tex}
+
+\input{tables/supplementary_table_S1_emission.tex}
+ 
+\input{tables/supplementary_table_S2_st_gap.tex}
+ 
+\input{tables/supplementary_table_S3_outliers.tex}
+
+\input{tables/supplementary_table_S4_tddft_benchmark.tex}
+
+% \subsection{Data Availability}
+% 
+% All computational data, analysis scripts, and molecular structures are available at
+% \href{https://doi.org/10.5281/zenodo.17436069}{10.5281/zenodo.17436069}.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% If you are using classical BibTeX rather than biblatex,
+%% remove the \printbibliography and uncomment the \bibliograpy one
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\printbibliography
+\bibliography{TADF_Article_References}
+\end{document}

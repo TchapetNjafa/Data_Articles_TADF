@@ -1,0 +1,61 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Table S3: Outlier Analysis
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{\small
+\begin{longtable}{l l S[table-format=3.4] S[table-format=4.4] S[table-format=4.4] l l}
+\caption{Outlier analysis for emission wavelength and singlet-triplet gap predictions. 
+Outliers were identified using the Median Absolute Deviation (MAD) method with a threshold 
+of $3 \times \text{MAD}$ from the median residual. For emission wavelengths, 
+MAD = \qty{43.3}{\nano\meter} (threshold: \qty{130.0}{\nano\meter}); for \deltaest, 
+MAD = \qty{0.11}{\electronvolt} (threshold: \qty{0.32}{\electronvolt}). 
+All predictions are from sTDA-xTB calculations in toluene solvent.}
+\label{tab:outliers}
+\\
+\toprule
+\textbf{Molecule} & \textbf{Property} & {\textbf{Exp./Ref.}} & {\textbf{Predicted}} & {\textbf{Residual}} & \textbf{Architecture} & \textbf{Citation} \\
+\midrule
+\endfirsthead
+\multicolumn{7}{c}{{\tablename\ \thetable{} -- continued from previous page}} \\
+\toprule
+\textbf{Molecule} & \textbf{Property} & {\textbf{Exp./Ref.}} & {\textbf{Predicted}} & {\textbf{Residual}} & \textbf{Architecture} & \textbf{Citation} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{7}{r}{{Continued on next page}} \\
+\endfoot
+\bottomrule
+\endfoot
+
+% Emission Wavelength Outliers (12 molecules)
+DQP                                 & $\lambda_{\text{PL}}$ [nm] & 562.0 & 1057.9 &   495.9 & Polycyclic acceptor    & \citenum{Barman_2022} \\
+{[2,1-b]IF}                           & $\lambda_{\text{PL}}$ [nm] & 347.0 &  770.2 &   423.2 & Other                  & \citenum{Romain_2016} \\
+DPXZ-DPPM                           & $\lambda_{\text{PL}}$ [nm] & 636.0 & 1048.7 &   412.7 & Acridine/Phenoxazine   & \citenum{Liang_2020} \\
+thio-ether                          & $\lambda_{\text{PL}}$ [nm] & 366.0 &  770.0 &   404.0 & Other                  & \citenum{Romain_2016} \\
+$\alpha$-2DMAC-DBP                  & $\lambda_{\text{PL}}$ [nm] & 637.5 & 1039.5 &   402.0 & Acridine/Phenoxazine   & \citenum{Maeng_2021} \\
+2PN                                 & $\lambda_{\text{PL}}$ [nm] & 673.3 & 1059.4 &   386.1 & Polycyclic acceptor    & \citenum{Lin_2022} \\
+TFM-QP                              & $\lambda_{\text{PL}}$ [nm] & 566.5 &  929.3 &   362.8 & Polycyclic acceptor    & \citenum{Huang_2019} \\
+TPXZ-as-TAZ                         & $\lambda_{\text{PL}}$ [nm] & 529.0 &  889.5 &   360.5 & Acridine/Phenoxazine   & \citenum{Zhang_2018} \\
+PXZ-10-DPPZ                         & $\lambda_{\text{PL}}$ [nm] & 614.0 &  958.6 &   344.6 & Acridine/Phenoxazine   & \citenum{Zhou_2020} \\
+CN-QP                               & $\lambda_{\text{PL}}$ [nm] & 602.0 &  945.1 &   343.1 & Polycyclic acceptor    & \citenum{Huang_2019} \\
+$\alpha$-DMAC-DBP                   & $\lambda_{\text{PL}}$ [nm] & 622.0 &  952.2 &   330.2 & Acridine/Phenoxazine   & \citenum{Maeng_2021} \\
+DMAC-11-DPPZ                        & $\lambda_{\text{PL}}$ [nm] & 577.5 &  891.9 &   314.4 & Acridine/Phenoxazine   & \citenum{Zhou_2020} \\
+
+% Singlet-Triplet Gap Outliers (8 molecules, Spiro-CN excluded - discussed separately)
+IQ-Se                               & \deltaest [eV] & 1.1800 & 0.4327 & -0.7473 & Heteroatom-containing  & \citenum{Zhang_2022_10_1039_d1cc06380d} \\
+DMIC-TRZ                            & \deltaest [eV] & 0.0560 & 0.7550 &  0.6990 & Triazine acceptor      & \citenum{Chen_2022_10_1016_j_orgel_2022_106536} \\
+3ai                                 & \deltaest [eV] & 0.1800 & 0.8521 &  0.6721 & Other                  & \citenum{Puntscher_2015} \\
+TBPe                                & \deltaest [eV] & 0.1200 & 0.7738 &  0.6538 & Other                  & \citenum{Duan_2022_10_1039_d1sc05753g} \\
+PS-BZ-DMAC                          & \deltaest [eV] & 0.0045 & 0.5994 &  0.5949 & Acridine/Phenoxazine   & \citenum{Ma_2021_10_1016_j_dyepig_2021_109649} \\
+TPSi-F                              & \deltaest [eV] & 0.1000 & 0.6494 &  0.5494 & Heteroatom-containing  & \citenum{M_hes_2014} \\
+P4CzCN–BCz                          & \deltaest [eV] & 0.1700 & 0.6999 &  0.5299 & Carbazole-based        & \citenum{Zhou_2022_10_1039_d1tc05010a} \\
+TXO-P-Si                            & \deltaest [eV] & 0.5222 & -0.0027 & -0.5250 & Heteroatom-containing  & \citenum{Wei_2022} \\
+
+\end{longtable}
+}
+% Notes on outliers:
+% - Emission wavelength outliers (12): Large prediction errors > 130 nm, primarily affecting 
+%   polycyclic and extended conjugated systems where the vertical approximation breaks down.
+% - Singlet-triplet gap outliers (8): Residuals > 0.32 eV, representing molecules with either 
+%   very small experimental gaps (< 0.1 eV) or unusual electronic structures.
+% - Spiro-CN (ΔE_ST = 5.5 eV) is excluded from this table as it represents a non-TADF molecule
+%   and is discussed separately in the main text.

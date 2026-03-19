@@ -1,0 +1,14 @@
+\begin{table}[htbp]
+\centering
+\caption{Statistical metrics for Singlet-Triplet Energy Gap predictions. Comparison of sTDA and sTD-DFT methods in gas phase and toluene phase against reference data from literature.}
+\label{tab:table-st-metrics}
+\begin{tabular}{lccccccc}
+	\hline
+	\textbf{Method} & \textbf{N} & \textbf{MAE} & \textbf{RMSE} & \textbf{R$^2$} & \textbf{Pearson r} & \textbf{MAPE} & \textbf{Max Error} \\
+	                &            &     (eV)     &     (eV)      &                &                    &     (\%)      &        (eV)        \\ \hline
+	sTDA Gas        &    296     &     0.17     &     0.37      &    -0.0695     &       0.1807       &      inf      &        5.21        \\
+	sTD-DFT Gas     &    296     &     0.17     &     0.36      &    -0.0493     &       0.1827       &      inf      &        5.20        \\
+	sTDA Tol        &    296     &     0.19     &     0.38      &    -0.1232     &       0.1614       &      inf      &        5.23        \\
+	sTD-DFT Tol     &    296     &     0.18     &     0.38      &    -0.1285     &       0.1475       &      inf      &        5.22        \\ \hline
+\end{tabular}
+\end{table}

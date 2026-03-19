@@ -1,0 +1,27 @@
+\begin{table}[htbp]
+\centering
+\caption{Representative examples from the emission wavelength validation dataset.
+Molecules are selected to span the full range of prediction errors. Complete validation
+dataset is provided in Supplementary \Cref{tab:supp-emission-complete,tab:supp-st-complete}.}
+% S1 and S2
+\label{tab:validation-examples}
+\small
+\begin{tabular}{lcccccc}
+	\hline
+	\textbf{Molecule} & \textbf{sTDA}  & \textbf{sTD-DFT} & \textbf{sTDA}  & \textbf{sTD-DFT} & \textbf{Ref.} &                 \textbf{Ref.}                 \\
+	                  & \textbf{(Gas)} &  \textbf{(Gas)}  & \textbf{(Tol)} &  \textbf{(Tol)}  & \textbf{(nm)} &                                               \\ \hline
+	DCzBNPh-1         &     472.4      &      475.7       &     442.1      &      445.7       &     472.5     &                \cite{Yan_2022}                \\
+	BACH              &     433.6      &      439.5       &     409.9      &      415.7       &     427.7     &  \cite{Li_2022_10_1016_j_dyepig_2021_110030}  \\
+	PyDCN–DMAC        &     508.7      &      504.4       &     496.9      &      493.2       &     494.2     &               \cite{Dong_2022}                \\
+	tCTM              &     483.8      &      487.0       &     483.3      &      483.5       &     459.0     &                \cite{Tan_2020}                \\
+	t-DABNA           &     431.1      &      438.5       &     418.4      &      425.5       &     464.0     &      \cite{Lee_2019_10_1039_c9tc02746g}       \\
+	TPBPPI-PBI        &     472.9      &      473.4       &     461.4      &      462.6       &     429.0     &                \cite{Zhu_2020}                \\
+	2Cz-DMAC-BTB      &     474.2      &      471.3       &     535.1      &      531.4       &     529.0     & \cite{Zhang_2022_10_1016_j_cclet_2021_08_064} \\
+	TBPe              &     542.6      &      553.7       &     500.3      &      510.7       &     471.0     &                \cite{Yao_2019}                \\
+	DPCN              &     511.7      &      511.6       &     508.0      &      508.3       &     424.0     & \cite{Xiao_2022_10_1016_j_dyepig_2022_110451} \\
+	TRZ-3SO2          &     577.4      &      572.9       &     540.6      &      539.9       &     706.0     &     \cite{Zhang_2022_10_1039_d2tc02694e}      \\
+	SBDBQ-PXZ         &     843.2      &      845.7       &     751.8      &      753.8       &     594.0     &                \cite{Yu_2018}                 \\
+	{[2,1-b]IF}       &     1031.9     &      586.3       &     770.2      &      571.9       &     347.0     &              \cite{Romain_2016}               \\ \hline
+	\multicolumn{7}{l}{\footnotesize Complete dataset: 213 molecules (emission), 296 molecules (ST gap)}
+\end{tabular}
+\end{table}

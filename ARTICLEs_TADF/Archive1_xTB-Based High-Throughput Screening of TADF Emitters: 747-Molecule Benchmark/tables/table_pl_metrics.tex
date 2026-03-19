@@ -1,0 +1,14 @@
+\begin{table}[htbp]
+\centering
+\caption{Statistical metrics for Photoluminescence Wavelength predictions. Comparison of sTDA and sTD-DFT methods in gas phase and toluene phase against reference data from literature.}
+\label{tab:table-pl-metrics}
+\begin{tabular}{lccccccc}
+	\hline
+	\textbf{Method} & \textbf{N} & \textbf{MAE} & \textbf{RMSE} & \textbf{R$^2$} & \textbf{Pearson r} & \textbf{MAPE} & \textbf{Max Error} \\
+	                &            &     (nm)     &     (nm)      &                &                    &     (\%)      &        (nm)        \\ \hline
+	sTDA Gas        &    213     &    89.24     &    149.01     &    -2.5419     &       0.5612       &     17.7      &       684.89       \\
+	sTD-DFT Gas     &    213     &    85.28     &    135.43     &    -1.9257     &       0.6299       &     16.6      &       621.59       \\
+	sTDA Tol        &    213     &    80.68     &    124.03     &    -1.4538     &       0.6629       &     15.7      &       495.89       \\
+	sTD-DFT Tol     &    213     &    78.76     &    118.76     &    -1.2498     &       0.6922       &     15.2      &       474.81       \\ \hline
+\end{tabular}
+\end{table}

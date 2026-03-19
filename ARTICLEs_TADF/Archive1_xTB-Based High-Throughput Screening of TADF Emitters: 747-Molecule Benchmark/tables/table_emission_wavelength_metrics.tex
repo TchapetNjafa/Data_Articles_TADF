@@ -1,0 +1,13 @@
+\begin{table}[htbp]
+\centering
+\caption{Statistical metrics for emission wavelength predictions (\(\lambda_{\mathrm{PL}}\)) comparing sTDA and sTD-DFT methods in gas and toluene phases against experimental/computational literature values (N=213 molecules).}
+\label{tab:emission-wavelength-metrics}
+\begin{tabular}{lccccc}
+	\hline
+	\textbf{Method}   & \textbf{MAE (nm)} & \textbf{RMSE (nm)} & \(\mathbf{R^2}\) & \textbf{Pearson \(r\)} & \textbf{\(p\)-value} \\ \hline
+	sTDA (Gas)        &       89.2        &       149.0        &      -2.54       &         0.561          &       4.50e-19       \\
+	sTD-DFT (Gas)     &       85.3        &       135.4        &      -1.93       &         0.630          &       5.94e-25       \\
+	sTDA (Toluene)    &       80.7        &       124.0        &      -1.45       &         0.663          &       2.48e-28       \\
+	sTD-DFT (Toluene) &       78.8        &       118.8        &      -1.25       &         0.692          &       1.02e-31       \\ \hline
+\end{tabular}
+\end{table}

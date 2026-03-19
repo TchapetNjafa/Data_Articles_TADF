@@ -1,16 +1,47 @@
 # TADF Emitters Computational Data Repository [![DOI](https://zenodo.org/badge/1082469447.svg)](https://doi.org/10.5281/zenodo.17436069)
 
-This repository contains computational data and results used in two related research articles on thermally activated delayed fluorescence (TADF) emitters.
+This repository contains computational data, results, and manuscripts for two related research articles on thermally activated delayed fluorescence (TADF) emitters, based on high-throughput computational screening of 747 experimentally known molecules.
 
 ## Publications
 
-This dataset supports the following publications:
+This repository supports the following publications:
 
-1. **Validation of Semi-Empirical xTB Methods for High-Throughput Screening of TADF Emitters: A 747-Molecule Benchmark Study**
+### Article 1: xTB-Based High-Throughput Screening of TADF Emitters: 747-Molecule Benchmark
 
-2. **Data-Driven Design Rules for TADF Emitters from a High-Throughput Screening of 747 Molecules**
+**Status:** ✅ Published  
+**Journal:** Journal of Chemical Information and Modeling (2026)  
+**DOI:** [10.1021/acs.jcim.5c02978](https://doi.org/10.1021/acs.jcim.5c02978)  
+**arXiv:** [2511.00922](https://arxiv.org/abs/2511.00922)
+
+This article validates semi-empirical sTDA-xTB and sTD-DFT-xTB methods for high-throughput screening of TADF emitters using 747 experimentally characterized molecules—the largest benchmark to date. The framework achieves >99% computational cost reduction versus TD-DFT while maintaining strong internal consistency and reasonable agreement with experimental data.
+
+**Manuscript Location:** `ARTICLEs_TADF/Archive1_xTB-Based High-Throughput Screening of TADF Emitters: 747-Molecule Benchmark/`
+
+### Article 2: Data-Driven Design Guidelines for TADF Emitters from a High-Throughput Screening of 747 Molecules
+
+**Status:** 📝 Awaiting Publication (Accepted, revisions in progress)  
+**arXiv:** [2511.11606](https://arxiv.org/abs/2511.11606)
+
+This article leverages the validated computational workflow from Article 1 to extract quantitative design guidelines for TADF emitters. Through systematic analysis of molecular architecture, geometry, and electronic structure, it identifies 127 high-performance candidates and establishes structure-property relationships to guide future TADF development.
+
+**Manuscript Location:** `ARTICLEs_TADF/Article2_Data-Driven Design Guidelines for TADF-Emitters from a High-Throughput Screening of 747 Molecules/`
+
+### Relationship Between Articles
+
+These two articles form a cohesive research program:
+1. **Article 1** establishes and validates the computational methodology (xTB-based high-throughput screening)
+2. **Article 2** applies this validated methodology to extract design rules and identify promising candidates
+
+Both articles analyze the same dataset of 747 TADF molecules and share computational infrastructure.
 
 ## Repository Contents
+
+### Manuscripts and Supporting Materials
+
+- **`ARTICLEs_TADF/`** - Complete manuscripts, supporting information, and figures for both articles
+  - `Archive1_xTB-Based High-Throughput Screening of TADF Emitters: 747-Molecule Benchmark/` - Published article (Article 1)
+  - `Article2_Data-Driven Design Guidelines for TADF-Emitters from a High-Throughput Screening of 747 Molecules/` - Under review (Article 2)
+  - See `ARTICLEs_TADF/README.md` for detailed information about each article
 
 ### CSV Data Files
 
@@ -284,12 +315,23 @@ python extract_hlt_results.py
 If you use this data or scripts in your research, please cite:
 
 ```bibtex
-@article{tchapet2025validation,
-  title={Validation of Semi-Empirical xTB Methods for High-Throughput Screening of TADF Emitters: A 747-Molecule Benchmark Study},
-  author={Jean-Pierre Tchapet Njafa, Elvira Vanelle Kameni Tcheuffa, Aissatou Maghame Foumkpou, and Serge Guy Nana Engo},
+@article{tchapet2026validation,
+  title={xTB-Based High-Throughput Screening of TADF Emitters: 747-Molecule Benchmark},
+  author={Tchapet Njafa, Jean-Pierre and Kameni Tcheuffa, Elvira Vanelle and Foumkpou, Aissatou Maghame and Nana Engo, Serge Guy},
   journal={Journal of Chemical Information and Modeling},
   year={2026},
   doi={10.1021/acs.jcim.5c02978}
+}
+```
+
+**For Article 2 (Design Guidelines):**
+```bibtex
+@article{tchapet2026design,
+  title={Data-Driven Design Guidelines for TADF Emitters from a High-Throughput Screening of 747 Molecules},
+  author={Tchapet Njafa, Jean-Pierre and Kameni Tcheuffa, Elvira Vanelle and Foumkpou, Aissatou Maghame and Nana Engo, Serge Guy},
+  journal={Awaiting publication},
+  year={2026},
+  note={arXiv:2511.11606}
 }
 ```
 

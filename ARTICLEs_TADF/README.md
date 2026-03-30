@@ -7,7 +7,7 @@ This repository contains the manuscripts and supporting materials for two relate
 | Article | Focus | Status | Key Contribution |
 |---------|-------|--------|------------------|
 | **Article 1** | Method Validation | ✅ Published | Validates xTB-based workflow for TADF screening (>99% cost reduction) |
-| **Article 2** | Design Guidelines | 📝 Awaiting Publication | Extracts quantitative design rules and identifies 127 high-performance candidates |
+| **Article 2** | Design Guidelines | ✅ Published  | Extracts quantitative design rules and identifies 127 high-performance candidates |
 
 ## Articles
 
@@ -24,7 +24,9 @@ This article validates semi-empirical sTDA-xTB and sTD-DFT-xTB methods for high-
 
 ### Article 2: Data-Driven Design Guidelines for TADF Emitters from a High-Throughput Screening of 747 Molecules
 
-**Status:** Awaiting publication  
+**Status:** ✅ Published  
+**Journal:** Journal of Chemical Information and Modeling (2026)  
+**DOI:** [10.1021/acs.jcim.5c03068](https://doi.org/10.1021/acs.jcim.5c03068)  
 **arXiv:** [2511.11606](https://arxiv.org/abs/2511.11606)
 
 This article leverages the validated computational workflow from Article 1 to extract quantitative design guidelines for TADF emitters. Through systematic analysis of molecular architecture, geometry, and electronic structure, it identifies 127 high-performance candidates and establishes structure-property relationships to guide future TADF development.
@@ -109,9 +111,9 @@ If you use these manuscripts or the associated data in your research, please cit
 @article{tchapet2026design,
   title={Data-Driven Design Guidelines for TADF Emitters from a High-Throughput Screening of 747 Molecules},
   author={Tchapet Njafa, Jean-Pierre and Kameni Tcheuffa, Elvira Vanelle and Foumkpou, Aissatou Maghame and Nana Engo, Serge Guy},
-  journal={Awaiting publication},
+  journal={Journal of Chemical Information and Modeling},
   year={2026},
-  note={arXiv:2511.11606}
+  doi={10.1021/acs.jcim.5c03068}
 }
 ```
 

@@ -1,3 +1,0 @@
-Molecule: DMAC-TRZ
-Optimal omega: 0.1847 bohr^-1
-Final J value: 0.000040

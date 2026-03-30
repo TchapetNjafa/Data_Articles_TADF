@@ -4,7 +4,9 @@
 
 ## Publication Information
 
-**Status:** Awaiting Publication (Accepted, revisions in progress)  
+**Status:** Published  
+**Journal:** Journal of Chemical Information and Modeling (2026)  
+**DOI:** [10.1021/acs.jcim.5c03068](https://doi.org/10.1021/acs.jcim.5c03068)  
 **arXiv:** [2511.11606](https://arxiv.org/abs/2511.11606)
 
 ## Authors
@@ -109,4 +111,4 @@ MIT License
 
 ---
 
-*Submitted: 2026*
+*Published: 2026*

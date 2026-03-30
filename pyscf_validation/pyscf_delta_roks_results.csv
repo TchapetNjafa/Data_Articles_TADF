@@ -1,0 +1,3 @@
+molecule,solvent,omega_bohr-1,omega_reference,e_s0_eV,e_s1_opt_eV,e_t1_opt_eV,e_s1_vert_eV,e_t1_vert_eV,excitation_s1_opt_eV,excitation_t1_opt_eV,excitation_s1_vert_eV,excitation_t1_vert_eV,delta_est_opt_eV,delta_est_vert_eV,basis,functional
+BACN,gas,0.160000,default,-30216.250736,-30213.420055,-30214.244312,-30212.886234,-30213.551004,3.051105,2.006424,3.364502,2.699732,0.824257,0.664770,def2-svp,LC_wPBE
+BACN,toluene,0.160000,default,-30216.426191,-30213.658765,-30214.442486,-30213.113745,-30213.779547,2.987520,1.983705,3.312445,2.646644,0.783721,0.665801,def2-svp,LC_wPBE

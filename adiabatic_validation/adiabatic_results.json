@@ -1,0 +1,226 @@
+[
+  {
+    "molecule": "DMAC-DPS",
+    "phase": "gas",
+    "S1_adiabatic_eV": -62040.97693805136,
+    "T1_adiabatic_eV": -62041.36183247648,
+    "Delta_EST_adiabatic_eV": 0.38489442512077376,
+    "status": "success"
+  },
+  {
+    "molecule": "DMAC-DPS",
+    "phase": "toluene",
+    "S1_adiabatic_eV": -62041.34951651401,
+    "T1_adiabatic_eV": -62041.90724058843,
+    "Delta_EST_adiabatic_eV": 0.5577240744125394,
+    "status": "success"
+  },
+  {
+    "molecule": "DMAC-TRZ",
+    "phase": "gas",
+    "S1_adiabatic_eV": -43739.481778309804,
+    "T1_adiabatic_eV": -43739.924151895975,
+    "Delta_EST_adiabatic_eV": 0.4423735861668757,
+    "status": "success"
+  },
+  {
+    "molecule": "DMAC-TRZ",
+    "phase": "toluene",
+    "S1_adiabatic_eV": -43739.70750709795,
+    "T1_adiabatic_eV": -43740.345632430355,
+    "Delta_EST_adiabatic_eV": 0.6381253324066456,
+    "status": "success"
+  },
+  {
+    "molecule": "4CzIPN",
+    "phase": "gas",
+    "S1_adiabatic_eV": -67520.78883483351,
+    "T1_adiabatic_eV": -67521.19038385425,
+    "Delta_EST_adiabatic_eV": 0.4015490207484663,
+    "status": "success"
+  },
+  {
+    "molecule": "4CzIPN",
+    "phase": "toluene",
+    "S1_adiabatic_eV": -67521.39906112813,
+    "T1_adiabatic_eV": -67521.83512251367,
+    "Delta_EST_adiabatic_eV": 0.4360613855460093,
+    "status": "success"
+  },
+  {
+    "molecule": "PXZ-NAI",
+    "phase": "gas",
+    "S1_adiabatic_eV": -40518.23163734687,
+    "T1_adiabatic_eV": -40518.47513631208,
+    "Delta_EST_adiabatic_eV": 0.24349896520759545,
+    "status": "success"
+  },
+  {
+    "molecule": "PXZ-NAI",
+    "phase": "toluene",
+    "S1_adiabatic_eV": -40518.585969277854,
+    "T1_adiabatic_eV": -40519.077220981126,
+    "Delta_EST_adiabatic_eV": 0.4912517032775544,
+    "status": "success"
+  },
+  {
+    "molecule": "TPA-APy",
+    "phase": "gas",
+    "S1_adiabatic_eV": -42603.88352782274,
+    "T1_adiabatic_eV": -42604.636276732424,
+    "Delta_EST_adiabatic_eV": 0.7527489096823645,
+    "status": "success"
+  },
+  {
+    "molecule": "TPA-APy",
+    "phase": "toluene",
+    "S1_adiabatic_eV": -42604.21947848511,
+    "T1_adiabatic_eV": -42605.11490948656,
+    "Delta_EST_adiabatic_eV": 0.8954310014564909,
+    "status": "success"
+  },
+  {
+    "molecule": "BACN",
+    "phase": "gas",
+    "S1_adiabatic_eV": -30259.56333998852,
+    "T1_adiabatic_eV": -30260.692403451107,
+    "Delta_EST_adiabatic_eV": 1.129063462585572,
+    "status": "success"
+  },
+  {
+    "molecule": "BACN",
+    "phase": "toluene",
+    "S1_adiabatic_eV": -30259.92845200313,
+    "T1_adiabatic_eV": -30260.991120336854,
+    "Delta_EST_adiabatic_eV": 1.0626683337255138,
+    "status": "success"
+  },
+  {
+    "molecule": "BMZ-TZ",
+    "phase": "gas",
+    "S1_adiabatic_eV": -57393.246179747235,
+    "T1_adiabatic_eV": -57393.65656759389,
+    "Delta_EST_adiabatic_eV": 0.41038784665554084,
+    "status": "success"
+  },
+  {
+    "molecule": "BMZ-TZ",
+    "phase": "toluene",
+    "S1_adiabatic_eV": -57393.46433447915,
+    "T1_adiabatic_eV": -57394.164195915175,
+    "Delta_EST_adiabatic_eV": 0.699861436026082,
+    "status": "success"
+  },
+  {
+    "molecule": "2CzPN",
+    "phase": "gas",
+    "S1_adiabatic_eV": -39427.830015360865,
+    "T1_adiabatic_eV": -39428.38969292734,
+    "Delta_EST_adiabatic_eV": 0.5596775664765128,
+    "status": "success"
+  },
+  {
+    "molecule": "2CzPN",
+    "phase": "toluene",
+    "S1_adiabatic_eV": -39428.197994998896,
+    "T1_adiabatic_eV": -39428.84989590022,
+    "Delta_EST_adiabatic_eV": 0.6519009013165573,
+    "status": "success"
+  },
+  {
+    "molecule": "APPT-PXZ",
+    "phase": "gas",
+    "S1_adiabatic_eV": -47129.90384551033,
+    "T1_adiabatic_eV": -47130.234903061355,
+    "Delta_EST_adiabatic_eV": 0.3310575510256631,
+    "status": "success"
+  },
+  {
+    "molecule": "APPT-PXZ",
+    "phase": "toluene",
+    "S1_adiabatic_eV": -47130.20528295661,
+    "T1_adiabatic_eV": -47130.72249790964,
+    "Delta_EST_adiabatic_eV": 0.5172149530392449,
+    "status": "success"
+  },
+  {
+    "molecule": "2PXZP",
+    "phase": "gas",
+    "S1_adiabatic_eV": -57034.206743807044,
+    "T1_adiabatic_eV": -57034.59089940625,
+    "Delta_EST_adiabatic_eV": 0.38415559919797754,
+    "status": "success"
+  },
+  {
+    "molecule": "2PXZP",
+    "phase": "toluene",
+    "S1_adiabatic_eV": -57034.49674409837,
+    "T1_adiabatic_eV": -57035.13605375972,
+    "Delta_EST_adiabatic_eV": 0.6393096613502603,
+    "status": "success"
+  },
+  {
+    "molecule": "ACRSA",
+    "phase": "gas",
+    "S1_adiabatic_eV": -37054.767817434,
+    "T1_adiabatic_eV": -37054.9719431097,
+    "Delta_EST_adiabatic_eV": 0.20412567569580697,
+    "status": "success"
+  },
+  {
+    "molecule": "ACRSA",
+    "phase": "toluene",
+    "S1_adiabatic_eV": -37055.008959036175,
+    "T1_adiabatic_eV": -37055.68622649488,
+    "Delta_EST_adiabatic_eV": 0.6772674587064452,
+    "status": "success"
+  },
+  {
+    "molecule": "ACRFLCN",
+    "phase": "gas",
+    "S1_adiabatic_eV": -38990.70994947889,
+    "T1_adiabatic_eV": -38991.0115667119,
+    "Delta_EST_adiabatic_eV": 0.3016172330093321,
+    "status": "success"
+  },
+  {
+    "molecule": "ACRFLCN",
+    "phase": "toluene",
+    "S1_adiabatic_eV": -38991.14208153698,
+    "T1_adiabatic_eV": -38991.717751074495,
+    "Delta_EST_adiabatic_eV": 0.5756695375168307,
+    "status": "success"
+  },
+  {
+    "molecule": "2CzTPE",
+    "phase": "gas",
+    "S1_adiabatic_eV": -51857.741743554274,
+    "T1_adiabatic_eV": -51859.433107822486,
+    "Delta_EST_adiabatic_eV": 1.6913642682127776,
+    "status": "success"
+  },
+  {
+    "molecule": "2CzTPE",
+    "phase": "toluene",
+    "S1_adiabatic_eV": -51858.27690031546,
+    "T1_adiabatic_eV": -51859.81221602463,
+    "Delta_EST_adiabatic_eV": 1.53531570916569,
+    "status": "success"
+  },
+  {
+    "molecule": "BBPA",
+    "phase": "gas",
+    "S1_adiabatic_eV": -39898.414741089444,
+    "T1_adiabatic_eV": -39900.05602087793,
+    "Delta_EST_adiabatic_eV": 1.641279788489359,
+    "status": "success"
+  },
+  {
+    "molecule": "BBPA",
+    "phase": "toluene",
+    "S1_adiabatic_eV": -39898.64028085708,
+    "T1_adiabatic_eV": -39900.20226604343,
+    "Delta_EST_adiabatic_eV": 1.5619851863522662,
+    "status": "success"
+  }
+]

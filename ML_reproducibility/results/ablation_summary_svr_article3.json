@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-05-12T15:33:31.136101",
+  "data_file": "/home/tchapet/Documents/GitHub/TADF/smiEmpirical-TADF/Public_Results/Result_article1_TADF_xTB/ML_reproducibility/features/combined_features_747mol_full_ct.csv",
+  "models": [
+    {
+      "name": "Model_A_energy_only",
+      "n_features": 4,
+      "n_samples": 2943,
+      "mae_eV": 0.0055,
+      "rmse_eV": 0.0074,
+      "r2": 0.999
+    },
+    {
+      "name": "Model_C_full",
+      "n_features": 38,
+      "n_samples": 2943,
+      "mae_eV": 0.0251,
+      "rmse_eV": 0.0479,
+      "r2": 0.9564
+    },
+    {
+      "name": "Model_D_CT_only",
+      "n_features": 34,
+      "n_samples": 2943,
+      "mae_eV": 0.0985,
+      "rmse_eV": 0.1416,
+      "r2": 0.6186
+    }
+  ]
+}

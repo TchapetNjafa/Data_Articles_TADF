@@ -1,0 +1,17 @@
+Phase 2: TADF Prediction Summary
+============================================================
+Total molecules analyzed: 22,194
+Top candidates selected: 500
+Selection criteria: TADF heuristic score > 0.910
+
+Top candidate statistics:
+  Average TADF score: 0.924
+  Average predicted ΔE_ST: 0.130 eV
+  MW range: 235.3 - 407.4 Da
+  LogP range: 1.9 - 4.2
+
+Next steps:
+  1. Run xTB calculations on top 500 candidates
+  2. Compare predicted vs calculated ΔE_ST
+  3. Train ML model on high-fidelity data
+  4. Predict remaining molecules

@@ -1,0 +1,94 @@
+{
+  "title": "Article 3 SHAP Feature Importance — Correction Note",
+  "article": "Computational Screening of TADF Emitters for Horticulture Lighting via Multi-Scale Machine Learning and Structure-Property Analysis",
+  "journal": "Chemistry of Materials (submitted 2026)",
+  "zenodo_doi": "10.5281/zenodo.17436069",
+  "date_corrected": "2026-05-12",
+
+  "correction_summary": {
+    "issue": "The 'feature_importance' field in advanced_ml_results.json contains Random Forest Gini importance computed on the 8-feature dataset. This was incorrectly labelled as 'SHAP' in the Article 3 manuscript.",
+    "root_cause": "advanced_ml_pipeline.py line 377 passes the RF model to compute_shap_importance(), and the fallback path (line 202-203) returns model.feature_importances_ (Gini impurity). No SVR SHAP computation existed prior to this correction.",
+    "corrected_values_source": "run_svr_shap_verification.py — SVR KernelSHAP, 29 features, 5-fold CV, averaged over 3 random seeds (42/123/777)",
+    "corrected_values_file": "shap_svr_modelC_configF_article3.csv"
+  },
+
+  "model_configuration": {
+    "name": "Config F — SVR KernelSHAP, 29 features, 5-fold CV",
+    "model": "SVR(kernel='rbf', C=10, epsilon=0.01, gamma='scale')",
+    "preprocessing": "StandardScaler",
+    "cv": "KFold(n_splits=5, shuffle=True, random_state=42)",
+    "shap_method": "KernelExplainer",
+    "shap_background": "100 samples (kmeans summary)",
+    "shap_explain": "200 samples per fold",
+    "shap_nsamples": 100,
+    "seeds_averaged": [42, 123, 777],
+    "feature_file": "features/combined_features_747mol_full_ct.csv",
+    "n_features": 29,
+    "n_samples": 2943
+  },
+
+  "model_performance": {
+    "cv_mae_eV": 0.0251,
+    "cv_r2": 0.9560,
+    "test_mae_eV": 0.025,
+    "test_r2": 0.960
+  },
+
+  "shap_feature_importance_corrected": {
+    "description": "Mean absolute SHAP values averaged over 3 seeds, as percentage of total",
+    "groups": {
+      "Energy (E_T1 + E_S1 + HOMO-LUMO)": "92%",
+      "NTO/CT spatial descriptors (S_he, Delta_r, Omega_CT, Lambda_D/A, etc.)": "8%",
+      "Oscillator strength (f_S1)": "0.5%"
+    },
+    "top_features": {
+      "T1_energy_eV": "47.8%",
+      "S1_energy_eV": "43.3%",
+      "T1_S_he": "1.1%",
+      "S1_S_he": "0.8%",
+      "HOMO_LUMO_gap_eV": "0.6%",
+      "S1_osc_strength": "0.5%"
+    },
+    "collinearity_note": "T1 and S1 energies dominate (91%) because DeltaE_ST = E_S1 - E_T1 by construction. The CT-only ablation (Model D, R2=0.619, shap_svr_modelD_ct_only.csv) demonstrates that spatial descriptors encode genuine exchange-integral physics independent of this collinearity."
+  },
+
+  "ablation_models": {
+    "Model_A_energy_only": {
+      "features": 4,
+      "feature_file": "shap_svr_modelA_energy_only.csv",
+      "cv_r2": 0.999,
+      "note": "Confirms feature leakage: DeltaE_ST = E_S1 - E_T1 is an arithmetic identity in the dataset"
+    },
+    "Model_C_full_29feat": {
+      "features": 29,
+      "feature_file": "shap_svr_modelC_configF_article3.csv",
+      "cv_r2": 0.956,
+      "note": "Authoritative model used in Article 3 manuscript"
+    },
+    "Model_C_full_38feat": {
+      "features": 38,
+      "feature_file": "shap_svr_modelC_38feat.csv",
+      "cv_r2": 0.956,
+      "note": "38-feature variant including additional proxy features; marginal difference from 29-feature"
+    },
+    "Model_D_CT_only": {
+      "features": 34,
+      "feature_file": "shap_svr_modelD_ct_only.csv",
+      "cv_r2": 0.619,
+      "note": "CT-only ablation: no E_S1, E_T1, HOMO-LUMO. Demonstrates that spatial descriptors capture exchange-integral physics."
+    }
+  },
+
+  "files_added": {
+    "results/shap_svr_modelC_configF_article3.csv": "Authoritative Config F SHAP output (29 features, 3-seed average) — cited in Article 3",
+    "results/shap_svr_modelA_energy_only.csv": "Model A (energy-only, 4 features) SHAP values",
+    "results/shap_svr_modelC_38feat.csv": "Model C SHAP on 38-feature set",
+    "results/shap_svr_modelD_ct_only.csv": "Model D (CT-only, 34 features) SHAP values",
+    "results/ablation_summary_svr_article3.json": "Ablation model comparison summary",
+    "scripts/experiments/run_svr_shap_verification.py": "Self-contained script to reproduce Config F results",
+    "figures/feature_importance_747mol_v2_article3.pdf": "Corrected SHAP importance figure (Article 3, Config F values)",
+    "figures/feature_importance_747mol_v2_article3.png": "Corrected SHAP importance figure (PNG)"
+  },
+
+  "do_not_modify": "advanced_ml_results.json is preserved as-is (Articles 1 and 2 may reference its RF results). The corrected SVR SHAP values are stored in the files above."
+}

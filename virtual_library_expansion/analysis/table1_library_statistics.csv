@@ -1,0 +1,10 @@
+Metric,All Molecules,Top Candidates
+Total Molecules,"22,194",-
+Top Candidates Selected,500,-
+Selection Percentage,2.3%,-
+Average Molecular Weight,420.8 ± 94.9,339.0 ± 36.9
+Average LogP,4.0 ± 1.6,3.0 ± 0.3
+Average Aromatic Rings,3.2 ± 1.0,3.0 ± 0.0
+Average Heteroatoms,6.6 ± 2.6,6.4 ± 0.9
+Average TADF Score,0.760 ± 0.105,0.924 ± 0.011
+Average Predicted ΔE_ST,0.196 ± 0.042 eV,0.130 ± 0.005 eV

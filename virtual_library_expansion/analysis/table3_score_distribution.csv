@@ -1,0 +1,5 @@
+TADF Score Category,Number of Molecules,Percentage
+Excellent (≥0.9),855,3.9%
+Good (0.7-0.9),"16,538",74.5%
+Moderate (0.5-0.7),"4,129",18.6%
+Poor (<0.5),672,3.0%

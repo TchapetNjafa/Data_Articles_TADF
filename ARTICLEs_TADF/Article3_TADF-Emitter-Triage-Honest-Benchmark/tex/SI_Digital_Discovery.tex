@@ -1,0 +1,776 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Supporting Information — Digital Discovery
+% Repositioned 2026-06-23: honest structure-based benchmark (see HONEST_ML_ASSESSMENT_260622.md)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[twoside,twocolumn,9pt]{extarticle}
+\usepackage{extsizes}
+\usepackage[super,sort&compress,comma]{natbib}
+\usepackage[left=1.5cm, right=1.5cm, top=1.785cm, bottom=2.0cm]{geometry}
+\usepackage{mathptmx}
+\usepackage{graphicx}
+\usepackage{lastpage}
+\usepackage[format=plain,justification=justified,singlelinecheck=false,font={stretch=1.125,small,sf},labelfont=bf,labelsep=space]{caption}
+\usepackage{float, booktabs, multirow, array}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, lmodern}
+\usepackage[detect-all=true,group-minimum-digits=4]{siunitx}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{xr-hyper}  % Cross-reference to main document
+\usepackage[english]{babel}
+\addto{\captionsenglish}{\renewcommand{\refname}{Notes and references}}
+\externaldocument[M-]{Article_Digital_Discovery}  % Prefix M- for all main text references
+
+% Prefix SI figures/tables
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\theequation}{S\arabic{equation}}
+\setcounter{figure}{0}
+\setcounter{table}{0}
+
+\begin{document}
+
+\twocolumn[{
+\begin{center}
+  {\large\textbf{Supporting Information}}\\[4pt]
+  {\large How Far Can Structure-Based Machine Learning Predict Experimental
+  Singlet--Triplet Gaps? An Honest Benchmark for TADF Emitter Triage}\\[6pt]
+  Jean-Pierre Tchapet Njafa,$^{a}$* Steve Cabrel Teguia Kouam,$^{b}$ Patrick Sorrel Mvoto Kongo,$^{a}$ Panebei Samafou,$^{c}$ and Serge Guy Nana Engo$^{a}$\\[4pt]
+  {\small $^a$Department of Physics, Faculty of Science, University of Yaound\'{e}~1, Yaound\'{e}~812, Cameroon.}\\
+  {\small $^b$Department of Physics, Faculty of Science, University of Douala, Douala~24157, Cameroon.}\\
+  {\small $^c$Department of Medical Imaging and Radiation Sciences, Faculty of Medicine and Health Sciences, Universit\'{e} de Sherbrooke, 3001, 12th Avenue Nord, Sherbrooke, QC J1H~5N4, Canada.}\\[4pt]
+  {\small *E-mail: jean-pierre.tchapet@facsciences-uy1.cm; ORCID: https://orcid.org/0000-0002-1936-8353}
+\end{center}
+\vspace{8pt}
+}]
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section*{S1. Computational details}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\subsection*{S1.1 Semi-empirical calculations}
+Ground-state geometries were optimised with GFN2-xTB~\cite{Bannwarth2019}
+(\texttt{xtb} 6.5.1, default convergence: $10^{-6}$~Ha SCF). Lowest singlet and
+triplet excitations were obtained with sTDA~\cite{Grimme2017}. These
+semi-empirical excited states are used only to derive the natural transition
+orbital (NTO) descriptors of \cref{tab:descriptors}; they are not used as a
+prediction target (the semi-empirical gap is circular with respect to such
+features; see main text).
+
+\subsection*{S1.2 DFT reference calculations}
+Functional-dependence benchmarks (\cref{tab:dft_benchmark}) used
+B3LYP/6-31G(d) (Gaussian~16~\cite{Gaussian16}) and CAM-B3LYP/def2-TZVP
+(ORCA~6.1.0~\cite{Neese2020}), in gas phase and toluene (CPCM).
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section*{S2. Natural transition orbital descriptors}
+% ─────────────────────────────────────────────────────────────────────────────
+NTOs~\cite{Martin2003} were obtained by singular-value decomposition of the
+transition density matrix; the dominant hole--electron pair
+($\lambda_\text{NTO}>0.9$) defines the spatial descriptors. The \num{35}
+NTO descriptors---which require the sTDA excited-state calculation but exclude the
+$S_1$/$T_1$ energy scalars---are enumerated in \cref{tab:descriptors}. For each of
+the lowest singlet ($S_1$) and triplet ($T_1$) states we computed the
+hole--electron spatial overlap $S_\text{he}$, the charge-transfer number CT, the
+donor/acceptor NTO weights $\lambda_D$/$\lambda_A$, the hole--electron separation
+$\Delta r$, and the localisation indices (hole-on-acceptor, particle-on-donor).
+State differences ($\Delta X = X_{S_1}-X_{T_1}$) and their magnitudes $|\Delta X|$
+were added because the $S_1$--$T_1$ exchange splitting depends on how the spatial
+distributions \emph{change} between states. The oscillator strength $f_{S_1}$ and the
+log-transformed absorption proxies are the only intensity-related quantities; no
+energy scalar enters the feature set.
+
+\begin{table}[htbp]
+  \centering
+  \caption{The \num{35} NTO spatial descriptors used as the structure-derived
+    feature set. $X_{S_1}$ and $X_{T_1}$ denote the quantity evaluated in the
+    singlet and triplet state; $\Delta X = X_{S_1}-X_{T_1}$. Energy scalars
+    ($E_{S_1}$, $E_{T_1}$, and the gap) are deliberately excluded.}
+  \label{tab:descriptors}
+  \footnotesize
+  \begin{tabular}{p{0.30\columnwidth}p{0.60\columnwidth}}
+    \toprule
+    Family & Descriptors \\
+    \midrule
+    Hole--electron overlap (5)
+      & $S_\text{he}(S_1)$, $S_\text{he}(T_1)$, $\Delta S_\text{he}$,
+        $|\Delta S_\text{he}|$, \texttt{Char\_diff\_squared} \\
+    \addlinespace
+    Charge-transfer number (4)
+      & $\text{CT}(S_1)$, $\text{CT}(T_1)$, $\Delta\text{CT}$, $|\Delta\text{CT}|$ \\
+    \addlinespace
+    Donor weight (4)
+      & $\lambda_D(S_1)$, $\lambda_D(T_1)$, $\Delta\lambda_D$, $|\Delta\lambda_D|$ \\
+    \addlinespace
+    Acceptor weight (4)
+      & $\lambda_A(S_1)$, $\lambda_A(T_1)$, $\Delta\lambda_A$, $|\Delta\lambda_A|$ \\
+    \addlinespace
+    CT separation (4)
+      & $\Delta r(S_1)$, $\Delta r(T_1)$, $\Delta(\Delta r)$, $|\Delta(\Delta r)|$ \\
+    \addlinespace
+    Localisation (4)
+      & hole-on-A$(S_1)$, particle-on-D$(S_1)$,
+        hole-on-A$(T_1)$, particle-on-D$(T_1)$ \\
+    \addlinespace
+    NTO overlap composites (7)
+      & $S_\text{NTO}^{\text{sum}}$, $S_\text{NTO}^{\text{prod}}$,
+        $S_\text{NTO}^{\text{ratio}}$, $\Delta S_\text{NTO}$,
+        $|\Delta S_\text{NTO}|$, NTO overlap$(S_1)$, NTO overlap$(T_1)$ \\
+    \addlinespace
+    Intensity proxies (3)
+      & $f_{S_1}$, $\log|A_{S_1}|$, $\log|A_{T_1}|$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section*{S3. Machine learning details}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\subsection*{S3.1 Target and dataset}
+The target is the experimental $\Delta E_\text{ST}$, extracted from the
+literature and matched by compound name; multiple reports were reduced to the
+median. The benchmark contains \num{231} molecules spanning \num{212}
+Bemis--Murcko scaffolds~\cite{Bemis1996}, so scaffold-based splits place almost
+every molecule on a unique chemotype.
+
+The corpus was assembled by a name-based join, which is a fragile step; we therefore
+state the rule and its accounting in full (\cref{tab:provenance}). Starting from
+\num{1520} extracted literature rows, we kept rows whose property specifier
+contained ``EST'' (\num{1490}), parsed the reported value (all \num{1490} parsed),
+and retained values in the physical range $[-0.3, 1.5]$~eV (all \num{1490}). Each
+row's compound-name list was exploded and matched by exact string equality to the
+identifiers of molecules for which we had computed NTO descriptors, giving
+\num{363} name--value matches over \num{231} unique molecules. Of these,
+\num{102} molecules carried more than one literature report; we collapsed each to
+its median. The inter-report spread (standard deviation across reports for a given
+molecule) had a median of \qty{0}{\electronvolt} but reached
+\qty{0.564}{\electronvolt} in the worst case, which bounds the achievable accuracy
+from below. Every matched molecule had an RDKit-parseable SMILES (zero dropped),
+yielding the final set of \num{231} molecules over \num{212} scaffolds. The script
+\texttt{code/si\_supplementary\_data.py} regenerates this table.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Provenance of the experimental $\Delta E_\text{ST}$ corpus: rows
+    retained or dropped at each stage of the name-based join.}
+  \label{tab:provenance}
+  \footnotesize
+  \begin{tabular}{lc}
+    \toprule
+    Stage & Count \\
+    \midrule
+    Extracted literature rows                 & 1520 \\
+    Specifier contains ``EST''                & 1490 \\
+    Value parsed and finite                   & 1490 \\
+    Value in physical range $[-0.3,1.5]$~eV   & 1490 \\
+    Name--value matches to descriptor set     & 363 \\
+    Unique molecules matched                  & 231 \\
+    \quad of which with $>1$ report           & 102 \\
+    Dropped: no RDKit-parseable SMILES        & 0 \\
+    \midrule
+    \textbf{Final benchmark molecules}        & \textbf{231} \\
+    \textbf{Final Bemis--Murcko scaffolds}    & \textbf{212} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The corpus records no measurement medium: the solvent and atmosphere fields are
+empty for all \num{1490} EST rows, so the target cannot be stratified by solvent.
+The label heterogeneity is instead quantified directly from the spread among
+independent reports of the same molecule---the empirical footprint of the
+uncontrolled solvent, host and method effects that dominate experimental
+$\Delta E_\text{ST}$~\cite{Olivier2017} (\cref{tab:solvent}). Across the \num{102}
+molecules with repeat reports, the inter-report range exceeds the model MAE
+(\qty{0.096}{\electronvolt}) for \qty{19.6}{\percent} of molecules, and a single
+randomly chosen report sits \qty{0.072}{\electronvolt} (RMS) from its molecule's
+median. This label noise is comparable to the model error, so it---not model
+capacity---sets the accuracy ceiling. Regenerated by
+\texttt{code/solvent\_analysis.py}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Label heterogeneity of the experimental target, measured from
+    within-molecule disagreement among independent literature reports
+    (\num{102} molecules with $>1$ report). Range is max$-$min; SD is the standard
+    deviation across a molecule's reports (the latter matches \cref{tab:provenance}).}
+  \label{tab:solvent}
+  \footnotesize
+  \begin{tabular}{lc}
+    \toprule
+    Quantity (eV unless noted) & Value \\
+    \midrule
+    Molecules with $>1$ report                 & 102 \\
+    Inter-report range: mean / median          & 0.062 / 0.000 \\
+    Inter-report range: 90th pct.\ / max       & 0.17 / 1.09 \\
+    Fraction with range $>$ model MAE          & 19.6\% \\
+    Inter-report SD: mean / max                & 0.036 / 0.564 \\
+    Single report vs median (RMS)              & 0.072 \\
+    \midrule
+    Model MAE (reference)                      & 0.096 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection*{S3.2 Models and evaluation}
+Random forests~\cite{Breiman2001} (\num{400} trees, scikit-learn~\cite{Pedregosa2011})
+were compared against ridge regression, support-vector regression and a
+mean-value baseline; the random forest was best on every feature set. The forest
+used \num{400} estimators with no depth cap, $\sqrt{p}$ features per split, and
+fixed seed; these defaults were not tuned per fold, so the reported scores carry
+no test-set selection bias. Performance is reported under Bemis--Murcko scaffold
+\texttt{GroupKFold} ($k=5$): each fold holds out whole scaffolds, so no scaffold
+appears in both training and test, which removes the optimistic leakage of a
+random split on a set where \num{212} scaffolds cover \num{231} molecules.
+\qty{95}{\percent} confidence intervals come from \num{2000} bootstrap resamples
+of the pooled out-of-fold predictions (\cref{tab:model_metrics}). Feature
+importance used exact TreeSHAP~\cite{Lundberg2017}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Prediction of experimental $\Delta E_\text{ST}$ (random forest,
+    scaffold cross-validation, \num{231} molecules); $R^2$ with \qty{95}{\percent}
+    bootstrap CI. The 2D-structure-only sets (no quantum chemistry) match the NTO
+    set (which needs an sTDA run); structure-only $R^2$ intervals include zero.}
+  \label{tab:model_metrics}
+  \small
+  \begin{tabular}{lccc}
+    \toprule
+    Feature set & MAE (eV) & $R^2$ (95\% CI) & $\rho$ \\
+    \midrule
+    Morgan FP (2D structure only)   & 0.091 & 0.27 ($-0.19$, 0.53) & 0.31 \\
+    RDKit desc.\ (2D structure only) & 0.100 & 0.31 ($-0.11$, 0.51) & 0.26 \\
+    NTO spatial (needs sTDA)        & 0.096 & 0.25 (0.03, 0.45) & 0.36 \\
+    Energies + NTO (reference)      & 0.097 & 0.24 & 0.34 \\
+    Mean-value baseline             & 0.107 & 0.00 & --- \\
+    Raw sTDA gap                    & 0.251 & $-2.22$ & 0.24 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\Cref{tab:metrics_ci} collects all accuracy and association metrics for the
+headline NTO model with their \qty{95}{\percent} bootstrap confidence intervals,
+together with the power analysis for the rank-correlation test. Both Spearman
+$\rho$ and Pearson $r$ exclude zero, while the $R^2$ interval does not; the
+test for $\rho = 0.36$ is fully powered at $n = 231$ (only $n \approx 60$ is
+required for \qty{80}{\percent} power), so the wide $R^2$ interval is a property
+of the variance-explained statistic under outlier influence rather than a
+sample-size limitation. Values regenerated by
+\texttt{code/r2\_ci\_power\_analysis.py}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Headline NTO random-forest model: accuracy and association metrics
+    with \qty{95}{\percent} percentile-bootstrap CIs (\num{5000} resamples of the
+    out-of-fold predictions, \num{231} molecules), and a Fisher-$z$ power analysis
+    for the correlation test (two-sided, $\alpha = 0.05$).}
+  \label{tab:metrics_ci}
+  \small
+  \begin{tabular}{lcc}
+    \toprule
+    Metric & Point estimate & 95\% CI \\
+    \midrule
+    MAE (eV)            & 0.096 & (0.082, 0.109) \\
+    $R^2$               & 0.25  & (0.03, 0.45) \\
+    Spearman $\rho$     & 0.36  & (0.24, 0.47) \\
+    Pearson $r$         & 0.50  & (0.26, 0.68) \\
+    \midrule
+    \multicolumn{3}{l}{\emph{Power analysis (correlation test, $\rho = 0.36$)}} \\
+    Spearman $\rho$ $p$-value     & \multicolumn{2}{c}{$\num{2.6e-8}$} \\
+    Achieved power at $n = 231$   & \multicolumn{2}{c}{$\approx 1.0$} \\
+    $n$ for \qty{80}{\percent} power & \multicolumn{2}{c}{60} \\
+    $n$ for \qty{90}{\percent} power & \multicolumn{2}{c}{79} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+A scaffold-CV learning curve (\cref{fig:learning}) tests whether the
+\num{231}-molecule set is simply too small. The cross-validated MAE shows no
+systematic decrease beyond $n \approx 90$: it varies by \qty{5}{\percent} across
+$n = 46$--\num{231}, within the fold-to-fold standard deviation
+($\approx \qty{0.013}{\electronvolt}$), while the training MAE stays near
+\qty{0.035}{\electronvolt}. The persistent train--CV gap that does \emph{not} close
+with more data is the signature of an irreducible label-noise floor rather than an
+undersampled model; within this data regime, additional molecules of the same
+provenance would not lower the error. Regenerated by
+\texttt{code/learning\_curve\_analysis.py}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.72\linewidth]{figures/learning_curve.pdf}
+  \caption{Scaffold cross-validation learning curve for the headline NTO random
+    forest. Shaded band: $\pm 1$ fold standard deviation of the CV-MAE. The CV-MAE
+    is flat beyond $n \approx 90$ and remains above the mean-value baseline gap,
+    indicating a label-noise ceiling rather than a sample-size limit.}
+  \label{fig:learning}
+\end{figure}
+
+\subsection*{S3.3 Per-feature SHAP attributions}
+\Cref{tab:shap} lists the mean absolute TreeSHAP value of every NTO descriptor for
+the random forest trained on the \num{231}-molecule set. Attribution concentrates
+on a handful of descriptors: the singlet hole--electron overlap $S_\text{he}(S_1)$
+alone accounts for \qty{29}{\percent} of the total attribution, and the top five
+descriptors ($S_\text{he}(S_1)$, $S_\text{NTO}^{\text{ratio}}$, $f_{S_1}$,
+$\Delta r(S_1)$, $S_\text{he}(T_1)$) for \qty{60}{\percent}. The \num{12}
+lowest-ranked descriptors together contribute under \qty{3}{\percent}; the two
+raw NTO-overlap and the squared-character features are effectively unused. This is
+consistent with the main-text finding that the gap is governed by a small number
+of donor--acceptor overlap quantities rather than by the full \num{35}-dimensional
+descriptor vector.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Per-feature importance (mean $|\text{SHAP}|$, in meV) of the \num{35}
+    NTO descriptors for the random forest on the \num{231}-molecule experimental
+    set, ranked high to low. Regenerated by
+    \texttt{code/si\_supplementary\_data.py}.}
+  \label{tab:shap}
+  \footnotesize
+  \begin{tabular}{lr@{\hskip 2em}lr}
+    \toprule
+    Descriptor & meV & Descriptor & meV \\
+    \midrule
+    $S_\text{he}(S_1)$        & 36.9 & $|\Delta\text{CT}|$            & 1.6 \\
+    $S_\text{NTO}^{\text{ratio}}$ & 14.5 & hole-on-A$(T_1)$          & 1.5 \\
+    $f_{S_1}$                 & 11.5 & $\Delta r(T_1)$               & 1.5 \\
+    $\Delta r(S_1)$           &  7.9 & $\text{CT}(S_1)$              & 1.4 \\
+    $S_\text{he}(T_1)$        &  6.9 & $|\Delta\lambda_A|$          & 1.3 \\
+    $\log|A_{T_1}|$           &  6.9 & $\Delta\text{CT}$            & 1.2 \\
+    $\Delta(\Delta r)$        &  4.8 & particle-on-D$(S_1)$         & 0.7 \\
+    $\Delta S_\text{he}$      &  4.3 & $\lambda_D(S_1)$             & 0.7 \\
+    $|\Delta(\Delta r)|$      &  4.1 & particle-on-D$(T_1)$         & 0.6 \\
+    $|\Delta S_\text{he}|$    &  4.0 & $\lambda_A(T_1)$             & 0.6 \\
+    $|\Delta\lambda_D|$       &  3.1 & $\lambda_A(S_1)$             & 0.5 \\
+    $\log|A_{S_1}|$           &  3.0 & hole-on-A$(S_1)$             & 0.5 \\
+    $\Delta\lambda_D$         &  2.6 & $\Delta S_\text{NTO}$        & 0.1 \\
+    $\Delta\lambda_A$         &  2.0 & $S_\text{NTO}^{\text{sum}}$  & 0.1 \\
+    $\lambda_D(T_1)$          &  2.0 & NTO overlap$(T_1)$           & 0.1 \\
+    $\text{CT}(T_1)$          &  1.7 & NTO overlap$(S_1)$           & 0.0 \\
+    \multicolumn{2}{l}{} & $|\Delta S_\text{NTO}|$         & 0.0 \\
+    \multicolumn{2}{l}{} & $S_\text{NTO}^{\text{prod}}$    & 0.0 \\
+    \multicolumn{2}{l}{} & \texttt{Char\_diff\_squared}    & 0.0 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The interpretive value of the physics-informed descriptors is visible when their
+attribution is placed beside that of the equally accurate Morgan-fingerprint model
+(\cref{fig:shapcompare}). The ten highest-attribution NTO descriptors carry
+\qty{79}{\percent} of the total and are all named physical quantities; the ten
+highest-attribution Morgan bits carry only \qty{30}{\percent}, spread over
+\num{2048} anonymous hashed substructure bits that resist mechanistic reading.
+Equal predictive accuracy thus buys interpretability only in the NTO
+representation. Regenerated by \texttt{code/shap\_morgan\_vs\_nto.py}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{figures/shap_morgan_vs_nto.pdf}
+  \caption{Top-ten SHAP attributions for the two equally accurate models. (A) NTO
+    random forest: attribution concentrates on named donor--acceptor overlap and
+    charge-transfer descriptors. (B) Morgan random forest: attribution is diffuse
+    across anonymous fingerprint bits (\texttt{fp}$n$), which carry no direct
+    chemical meaning.}
+  \label{fig:shapcompare}
+\end{figure}
+
+To test whether this attribution pattern is a stable signal rather than an
+artefact of one particular fit, we refit the random forest on \num{200} bootstrap
+resamples of the \num{231}-molecule set and recorded the top-five descriptors of
+each (\cref{tab:shapboot}). The leading descriptor $S_\text{he}(S_1)$ appears in
+the top five of \qty{99.5}{\percent} of resamples; on average \num{3.7} of the five
+canonical descriptors recur per resample, and \qty{64.5}{\percent} of resamples
+recover at least four of the five. The attribution is therefore reproducible at the
+top of the ranking, even though the model's ranking power on the gap itself is
+modest; we accordingly read these attributions as mechanistic hypotheses for
+experimental test, not validated causal claims. Regenerated by
+\texttt{code/shap\_bootstrap\_stability.py}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Bootstrap stability of the top-five SHAP descriptors: fraction of
+    \num{200} resampled-and-refit models in which each canonical descriptor remains
+    in the top five.}
+  \label{tab:shapboot}
+  \footnotesize
+  \begin{tabular}{lc}
+    \toprule
+    Descriptor & Top-5 frequency \\
+    \midrule
+    $S_\text{he}(S_1)$            & 99.5\% \\
+    $S_\text{NTO}^{\text{ratio}}$ & 74.0\% \\
+    $f_{S_1}$                     & 72.0\% \\
+    $\Delta r(S_1)$               & 68.0\% \\
+    $S_\text{he}(T_1)$            & 59.5\% \\
+    \midrule
+    Mean top-5 overlap            & 3.7 / 5 \\
+    Resamples recovering $\ge 4$  & 64.5\% \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection*{S3.4 Scaffold-split characterisation}
+Because \num{212} Bemis--Murcko scaffolds cover \num{231} molecules,
+\qty{92.9}{\percent} of scaffolds are singletons, and a reviewer may reasonably ask
+whether scaffold \texttt{GroupKFold} differs at all from a random split. It does, in
+the way that matters for leakage: by construction no scaffold appears in both
+training and test (zero shared groups in every fold), whereas a random split of the
+same data leaks \numrange{3}{8} scaffolds per fold across the train/test boundary
+(\cref{tab:scaffold}). The numerical effect on difficulty is nonetheless small---the
+mean nearest-neighbour Tanimoto similarity between a test molecule and its closest
+training molecule falls only from \num{0.615} (random) to \num{0.592} (scaffold)---so
+we do not claim the split makes the task dramatically harder; we claim it removes a
+specific leakage channel.
+
+That the model learns chemical signal rather than scaffold-group artefacts is
+established by a label-permutation test: the target was shuffled \num{1000} times and
+the scaffold-CV MAE recomputed under each permutation. The true MAE
+(\qty{0.0956}{\electronvolt}) lies far in the left tail of the null distribution
+(mean \qty{0.121}{\electronvolt}, SD \qty{0.0043}{\electronvolt}, \qty{95}{\percent}
+interval \numrange{0.112}{0.129}), giving $p = 0.001$. Regenerated by
+\texttt{code/scaffold\_split\_analysis.py}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Scaffold \texttt{GroupKFold} versus a random 5-fold split on the same
+    \num{231} molecules. Scaffold splitting removes train/test scaffold overlap; the
+    label-permutation test confirms the fitted model is far from the no-signal null.}
+  \label{tab:scaffold}
+  \footnotesize
+  \begin{tabular}{lcc}
+    \toprule
+    Quantity & Scaffold split & Random split \\
+    \midrule
+    Shared scaffolds per fold        & 0 (all folds) & 3--8 \\
+    Test--train NN Tanimoto (mean)   & 0.592 & 0.615 \\
+    \midrule
+    \multicolumn{3}{l}{\emph{Label-permutation test (1000 shuffles, scaffold CV)}} \\
+    True CV-MAE (eV)                 & \multicolumn{2}{c}{0.0956} \\
+    Null CV-MAE: mean (95\% CI) (eV) & \multicolumn{2}{c}{0.121 (0.112, 0.129)} \\
+    $p$-value (left tail)            & \multicolumn{2}{c}{0.001} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection*{S3.5 Reproducibility}
+The scripts \texttt{code/finalize\_model.py} and
+\texttt{code/rebuild\_structural\_model.py} regenerate \cref{tab:model_metrics}
+and Fig.~1 of the main text from the deposited data.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section*{S4. DFT level benchmark}
+% ─────────────────────────────────────────────────────────────────────────────
+Across \num{7} representative emitters in gas and toluene, B3LYP/6-31G(d) and
+CAM-B3LYP/def2-TZVP differ in $\Delta E_\text{ST}$ by a mean absolute
+\qty{0.30}{\electronvolt} (up to \qty{0.58}{\electronvolt}), with sign reversals
+of the relative ordering (e.g.\ DMAC-DPS). This functional dependence sets a
+physical ceiling on the meaning of any sub-\qty{0.1}{\electronvolt} accuracy
+claim (\cref{tab:dft_benchmark}).
+
+\begin{table}[htbp]
+  \centering
+  \caption{Functional dependence of $\Delta E_\text{ST}$ (eV): B3LYP/6-31G(d)
+    vs CAM-B3LYP/def2-TZVP.}
+  \label{tab:dft_benchmark}
+  \small
+  \begin{tabular}{llccc}
+    \toprule
+    Molecule & Phase & B3LYP & CAM-B3LYP & $\Delta$ \\
+    \midrule
+    4CzIPN & gas & 0.192 & 0.361 & +0.169 \\
+    4CzIPN & toluene & 0.206 & 0.335 & +0.129 \\
+    ACRFLCN & gas & 0.007 & 0.590 & +0.583 \\
+    ACRFLCN & toluene & 0.000 & 0.548 & +0.548 \\
+    ACRSA & gas & 0.034 & 0.447 & +0.413 \\
+    ACRSA & toluene & 0.000 & 0.372 & +0.372 \\
+    BACN & gas & 0.524 & 0.991 & +0.467 \\
+    BACN & toluene & 0.521 & 0.921 & +0.400 \\
+    DMAC-DPS & gas & 0.489 & 0.188 & $-0.301$ \\
+    DMAC-DPS & toluene & 0.444 & 0.207 & $-0.237$ \\
+    DMAC-TRZ & gas & 0.098 & 0.261 & +0.163 \\
+    DMAC-TRZ & toluene & 0.085 & 0.271 & +0.186 \\
+    PXZ-NAI & gas & 0.245 & 0.355 & +0.110 \\
+    PXZ-NAI & toluene & 0.289 & 0.360 & +0.071 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection*{S4.1 Vertical versus adiabatic gap}
+The NTO descriptors are evaluated at the ground-state (vertical) geometry. To bound
+the error this introduces relative to a relaxed (adiabatic) treatment, we recomputed
+$\Delta E_\text{ST}$ for \num{14} representative emitters in gas and toluene at
+CAM-B3LYP/def2-TZVP (D3BJ, RIJCOSX) with excited-state geometry optimisation in
+ORCA, and compared with the vertical sTDA-xTB values (\cref{tab:adiabatic}). Over the
+\num{27} converged points the vertical gap deviates from the adiabatic reference by a
+mean absolute \qty{0.195}{\electronvolt} (RMSE \qty{0.245}{\electronvolt}, worst case
+\qty{0.548}{\electronvolt} for 2CzTPE), but the deviation is a systematic offset, not
+random scatter: a linear fit of adiabatic on vertical gives slope \num{1.00} and
+intercept \qty{0.07}{\electronvolt} ($R^2 = 0.70$), and the rank correlation is
+preserved (Spearman $\rho = 0.71$). Geometry relaxation therefore shifts the absolute
+scale while leaving the ordering---on which the triage use depends---largely intact.
+Regenerated by \texttt{code/adiabatic\_validation\_analysis.py} from
+\texttt{data/vertical\_vs\_adiabatic\_comparison.csv}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Vertical (sTDA-xTB, ground-state geometry) versus adiabatic
+    (CAM-B3LYP/def2-TZVP, excited-state optimisation) $\Delta E_\text{ST}$ (eV) for
+    \num{14} emitters. $\Delta = $ adiabatic $-$ vertical. Summary: MAE
+    \qty{0.195}{\electronvolt}, slope \num{1.00}, intercept \qty{0.07}{\electronvolt},
+    $R^2 = 0.70$, $\rho = 0.71$.}
+  \label{tab:adiabatic}
+  \footnotesize
+  \begin{tabular}{llccc}
+    \toprule
+    Molecule & Phase & Vertical & Adiabatic & $\Delta$ \\
+    \midrule
+    4CzIPN & gas & 0.361 & 0.402 & $+0.041$ \\
+    4CzIPN & toluene & 0.335 & 0.436 & $+0.101$ \\
+    DMAC-TRZ & gas & 0.261 & 0.442 & $+0.181$ \\
+    DMAC-TRZ & toluene & 0.271 & 0.638 & $+0.367$ \\
+    DMAC-DPS & gas & 0.188 & 0.385 & $+0.197$ \\
+    DMAC-DPS & toluene & 0.207 & 0.558 & $+0.351$ \\
+    PXZ-NAI & gas & 0.355 & 0.243 & $-0.112$ \\
+    PXZ-NAI & toluene & 0.360 & 0.491 & $+0.131$ \\
+    TPA-APy & gas & 0.876 & 0.753 & $-0.123$ \\
+    TPA-APy & toluene & 0.765 & 0.895 & $+0.130$ \\
+    BACN & gas & 0.991 & 1.129 & $+0.138$ \\
+    BACN & toluene & 0.921 & 1.063 & $+0.142$ \\
+    BMZ-TZ & gas & 0.938 & 0.410 & $-0.528$ \\
+    BMZ-TZ & toluene & 0.933 & 0.700 & $-0.233$ \\
+    2CzPN & gas & 0.613 & 0.560 & $-0.053$ \\
+    2CzPN & toluene & 0.621 & 0.652 & $+0.031$ \\
+    APPT-PXZ & gas & 0.350 & 0.331 & $-0.019$ \\
+    2PXZP & gas & 0.467 & 0.384 & $-0.083$ \\
+    2PXZP & toluene & 0.485 & 0.639 & $+0.154$ \\
+    ACRSA & gas & 0.447 & 0.204 & $-0.243$ \\
+    ACRSA & toluene & 0.372 & 0.677 & $+0.305$ \\
+    ACRFLCN & gas & 0.590 & 0.302 & $-0.288$ \\
+    ACRFLCN & toluene & 0.548 & 0.576 & $+0.028$ \\
+    2CzTPE & gas & 1.143 & 1.691 & $+0.548$ \\
+    2CzTPE & toluene & 1.042 & 1.535 & $+0.493$ \\
+    BBPA & gas & 1.521 & 1.641 & $+0.120$ \\
+    BBPA & toluene & 1.433 & 1.562 & $+0.129$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection*{S4.2 Triplet manifold (T1--T2)}
+A small $S_1$--$T_1$ gap does not guarantee fast reverse intersystem crossing; the
+$T_1$--$T_2$ splitting and the wider triplet manifold matter too~\cite{Keruckiene2024}.
+The same vertical CAM-B3LYP/def2-TZVP TD-DFT calculations that supplied the adiabatic
+benchmark also resolve ten triplet roots, so we report $T_1$ and $T_2$ directly
+(\cref{tab:manifold}). Across the \num{27} converged emitter--phase points the $T_1$--$T_2$
+gap ranges from \qty{0.018}{\electronvolt} (4CzIPN) to \qty{1.50}{\electronvolt} (BBPA),
+mean \qty{0.41}{\electronvolt}; \num{13} of \num{27} fall below \qty{0.3}{\electronvolt}.
+The manifold therefore varies widely \emph{among molecules with similar $\Delta E_\text{ST}$}
+(e.g.\ DMAC-DPS and DMAC-TRZ have near-equal $S_1$--$T_1$ gaps but $T_1$--$T_2$ of
+\qtyrange{0.06}{0.26}{\electronvolt}), which is exactly the information a scalar
+$\Delta E_\text{ST}$ triage cannot encode and a direction where the excited-state pipeline
+adds genuine value. Regenerated by \texttt{code/extract\_triplet\_manifold.py} from the
+\texttt{orca\_package} outputs.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Vertical CAM-B3LYP/def2-TZVP TDA energies (eV): $S_1$, $T_1$, $T_2$, the
+    singlet--triplet gap $\Delta E_\text{ST}=S_1-T_1$, and the triplet-manifold gap
+    $T_1$--$T_2$, for \num{14} emitters in gas and toluene.}
+  \label{tab:manifold}
+  \scriptsize
+  \begin{tabular}{llccccc}
+    \toprule
+    Molecule & Phase & $S_1$ & $T_1$ & $T_2$ & $\Delta E_\text{ST}$ & $T_1$--$T_2$ \\
+    \midrule
+    2CzPN & gas & 3.652 & 3.039 & 3.464 & 0.613 & 0.425 \\
+    2CzPN & toluene & 3.632 & 3.011 & 3.459 & 0.621 & 0.448 \\
+    2CzTPE & gas & 3.496 & 2.353 & 2.767 & 1.143 & 0.414 \\
+    2CzTPE & toluene & 3.411 & 2.369 & 2.788 & 1.042 & 0.419 \\
+    2PXZP & gas & 3.292 & 2.825 & 3.080 & 0.467 & 0.255 \\
+    2PXZP & toluene & 3.343 & 2.858 & 3.139 & 0.485 & 0.281 \\
+    4CzIPN & gas & 3.377 & 3.016 & 3.050 & 0.361 & 0.034 \\
+    4CzIPN & toluene & 3.343 & 3.008 & 3.026 & 0.335 & 0.018 \\
+    ACRFLCN & gas & 3.597 & 3.007 & 3.548 & 0.590 & 0.541 \\
+    ACRFLCN & toluene & 3.546 & 2.998 & 3.536 & 0.548 & 0.538 \\
+    ACRSA & gas & 3.769 & 3.322 & 3.513 & 0.447 & 0.191 \\
+    ACRSA & toluene & 3.746 & 3.374 & 3.500 & 0.372 & 0.126 \\
+    APPT-PXZ & gas & 2.701 & 2.351 & 2.734 & 0.350 & 0.383 \\
+    BACN & gas & 3.713 & 2.722 & 3.533 & 0.991 & 0.811 \\
+    BACN & toluene & 3.629 & 2.708 & 3.503 & 0.921 & 0.795 \\
+    BBPA & gas & 3.553 & 2.032 & 3.525 & 1.521 & 1.493 \\
+    BBPA & toluene & 3.458 & 2.025 & 3.526 & 1.433 & 1.501 \\
+    BMZ-TZ & gas & 3.730 & 2.792 & 3.180 & 0.938 & 0.388 \\
+    BMZ-TZ & toluene & 3.896 & 2.963 & 3.142 & 0.933 & 0.179 \\
+    DMAC-DPS & gas & 3.637 & 3.449 & 3.508 & 0.188 & 0.059 \\
+    DMAC-DPS & toluene & 3.678 & 3.471 & 3.538 & 0.207 & 0.067 \\
+    DMAC-TRZ & gas & 3.509 & 3.248 & 3.504 & 0.261 & 0.256 \\
+    DMAC-TRZ & toluene & 3.533 & 3.262 & 3.509 & 0.271 & 0.247 \\
+    PXZ-NAI & gas & 2.688 & 2.333 & 2.836 & 0.355 & 0.503 \\
+    PXZ-NAI & toluene & 2.650 & 2.290 & 2.829 & 0.360 & 0.539 \\
+    TPA-APy & gas & 3.555 & 2.679 & 2.823 & 0.876 & 0.144 \\
+    TPA-APy & toluene & 3.425 & 2.660 & 2.795 & 0.765 & 0.135 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section*{S5. Heuristic library enumeration}
+% ─────────────────────────────────────────────────────────────────────────────
+An extended library of \num{22194} donor--acceptor fragment combinations was
+enumerated from literature-validated donors (carbazole, phenoxazine, acridine)
+and acceptors (triazine, benzonitrile, sulfone) under simple constraints
+(MW $<\qty{900}{\dalton}$, $\geq 2$ aromatic rings, $\geq 1$ N/O/S). Candidates
+were ranked by the rule-based TADF score defined in the main text. These are
+synthesis-planning leads only: they are not quantum-validated, and the heuristic
+score is not a calibrated $\Delta E_\text{ST}$ predictor. Property distributions
+of the enumerated set versus the top-scoring subset are shown in the main text.
+
+To make the section actionable rather than decorative, we additionally rank the full
+library with the calibrated structure-only Morgan-FP model and attach a split-conformal
+\qty{90}{\percent} prediction interval (half-width \qty{0.18}{\electronvolt}, empirical
+coverage \num{0.89}; \cref{tab:shortlist}) to every prediction. The complete top-\num{100}
+shortlist is deposited (\texttt{data/shortlist\_top100.csv}). We stress the honest reading:
+the predicted gaps for the leading candidates (\qtyrange{0.02}{0.05}{\electronvolt}) sit
+well inside their own \qty{\pm0.18}{\electronvolt} intervals, so the list \emph{prioritises}
+synthesis order; it does not certify any individual molecule. No device-level quantity is
+predicted. Generated by \texttt{code/build\_shortlist.py}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Top \num{10} of the deposited \num{100}-molecule shortlist: enumerated-library
+    candidates ranked by predicted experimental $\Delta E_\text{ST}$ (structure-only
+    Morgan-FP RF) with \qty{90}{\percent} split-conformal prediction intervals (eV).
+    SMILES truncated for display.}
+  \label{tab:shortlist}
+  \scriptsize
+  \begin{tabular}{llcc}
+    \toprule
+    ID & SMILES (truncated) & Pred.\ (eV) & 90\% PI (eV) \\
+    \midrule
+    MOL\_016680 & \texttt{O=C(C[C@@]1(O)C(=O)N(Cc2ccccc2Cl)c…} & 0.023 & [-0.15, 0.20] \\
+    MOL\_016681 & \texttt{O=C(C[C@]1(O)C(=O)N(Cc2ccccc2Cl)c2…} & 0.023 & [-0.15, 0.20] \\
+    MOL\_002952 & \texttt{O=c1c2ccccc2c(=O)c2c1ccc1c2[nH]c2c…} & 0.034 & [-0.14, 0.21] \\
+    MOL\_000892 & \texttt{Nc1cc2c(=O)c3cc(Cl)cc(Cl)c3[nH]c2c…} & 0.035 & [-0.14, 0.21] \\
+    MOL\_000969 & \texttt{O=C1c2ccccc2C(=O)c2c1c(Cl)cc1c(=O)…} & 0.038 & [-0.14, 0.22] \\
+    MOL\_002522 & \texttt{Cc1c2ccncc2c(C)c2c1[nH]c1c(Cl)cc(C…} & 0.039 & [-0.14, 0.22] \\
+    MOL\_017220 & \texttt{Cc1ccccc1CN1C(=O)[C@](O)(CC(=O)c2c…} & 0.039 & [-0.14, 0.22] \\
+    MOL\_017221 & \texttt{Cc1ccccc1CN1C(=O)[C@@](O)(CC(=O)c2…} & 0.039 & [-0.14, 0.22] \\
+    MOL\_017226 & \texttt{O=C(C[C@@]1(O)C(=O)N(CCc2ccccc2)c2…} & 0.041 & [-0.14, 0.22] \\
+    MOL\_017407 & \texttt{O=C(C[C@]1(O)C(=O)N(Cc2ccccc2)c2cc…} & 0.041 & [-0.14, 0.22] \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section*{S6. Robustness analyses}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\subsection*{S6.1 Cluster cross-validation}
+Because \qty{92.9}{\percent} of Bemis--Murcko scaffolds are singletons, we also built
+\emph{non-singleton} groups by Butina clustering on Morgan Tanimoto distance and ran the
+random forest under cluster-grouped CV across a cutoff scan (\cref{tab:clustercv}). Even at
+the coarsest grouping (\num{70} clusters, largest \num{38} molecules), the MAE
+(\qty{0.099}{\electronvolt}) is statistically indistinguishable from scaffold-CV
+(\qty{0.096}{\electronvolt}) and random-CV (\qty{0.106}{\electronvolt}). Performance is
+therefore \emph{robust to the validation scheme}: the headline number is not an artefact of
+singleton scaffolds. Regenerated by \texttt{code/cluster\_cv\_analysis.py}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Cluster-grouped CV of the headline NTO RF across Butina distance cutoffs,
+    with scaffold and random CV for reference.}
+  \label{tab:clustercv}
+  \footnotesize
+  \begin{tabular}{lcccc}
+    \toprule
+    Grouping & \#groups & largest & MAE (eV) & $\rho$ \\
+    \midrule
+    Butina 0.3 & 186 & 7  & 0.100 & 0.35 \\
+    Butina 0.4 & 153 & 10 & 0.100 & 0.38 \\
+    Butina 0.5 & 111 & 15 & 0.104 & 0.31 \\
+    Butina 0.6 & 70  & 38 & 0.099 & 0.40 \\
+    \midrule
+    Scaffold (headline) & 212 & --- & 0.096 & 0.36 \\
+    Random 5-fold       & --- & --- & 0.106 & 0.34 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection*{S6.2 Dimensionality and model capacity}
+Two checks address the charge that a \num{2048}-bit fingerprint over-parameterises a
+\num{231}-molecule set. First, shrinking the fingerprint to \num{1024} or \num{512} bits
+leaves the MAE and the (negative) lower $R^2$ confidence bound essentially unchanged
+(\cref{tab:capacity}, top), so the negative $R^2$ tail is intrinsic to the low
+variance-explained on this target, not a width artefact; the lowest-dimensional regularised
+model (NTO + ElasticNet) brings the lower bound closest to zero ($-0.03$) but does not lift
+it. Second, no higher- or different-capacity learner beats the random forest under the same
+scaffold CV (\cref{tab:capacity}, bottom): gradient boosting, an MLP and an SVR are all
+worse. Model capacity is not the limiting factor. Restricting to the \num{208} molecules
+whose repeat reports agree to within \qty{0.05}{\electronvolt} does not lower the MAE
+(\qty{0.106}{\electronvolt}), so the floor is not removed by discarding the noisiest labels
+either. Regenerated by \texttt{code/dimensionality\_check.py} and
+\texttt{code/capacity\_and\_noise\_ceiling.py}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Top: fingerprint-width sweep (RF) — MAE and \qty{95}{\percent} bootstrap $R^2$
+    CI. Bottom: alternative learners under the same scaffold CV. None beats the RF.}
+  \label{tab:capacity}
+  \footnotesize
+  \begin{tabular}{lcc}
+    \toprule
+    Setting & MAE (eV) & $R^2$ (95\% CI) \\
+    \midrule
+    Morgan 512 (RF)   & 0.098 & 0.15 ($-0.44$, 0.46) \\
+    Morgan 1024 (RF)  & 0.096 & 0.24 ($-0.25$, 0.51) \\
+    Morgan 2048 (RF)  & 0.091 & 0.27 ($-0.19$, 0.53) \\
+    NTO + ElasticNet  & 0.102 & 0.10 ($-0.03$, 0.17) \\
+    \midrule
+    RandomForest (headline) & 0.096 & --- \\
+    HistGradientBoosting    & 0.105 & --- \\
+    MLP (100, 50)           & 0.169 & --- \\
+    SVR (RBF)               & 0.120 & --- \\
+    ElasticNet              & 0.102 & --- \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection*{S6.3 SHAP cross-check by permutation importance}
+An independent, model-agnostic permutation-importance analysis (held-out \qty{30}{\percent},
+\num{50} repeats) ranks the singlet hole--electron overlap $S_\text{he}(S_1)$ \emph{first},
+in agreement with TreeSHAP; two of the SHAP top-five recur in the permutation top-five. The
+leading attribution is thus corroborated by two methods, while the lower-ranked tail is not
+--- consistent with our restriction of mechanistic reading to the dominant descriptor.
+Regenerated by \texttt{code/permutation\_importance\_check.py}.
+
+\subsection*{S6.4 Enrichment curve and calibrated operating points}
+\Cref{fig:enrichment} reports precision (fraction of selected molecules with experimental
+gap $\le\qty{0.10}{\electronvolt}$) against screening budget. Enrichment peaks at
+\num{1.37}$\times$ over the \qty{49}{\percent} base rate around the top \num{5}--\num{20}\%
+and does not improve at more aggressive cuts (the top \num{1}\% is two molecules). A
+split-conformal calibration gives a \qty{90}{\percent} interval half-width of
+\qty{0.178}{\electronvolt} (empirical coverage \num{0.892}), so a laboratory can pick an
+operating point at a stated confidence. Regenerated by \texttt{code/enrichment\_curve.py}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\linewidth]{figures/enrichment_curve.pdf}
+  \caption{Triage precision versus fraction of the benchmark screened (log $x$). Dashed line:
+    the \qty{49}{\percent} random base rate. Enrichment is real but bounded at
+    $\approx 1.3$--$1.4\times$.}
+  \label{fig:enrichment}
+\end{figure}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section*{S7. Data and code availability}
+% ─────────────────────────────────────────────────────────────────────────────
+All data (experimental corpus, descriptor tables, predictions), trained models,
+and analysis/figure scripts are openly available on Zenodo
+(DOI: 10.5281/zenodo.17436069) under a CC-BY-4.0 licence. Computations used
+\texttt{xtb} 6.7.1, Gaussian~16, ORCA~6.1.0, Python~3.12, scikit-learn~1.8,
+RDKit~2026.03, and SHAP~0.50.
+
+\bibliographystyle{../MCA_submission/rsc}
+\bibliography{references_digital_discovery}
+
+\end{document}

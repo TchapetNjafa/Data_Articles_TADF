@@ -1,0 +1,91 @@
+{
+  "nto_top10": [
+    {
+      "feature": "S1_S_he",
+      "mean_abs_shap_eV": 0.03692
+    },
+    {
+      "feature": "S_NTO_ratio",
+      "mean_abs_shap_eV": 0.01454
+    },
+    {
+      "feature": "S1_osc_strength",
+      "mean_abs_shap_eV": 0.01153
+    },
+    {
+      "feature": "S1_Delta_r",
+      "mean_abs_shap_eV": 0.00788
+    },
+    {
+      "feature": "T1_S_he",
+      "mean_abs_shap_eV": 0.00694
+    },
+    {
+      "feature": "Log_Abs_T1",
+      "mean_abs_shap_eV": 0.00685
+    },
+    {
+      "feature": "Delta_Delta_r",
+      "mean_abs_shap_eV": 0.00476
+    },
+    {
+      "feature": "Delta_S_he",
+      "mean_abs_shap_eV": 0.00428
+    },
+    {
+      "feature": "Abs_Delta_Delta_r",
+      "mean_abs_shap_eV": 0.00409
+    },
+    {
+      "feature": "Abs_Delta_S_he",
+      "mean_abs_shap_eV": 0.00403
+    }
+  ],
+  "morgan_top10": [
+    {
+      "feature": "fp988",
+      "mean_abs_shap_eV": 0.00747
+    },
+    {
+      "feature": "fp785",
+      "mean_abs_shap_eV": 0.00689
+    },
+    {
+      "feature": "fp243",
+      "mean_abs_shap_eV": 0.00615
+    },
+    {
+      "feature": "fp1549",
+      "mean_abs_shap_eV": 0.00589
+    },
+    {
+      "feature": "fp454",
+      "mean_abs_shap_eV": 0.00568
+    },
+    {
+      "feature": "fp381",
+      "mean_abs_shap_eV": 0.00546
+    },
+    {
+      "feature": "fp1948",
+      "mean_abs_shap_eV": 0.00481
+    },
+    {
+      "feature": "fp1281",
+      "mean_abs_shap_eV": 0.00458
+    },
+    {
+      "feature": "fp1686",
+      "mean_abs_shap_eV": 0.00383
+    },
+    {
+      "feature": "fp217",
+      "mean_abs_shap_eV": 0.0028
+    }
+  ],
+  "nto_top10_attribution_share": 0.793,
+  "morgan_top10_attribution_share": 0.297,
+  "nto_features_interpretable": 10,
+  "morgan_features_interpretable": 0,
+  "note": "Equal CV-MAE (NTO 0.096 / Morgan 0.091) but NTO attributions are named physical descriptors; Morgan attributions are anonymous hashed substructure bits."
+}

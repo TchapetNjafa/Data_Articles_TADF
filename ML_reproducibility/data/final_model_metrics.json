@@ -1,0 +1,63 @@
+{
+  "headline_model": "RandomForest on energy-free NTO spatial descriptors",
+  "target": "experimental Delta_E_ST (median of literature values)",
+  "n_molecules": 231,
+  "n_scaffolds": 212,
+  "validation": "Bemis-Murcko scaffold GroupKFold (5)",
+  "headline": {
+    "MAE": 0.0956,
+    "MAE_CI": [
+      0.082,
+      0.109
+    ],
+    "R2": 0.2535,
+    "R2_CI": [
+      0.029,
+      0.448
+    ],
+    "Spearman": 0.356
+  },
+  "feature_set_comparison": {
+    "NTO": {
+      "MAE": 0.0956,
+      "MAE_CI": [
+        0.082,
+        0.109
+      ],
+      "R2": 0.2535,
+      "R2_CI": [
+        0.029,
+        0.448
+      ],
+      "Spearman": 0.356
+    },
+    "RDKit": {
+      "MAE": 0.0996,
+      "MAE_CI": [
+        0.088,
+        0.112
+      ],
+      "R2": 0.3114,
+      "R2_CI": [
+        -0.107,
+        0.513
+      ],
+      "Spearman": 0.262
+    },
+    "Morgan": {
+      "MAE": 0.0913,
+      "MAE_CI": [
+        0.077,
+        0.106
+      ],
+      "R2": 0.2744,
+      "R2_CI": [
+        -0.192,
+        0.526
+      ],
+      "Spearman": 0.306
+    }
+  },
+  "dummy_mean_MAE": 0.1069,
+  "raw_stda_MAE": 0.2513
+}

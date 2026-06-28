@@ -1,0 +1,30 @@
+{
+  "n_molecules": 231,
+  "R2": 0.2535,
+  "R2_CI": [
+    0.029,
+    0.448
+  ],
+  "spearman": {
+    "rho": 0.3561,
+    "CI_95": [
+      0.2402,
+      0.4655
+    ],
+    "p_value": 2.5970149489486207e-08
+  },
+  "pearson": {
+    "r": 0.504,
+    "CI_95": [
+      0.257,
+      0.6825
+    ]
+  },
+  "power_analysis": {
+    "method": "Fisher z transform, two-sided, alpha=0.05",
+    "achieved_power_at_n": 0.9999,
+    "n_for_80pct_power": 60,
+    "n_for_90pct_power": 79
+  },
+  "n_bootstrap": 5000
+}

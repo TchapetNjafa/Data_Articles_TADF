@@ -1,0 +1,122 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Cover Letter — Digital Discovery (RSC)
+% Addressed to Prof. Alán Aspuru-Guzik, Editor-in-Chief
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt,a4paper]{letter}
+\usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage{mathptmx}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage[detect-all=true]{siunitx}
+
+\signature{
+  Jean-Pierre Tchapet Njafa\\
+  (on behalf of all authors)
+}
+
+\address{
+  Department of Physics, Faculty of Science\\
+  University of Yaound\'{e}~1\\
+  P.O. Box 812, Yaound\'{e}, Cameroon\\
+  \texttt{jean-pierre.tchapet@facsciences-uy1.cm}
+}
+
+\date{June 27, 2026}
+
+\begin{document}
+
+\begin{letter}{
+  Professor Alán Aspuru-Guzik\\
+  Editor-in-Chief, \textit{Digital Discovery}\\
+  Royal Society of Chemistry\\
+  Thomas Graham House, Science Park\\
+  Milton Road, Cambridge CB4 0WF, UK
+}
+
+\opening{Dear Professor Aspuru-Guzik,}
+
+We are pleased to submit our manuscript entitled \textbf{``How Far Can
+Structure-Based Machine Learning Predict Experimental Singlet--Triplet Gaps?
+An Honest Benchmark for TADF Emitter Triage''} for consideration as a Research
+Article in \textit{Digital Discovery}.
+
+\textbf{Why \textit{Digital Discovery}?}
+The journal has been a leading venue for rigorous, reproducible, and
+self-critical machine learning in chemistry---including negative and
+cautionary results. Our manuscript is in that spirit: a carefully validated
+assessment of what cheap, structure-based ML can and cannot do for a property
+of central interest, with every number reproducible from deposited code.
+
+\textbf{Scientific contributions.}
+The singlet--triplet gap ($\Delta E_\text{ST}$) governs thermally activated
+delayed fluorescence (TADF) emitters. We make four contributions:
+
+\begin{enumerate}
+  \item \textbf{A diagnosis of feature--target leakage.} We show that regressing
+  $\Delta E_\text{ST}$ onto feature sets containing the $S_1$ and $T_1$
+  energies is circular ($\Delta E_\text{ST}\equiv E_{S_1}-E_{T_1}$); reported
+  sub-\num{0.05}~eV accuracies for this set-up reflect arithmetic, not learning---a
+  general leakage failure mode for any property defined as a difference of computed
+  quantities.
+
+  \item \textbf{A scaffold-validated benchmark.} On \num{231} molecules across
+  \num{212} Bemis--Murcko scaffolds, a random forest on energy-free descriptors
+  predicts \emph{experimental} $\Delta E_\text{ST}$ with MAE~$= 0.096$~eV
+  ($R^2 = 0.25$, $\rho = 0.36$); a label-permutation test ($p = 0.001$) confirms the
+  signal is real. Structural descriptors and fingerprints perform equivalently, and
+  the semi-empirical excited-state step adds nothing.
+
+  \item \textbf{An explicit accuracy ceiling.} Inter-laboratory scatter
+  (\num{0.1}--\num{0.15}~eV) and functional dependence of the reference (up to
+  \num{0.58}~eV between B3LYP and CAM-B3LYP) bound achievable accuracy near
+  \num{0.1}~eV; a vertical-versus-adiabatic check (CAM-B3LYP/def2-TZVP) shows the
+  cheap descriptors carry only a systematic, rank-preserving offset. The result has
+  direct implications for how such models should be reported.
+
+  \item \textbf{A practical triage filter} that enriches low-gap candidates by
+  \num{1.2}--\num{1.4}$\times$ over random---useful for prioritisation, not a
+  device-level or emission-spectrum predictor.
+\end{enumerate}
+
+\textbf{Novelty and differentiation.}
+This work is distinct from our two prior \textit{JCIM} publications
+(xTB/sTDA benchmarking and design-rule extraction): here we ask, rigorously,
+what cheap structural data can and cannot support for $\Delta E_\text{ST}$
+prediction, and we report the limitations openly.
+
+\textbf{Open science.}
+All computational data, trained models, SHAP analysis, and Python code are
+openly available on Zenodo (DOI: 10.5281/zenodo.17436069) under CC-BY-4.0
+license, ensuring full reproducibility and enabling extension to new
+chemical spaces.
+
+\textbf{APC waiver.}
+As corresponding author affiliated with the University of Yaoundé I,
+Cameroon, we are eligible for a 100\% APC waiver under the RSC's
+Research4Life programme for authors from low- and middle-income countries.
+We will provide the required documentation upon request.
+
+\textbf{Suggested reviewers.}
+We suggest the following experts who have the relevant background in ML
+for materials discovery and TADF photophysics:
+\begin{itemize}
+  \item Prof. Heather Kulik (MIT) --- ML for molecular design, active learning
+  \item Prof. Andrew Monkman (Durham) --- TADF photophysics, device performance
+  \item Prof. Olexandr Isayev (Carnegie Mellon) --- ML for chemistry
+  \item Prof. Denis Jacquemin (Nantes) --- TD-DFT for excited states
+\end{itemize}
+
+We confirm that this manuscript has not been published elsewhere and is not
+under consideration by any other journal.
+All authors have approved the manuscript and agree to its submission to
+\textit{Digital Discovery}.
+
+We hope you will find this work suitable for publication and look forward
+to your response.
+
+\closing{Yours sincerely,}
+
+\end{letter}
+\end{document}

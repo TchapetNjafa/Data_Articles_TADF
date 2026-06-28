@@ -1,0 +1,47 @@
+{
+  "n_molecules": 231,
+  "cutoff_scan": {
+    "0.3": {
+      "n_clusters": 186,
+      "singleton_fraction": 0.828,
+      "largest_cluster": 7,
+      "MAE": 0.1004,
+      "R2": 0.1244,
+      "rho": 0.353
+    },
+    "0.4": {
+      "n_clusters": 153,
+      "singleton_fraction": 0.739,
+      "largest_cluster": 10,
+      "MAE": 0.1002,
+      "R2": 0.0954,
+      "rho": 0.378
+    },
+    "0.5": {
+      "n_clusters": 111,
+      "singleton_fraction": 0.64,
+      "largest_cluster": 15,
+      "MAE": 0.104,
+      "R2": 0.1058,
+      "rho": 0.31
+    },
+    "0.6": {
+      "n_clusters": 70,
+      "singleton_fraction": 0.571,
+      "largest_cluster": 38,
+      "MAE": 0.0995,
+      "R2": 0.1398,
+      "rho": 0.403
+    }
+  },
+  "scaffold_cv": {
+    "MAE": 0.0956,
+    "R2": 0.2535,
+    "rho": 0.356
+  },
+  "random_cv": {
+    "MAE": 0.106,
+    "R2": 0.0383,
+    "rho": 0.339
+  }
+}

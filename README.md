@@ -5,8 +5,8 @@ related research articles on thermally activated delayed fluorescence (TADF)
 emitters, based on high-throughput computational screening of 747 experimentally
 known molecules, extended to a 22,194-molecule virtual library for Article 3.
 
-> All code and data tested with **Python 3.12**, **scikit-learn 1.7.2**,
-> **RDKit 2024.03**, **SHAP 0.45.0**, available under **CC-BY-4.0** license.
+> Article 3 code and data tested with **Python 3.12**, **scikit-learn 1.8.0**,
+> **RDKit 2024.03+**, **SHAP 0.50.0**, available under **CC-BY-4.0** license.
 
 ---
 
@@ -43,63 +43,52 @@ of molecular architecture, geometry, and electronic structure, it identifies
 
 ---
 
-### Article 3: Accelerated Discovery of TADF Emitters via Physics-Informed Machine Learning and Multi-Fidelity Active Learning
+### Article 3: How Far Can Structure-Based Machine Learning Predict Experimental Singlet–Triplet Gaps? An Honest Benchmark for TADF Emitter Triage
 **Status:** 📝 Submitted to *Digital Discovery*, RSC (June 2026)
 **Authors:** Jean-Pierre Tchapet Njafa, Steve Cabrel Teguia Kouam, Patrick Sorrel
 Mvoto Kongo, Panebei Samafou, Serge Guy Nana Engo
-**Zenodo DOI:** [10.5281/zenodo.14241084](https://doi.org/10.5281/zenodo.14241084)
+**Zenodo DOI:** [10.5281/zenodo.17436069](https://doi.org/10.5281/zenodo.17436069)
 
-Develops a physics-informed multi-fidelity active learning pipeline for
-large-scale TADF emitter discovery. NTO-based spatial descriptors combined with
-SVR models predict ΔE_ST with high accuracy. Active learning achieves a 27.7-fold
-computational reduction over exhaustive TD-DFT. Multi-objective Pareto optimization
-improves discovery efficiency by 45.5%. A virtual library expansion from 747 to
-22,194 molecules (29.7×) demonstrates industrial-scale applicability, yielding a
-nested efficiency exceeding 1000×. Top candidates (DMAC-DPS, PXZ-NAI) exceed
->15% predicted EQE for horticultural and human-centric lighting applications.
+A scaffold-validated, deliberately honest benchmark of how accurately cheap
+structure-based machine learning can predict the **experimental** singlet–triplet
+gap (ΔE_ST). On 231 donor–acceptor molecules spanning 212 Bemis–Murcko scaffolds,
+random forests built from the 2D structure alone (Morgan fingerprints, RDKit
+descriptors) predict the measured ΔE_ST with MAE ≈ 0.096 eV — matching
+physics-informed NTO descriptors that require a semi-empirical excited-state
+calculation, so the excited-state step adds nothing. Accuracy is bounded near
+0.1 eV by experimental inter-report scatter (0.1–0.15 eV) and DFT functional
+dependence (up to 0.58 eV), not by model capacity. The model is a modest triage
+filter (1.2–1.4× enrichment over random); a conformal-bounded top-100 shortlist of
+a 22,194-molecule virtual library is deposited.
 
-#### Key Results (Article 3)
+> ⚠️ **Supersedes an earlier, withdrawn version.** A prior preprint of this work
+> (Zenodo 10.5281/zenodo.14241084) reported an SVR model at MAE 0.025 eV / R² 0.956,
+> a 27.7× active-learning speed-up, multi-objective Pareto optimisation, and
+> device-level EQE / k_RISC predictions. On review those results were found to rest
+> on **feature–target leakage** (regressing ΔE_ST on its own constituent S₁/T₁
+> energies, ΔE_ST ≡ E_{S₁}−E_{T₁}) and on molecule-independent device estimates, and
+> have been **withdrawn**. The honest benchmark below replaces them; the retired
+> active-learning / device scripts and figures have been removed from this deposit.
 
-| Metric | Value |
-|--------|-------|
-| Best ML model | SVR (RBF kernel) |
-| Cross-validation accuracy | MAE = 0.025 eV, R² = 0.956 |
-| Test set accuracy | MAE = 0.024 eV, R² = 0.960 |
-| Training set size | 640 experimental TADF molecules |
-| Feature set | 29 descriptors (energy, NTO, CT, oscillator strength) |
-| SHAP top features | E_T1: 48%, E_S1: 43%, NTO/CT spatial: 8% (SVR KernelSHAP, Config F) |
-| Active learning saving | **27.7× fewer DFT evaluations** (27 vs. 747) |
-| Multi-objective efficiency | **+45.5%** Pareto solutions vs. random sampling |
-| Virtual library size | **22,194 molecules** (29.7× scale-up from 747) |
-| Top candidates identified | **500** (TADF score ≥ 0.9), 8 fully validated |
-| Nested multi-fidelity efficiency | **>1000×** vs. exhaustive TD-DFT on 22,194 mol. |
-| Best candidate (blue emitter) | DMAC-DPS — 425 nm, Soret overlap Ω = 0.99, >15% EQE |
-| Best candidate (red emitter) | PXZ-NAI — 629 nm, Q_y overlap Ω = 0.58, >15% EQE |
-| Adiabatic validation | MAE = 0.195 eV (14 molecules, rigid structures: <0.1 eV) |
+#### Key Results (Article 3, honest benchmark)
 
-#### Model Comparison (5-fold CV)
+| Quantity | Value |
+|----------|-------|
+| Dataset | 231 donor–acceptor molecules / 212 Bemis–Murcko scaffolds |
+| Target | experimental ΔE_ST (median of literature reports) |
+| Best accuracy | MAE = 0.091 eV (Morgan) / 0.096 eV (NTO); R² ≈ 0.25–0.31 |
+| Ranking | Spearman ρ ≈ 0.26–0.36; mean-value baseline MAE = 0.107 eV |
+| Validation | scaffold GroupKFold + label-permutation test (p = 0.001) + Butina cluster-CV (MAE 0.099–0.104) |
+| Capacity test | RF best; HistGBR (0.105), MLP (0.169), SVR (0.120), ElasticNet (0.102) do **not** beat it |
+| Accuracy ceiling | experimental scatter 0.1–0.15 eV; DFT functional dependence up to 0.58 eV |
+| Vertical vs adiabatic | MAE 0.195 eV — systematic, rank-preserving offset (slope 1.00, ρ 0.71) |
+| Triplet manifold | T₁–T₂ extracted for 14 emitters (CAM-B3LYP), mean 0.41 eV, 13/27 < 0.3 eV |
+| Triage | 1.2–1.4× enrichment; deposited top-100 conformal-bounded shortlist (±0.18 eV, 90%) |
+| Circularity / leakage | naive ΔE_ST-on-energies regression is arithmetic, not learning (diagnosed, avoided) |
 
-| Model | CV MAE (eV) | CV R² | Notes |
-|-------|-------------|-------|-------|
-| **SVR (RBF)** | **0.025** | **0.956** | Best overall — used in manuscript |
-| Gradient Boosting | 0.027 | 0.946 | |
-| Random Forest | 0.035 | 0.918 | |
-| Ablation: CT-only (no energies) | 0.099 | 0.619 | Proves NTO descriptors encode genuine physics |
-| Ablation: energy-only | 0.006 | 0.999 | Feature leakage (ΔE_ST ≈ E_S1 − E_T1) |
-
-#### Active Learning Summary
-
-| Strategy | Final MAE (eV) | vs. Random |
-|----------|---------------|------------|
-| **Lower-confidence bound (LCB)** | **0.069** | **best** |
-| Diversity sampling | 0.069 | comparable |
-| Random (baseline) | 0.072 | — |
-| Uncertainty sampling | >0.072 | worse |
-| Upper-confidence bound (UCB) | 0.094 | −29.7% |
-
-LCB active learning reaches Spearman ρ = 0.95 with only 27 TD-DFT evaluations
-(3.6% of the 747-molecule space) — a **27.7-fold reduction** vs. random sampling
-(>200 evaluations needed).
+Headline numbers trace to `ML_reproducibility/data/final_model_metrics.json` and the
+other JSON/CSV outputs in `ML_reproducibility/data/`, regenerated by the scripts in
+`ML_reproducibility/code/`.
 
 ---
 
@@ -107,13 +96,15 @@ LCB active learning reaches Spearman ρ = 0.95 with only 27 TD-DFT evaluations
 
 1. **Article 1** establishes the xTB/sTDA high-throughput screening protocol (747 molecules)
 2. **Article 2** extracts quantitative design rules and identifies 127 high-performance candidates
-3. **Article 3** builds a physics-informed ML/AL framework for multi-objective discovery
-   and scales it to a 22,194-molecule virtual library
+3. **Article 3** asks, with scaffold-validated rigour, how far cheap structural
+   features can predict the *experimental* ΔE_ST, and reports the limits openly
 
 All three articles share the same 747-molecule core dataset and computational
-infrastructure. Article 3 extends this with the virtual library expansion
-(see `virtual_library_expansion/`) and the Digital Discovery manuscript figures
-(see `ML_reproducibility/figures/`).
+infrastructure. Article 3 evaluates the 231-molecule experimentally-labelled subset,
+extends the chemical space with the virtual library (see `virtual_library_expansion/`),
+and deposits its honest analysis code and outputs in `ML_reproducibility/code/` and
+`ML_reproducibility/data/`. The manuscript (PDF + sources) is in
+`ARTICLEs_TADF/Article3_TADF-Emitter-Triage-Honest-Benchmark/`.
 
 ---
 
@@ -124,7 +115,7 @@ infrastructure. Article 3 extends this with the virtual library expansion
 - **`interactive_umap.html`** — Interactive UMAP visualization of the 747-molecule
   chemical space (hover for molecule details: name, ΔE_ST, architecture). Open in
   any modern web browser. Referenced in the Article 3 Data Availability statement
-  (DOI: 10.5281/zenodo.14241084).
+  (DOI: 10.5281/zenodo.17436069).
 - **`Data_AllGas_results.csv`** — Physical properties and computational results for
   all 747 molecules (gas phase)
 - **`Data_AllTol_results.csv`** — Physical properties and computational results for
@@ -171,52 +162,41 @@ Raw calculation outputs for all 747 molecules.
 - `nto_orbital_overlap_747mol.csv` — NTO hole-electron overlap integrals (Multiwfn)
 - `DMAC-DPS_gas.tar.gz`, `DMAC-DPS_toluene.tar.gz` — Example complete calculation archives
 
-### `ML_reproducibility/` — Complete ML/AL package (Article 3)
+### `ML_reproducibility/` — Honest ML benchmark package (Article 3)
 
-Full ML training, active learning, SHAP analysis, and figure generation for
-Article 3. See the **Machine Learning Reproducibility Guide** section below.
+Analysis code and verified outputs for the structure-based ΔE_ST benchmark. Every
+headline number traces to a file in `data/`, regenerated by a script in `code/`.
 
-**`features/`** — Pre-computed descriptor tables:
-- `combined_features_747mol.csv` — Main feature table (38 descriptors × 2,943 samples)
-- `combined_features_747mol_with_ct.csv` — Extended with all CT descriptors
-- `combined_features_747mol_full_ct.csv` — Full CT descriptor set
-- `ct_descriptors_747mol.csv` — Charge-transfer descriptors (S_he, Ω_CT, Λ_D, Λ_A, Δr)
-- `stda_features_747mol.csv` — sTDA/sTD-DFT-xTB energy features
+**`code/`** — Analysis scripts:
+- `_dataset.py` — shared loader defining the 231-molecule / 212-scaffold set
+- `finalize_model.py` — headline random forest, metrics, and Fig 1
+- `compute_baselines.py`, `r2_ci_power_analysis.py` — baselines, bootstrap CIs, power analysis
+- `scaffold_split_analysis.py`, `cluster_cv_analysis.py` — split rigour (label-permutation + Butina cluster-CV)
+- `capacity_and_noise_ceiling.py`, `dimensionality_check.py` — capacity and over-parameterisation tests
+- `permutation_importance_check.py` — SHAP cross-check
+- `extract_triplet_manifold.py` — T₁/T₂ extraction from ORCA outputs
+- `adiabatic_validation_analysis.py` — vertical vs adiabatic gap
+- `enrichment_curve.py`, `triage_evaluation.py`, `build_shortlist.py` — triage + conformal shortlist
+- `create_dft_benchmark_table.py`, `uq_calibration.py`, `si_supplementary_data.py`, `interactive_umap.py` — SI artifacts
 
-**`results/`** — Model outputs and SHAP values:
-- `advanced_ml_results.json` — SVR/GB/RF model comparison (8 features)
-- `advanced_predictions.json` — Per-molecule predictions (all 2,943 samples)
-- `predictions_747mol.csv` — Predictions in CSV format
-- `advanced_al_results.json` — Active learning results (all 6 acquisition functions)
-- `shap_svr_modelC_configF_article3.csv` — **Authoritative SHAP** (SVR KernelSHAP, Config F, 29 feat)
-- `shap_svr_modelA_energy_only.csv` — Model A ablation SHAP (energy-only)
-- `shap_svr_modelD_ct_only.csv` — Model D ablation SHAP (CT-only, R²=0.619)
-- `ablation_summary_svr_article3.json` — Model A/C/D performance comparison
-- `shap_svr_article3_correction_note.json` — Correction record (RF Gini → SVR KernelSHAP)
+**`data/`** — Verified model outputs:
+- `final_model_metrics.json` — headline MAE/R²/ρ and feature-set comparison
+- `scaffold_split_analysis.json`, `cluster_cv.json` — validation rigour
+- `ceiling_tests.json`, `dim_check.json` — capacity / dimensionality
+- `triplet_manifold.csv` (+ `triplet_manifold_stats.json`) — T₁–T₂ manifold (14 emitters)
+- `vertical_vs_adiabatic_comparison.csv`, `adiabatic_validation_stats.json` — adiabatic check
+- `enrichment_curve.json`, `triage_metrics.json`, `shortlist_top100.csv` — triage + deposited shortlist
+- `shap_*`, `perm_importance.json`, `dft_benchmark_*` — supporting analyses
 
-**`figures/`** — All manuscript-ready figures (PDF+PNG):
+**`features/`** — Pre-computed descriptor tables (model inputs):
+- `combined_features_747mol_full_ct.csv` — full NTO/CT descriptor set (the model's feature source)
+- `ct_descriptors_747mol.csv`, `stda_features_747mol.csv`, `combined_features_747mol.csv`
 
-*Article 3 Digital Discovery figures (new):*
-- `fig1_model_performance.{pdf,png}` — Model comparison + parity plot + SHAP
-- `fig1c_shap_beeswarm.{pdf,png}` — SHAP beeswarm plot (all features)
-- `fig1c_model_c_shap.{pdf,png}` — Model C SHAP summary
-- `fig2_active_learning.{pdf,png}` — Active learning convergence (27.7× reduction)
-- `fig3_multi_objective.{pdf,png}` — Multi-objective Pareto optimization (45.5% gain)
-- `fig4_device_predictions.{pdf,png}` — SOC + Marcus device predictions (>15% EQE)
-- `fig5_pipeline.{pdf,png}` — Full multi-fidelity pipeline overview (22,194 mol.)
-- `fig_si_calibration.{pdf,png}` — GPR uncertainty calibration (ECE = 0.301)
-- `fig_si_supplementary_distributions.{pdf,png}` — Supplementary property distributions
+**`scripts/data_processing/`** — feature-building scripts (sTDA parsing, CT/NTO extraction, feature merge).
 
-*Legacy figures (Articles 1–2, preserved for reference):*
-- `parity_plot_747mol.{pdf,png,pgf}` — SVR parity plot
-- `feature_importance_747mol.{pdf,png,pgf}` — Original RF Gini importance (preserved)
-- `feature_importance_747mol_v2_article3.{pdf,png}` — Corrected SVR KernelSHAP figure
-- `al_learning_curves_747mol.{pdf,png,pgf}` — AL learning curves
-- `al_acquisition_comparison.{pdf,png,pgf}` — 6-strategy AL comparison
-- `enhanced_ml_comparison.{pdf,png}` — Multi-model performance comparison
-- `vertical_vs_adiabatic_comparison.{pdf,png}` — Adiabatic validation
-
-**`scripts/`** — Training and analysis scripts (see ML Reproducibility Guide below)
+> ⚠️ The active-learning, multi-objective, device-prediction and SVR-Model-C
+> scripts, result files and figures from the earlier (withdrawn) version have been
+> **removed** from this deposit; their claims do not appear in the current manuscript.
 
 ### `adiabatic_validation/` — ORCA adiabatic validation (Article 3)
 
@@ -257,10 +237,13 @@ Manuscript LaTeX sources and supporting information for Articles 1–2.
 - **29 descriptors** in 5 categories: energy, NTO overlaps, CT descriptors,
   oscillator strength, proxy RespA
 
-### ML and Active Learning
-- **scikit-learn (v1.7.2)** — SVR (best model), Gradient Boosting, Random Forest
-- **SHAP (v0.45.0)** — KernelSHAP for SVR feature importance
-- 5-fold cross-validation on 2,943 configurations (80/20 train-test split)
+### Machine Learning
+- **scikit-learn (v1.8.0)** — random forest (headline model), with gradient boosting,
+  MLP, SVR and ElasticNet evaluated as capacity controls (none beats the RF)
+- **SHAP (v0.50.0)** — exact TreeSHAP for random-forest feature importance,
+  cross-checked by model-agnostic permutation importance
+- Bemis–Murcko scaffold GroupKFold (k = 5) on 231 experimentally-labelled molecules,
+  with label-permutation and Butina cluster-CV robustness checks
 
 ### High-Level Validation
 - **ORCA (v6.1.0)** — Adiabatic S1/T1 optimization (14 molecules); CAM-B3LYP/def2-TZVP
@@ -276,65 +259,64 @@ Manuscript LaTeX sources and supporting information for Articles 1–2.
 
 ```
 ML_reproducibility/
-├── scripts/
-│   ├── data_processing/
-│   │   ├── build_features_747mol.py           # Merge all features into one CSV
-│   │   ├── extract_stda_features_747mol.py    # Parse sTDA/sTD-DFT log files
-│   │   ├── compute_ct_descriptors_747mol.py   # Extract CT from NTO molden files
-│   │   ├── merge_ct_features_747mol.py        # Combine energy + CT features
-│   │   └── run_hole_electron_analysis.sh      # Batch Multiwfn NTO analysis
-│   └── experiments/
-│       ├── advanced_ml_pipeline.py            # SVR + GB + RF benchmark
-│       ├── advanced_al_experiment.py          # All 6 acquisition functions
-│       ├── run_svr_shap_verification.py       # SVR KernelSHAP (Config F, 29 feat)
-│       ├── ablation_study.py                  # Feature ablation (Models A/C/D)
-│       ├── applicability_domain.py            # k-NN distance + leverage AD
-│       ├── spectral_application_analysis.py   # Spectral overlap screening
-│       ├── identify_candidates.py             # Multi-objective candidate filtering
-│       ├── generate_advanced_figures.py       # Manuscript figures
-│       └── interpret_model_shap.py            # SHAP importance plots
-├── features/                                  # Pre-computed descriptor tables
-├── results/                                   # Model outputs and SHAP values
-└── figures/                                   # All manuscript figures
+├── code/                                       # Honest analysis scripts
+│   ├── _dataset.py                             # Shared 231-molecule / 212-scaffold loader
+│   ├── finalize_model.py                       # Headline RF, metrics, Fig 1
+│   ├── compute_baselines.py                    # Mean/median/permutation baselines + CIs
+│   ├── r2_ci_power_analysis.py                 # R² bootstrap CI + correlation power
+│   ├── scaffold_split_analysis.py             # Label-permutation test, scaffold overlap
+│   ├── cluster_cv_analysis.py                 # Butina cluster cross-validation
+│   ├── capacity_and_noise_ceiling.py          # RF vs GBR/MLP/SVR/EN; clean-label test
+│   ├── dimensionality_check.py                # Morgan 512/1024/2048 + regularised refs
+│   ├── permutation_importance_check.py        # SHAP cross-check
+│   ├── extract_triplet_manifold.py            # T1/T2 from ORCA outputs
+│   ├── adiabatic_validation_analysis.py       # Vertical vs adiabatic gap
+│   ├── enrichment_curve.py                    # Triage precision curve + conformal
+│   ├── triage_evaluation.py                   # Enrichment / precision@k + shortlist band
+│   └── build_shortlist.py                     # Top-100 conformal-bounded shortlist
+├── data/                                       # Verified outputs (every headline number)
+├── features/                                   # Pre-computed descriptor tables (inputs)
+└── scripts/data_processing/                    # Feature-building (sTDA parse, CT/NTO, merge)
 ```
 
-### Feature Description (29-Descriptor Set, Config F)
+### Feature set (35 NTO spatial descriptors, energy scalars excluded)
 
-| Category | Features | SHAP Importance |
-|----------|----------|----------------|
-| Energy | E_S1, E_T1, HOMO-LUMO gap | 92% (E_T1=48%, E_S1=43%) |
-| NTO/CT descriptors | S_he^S1, S_he^T1, Ω_CT, Λ_D, Λ_A, Δr (S1+T1+diffs) | 8% |
-| Oscillator strength | f_S1 | 0.5% |
-| NTO overlap | S_NTO^S1, S_NTO^T1 | <1% |
-| Proxy RespA | ΔS_NTO, products, log-transforms | <1% |
+The model is trained on 35 natural-transition-orbital spatial descriptors
+(hole–electron overlap S_he, CT number, donor/acceptor weights, separation Δr,
+localisation and composites). The S₁/T₁ **energy scalars are deliberately excluded**:
+including them makes the task circular (ΔE_ST ≡ E_{S₁}−E_{T₁}). Structure-only Morgan
+fingerprints and RDKit descriptors match this NTO set, so the excited-state step adds
+no accuracy. Exact TreeSHAP attributes ~60% of the weight to the top five descriptors,
+led by S_he(S₁); the ranking is reproduced by permutation importance.
 
-> **SHAP note:** Values above are from SVR KernelSHAP, Config F (29 features,
-> 5-fold CV, seeds 42/123/777). Earlier README versions cited RF Gini importances.
-> Those values are superseded. See `results/shap_svr_article3_correction_note.json`.
-
-### Reproducing the ML Results
+### Reproducing the ML results
 
 ```bash
 # 1. Install dependencies
 python3 -m venv venv && source venv/bin/activate
-pip install numpy pandas scikit-learn==1.7.2 shap matplotlib joblib rdkit-pypi
+pip install numpy pandas scikit-learn shap rdkit matplotlib scipy
 
-# 2. Train SVR (reproduces Table 1 of manuscript)
-cd ML_reproducibility/scripts/experiments
-python advanced_ml_pipeline.py
-# -> results/advanced_ml_results.json  (SVR: MAE=0.025 eV, R²=0.956)
+# 2. Headline model + metrics (MAE 0.096 eV, R² 0.25, rho 0.36)
+cd ML_reproducibility/code
+python finalize_model.py            # -> ../data/final_model_metrics.json + Fig 1
 
-# 3. Reproduce Article 3 authoritative SHAP values (Config F)
-python run_svr_shap_verification.py
-# -> results/shap_svr_modelC_configF_article3.csv
+# 3. Validation rigour
+python scaffold_split_analysis.py   # permutation test, p = 0.001
+python cluster_cv_analysis.py       # Butina cluster-CV (MAE 0.099-0.104)
 
-# 4. Run active learning (all 6 strategies)
-python advanced_al_experiment.py
-# -> results/advanced_al_results.json
+# 4. Ceiling tests (capacity + dimensionality)
+python capacity_and_noise_ceiling.py
+python dimensionality_check.py
 
-# 5. Reproduce manuscript figures
-python generate_advanced_figures.py
+# 5. Triplet manifold, triage curve, conformal shortlist
+python extract_triplet_manifold.py
+python enrichment_curve.py
+python build_shortlist.py           # -> ../data/shortlist_top100.csv
 ```
+
+> Scripts use paths as published; the feature matrix is in
+> `ML_reproducibility/features/combined_features_747mol_full_ct.csv`. Re-run from the
+> manuscript repository for exact path resolution.
 
 ---
 
@@ -363,9 +345,10 @@ needed for quantitative k_RISC prediction.
 
 **Core dataset:** 747 TADF emitter molecules (Articles 1–2)
 spanning D-A, D-A-D, MR-TADF, TSCT, and other architectures.
-**Training set:** 640 molecules (used in Article 3 ML models)
-**Configurations:** 2,943 (2 calculation methods × 2 environments: gas + toluene)
-**Features:** 29 descriptors per configuration (Config F)
+**Article 3 benchmark set:** 231 molecules with an experimentally-reported ΔE_ST
+matched to a structure, spanning 212 Bemis–Murcko scaffolds.
+**Features:** 35 NTO spatial descriptors (energy scalars excluded), plus structure-only
+Morgan-fingerprint and RDKit baselines.
 
 **Virtual library expansion:** 22,194 molecules (Article 3, REQ-1)
 Source: PubChem CID-SMILES (January 2026), filtered for TADF-relevant D-A structures.
@@ -382,7 +365,7 @@ chemical space as a UMAP scatter plot. Hover over any point to see:
 - Molecular architecture
 - TADF score
 
-This file is part of the Article 3 open-data package (DOI: 10.5281/zenodo.14241084).
+This file is part of the Article 3 open-data package (DOI: 10.5281/zenodo.17436069).
 
 ---
 
@@ -411,14 +394,14 @@ If you use this data or scripts, please cite the relevant article(s):
 }
 
 @article{tchapet2026ml,
-  title   = {Accelerated Discovery of TADF Emitters via Physics-Informed Machine
-             Learning and Multi-Fidelity Active Learning},
+  title   = {How Far Can Structure-Based Machine Learning Predict Experimental
+             Singlet--Triplet Gaps? An Honest Benchmark for TADF Emitter Triage},
   author  = {Tchapet Njafa, Jean-Pierre and Teguia Kouam, Steve Cabrel and
              Mvoto Kongo, Patrick Sorrel and Samafou, Panebei and
              Nana Engo, Serge Guy},
   journal = {Digital Discovery},
   year    = {2026},
-  doi     = {10.5281/zenodo.14241084}
+  doi     = {10.5281/zenodo.17436069}
 }
 ```
 

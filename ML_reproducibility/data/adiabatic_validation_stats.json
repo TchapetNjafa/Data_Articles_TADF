@@ -1,0 +1,21 @@
+{
+  "level_vertical": "sTDA-xTB (ground-state geometry)",
+  "level_adiabatic": "CAM-B3LYP/def2-TZVP, D3BJ, excited-state optimisation (ORCA)",
+  "n_points": 27,
+  "n_molecules": 14,
+  "phases": [
+    "gas",
+    "toluene"
+  ],
+  "mae_eV": 0.195,
+  "rmse_eV": 0.245,
+  "mean_bias_adiabatic_minus_vertical_eV": 0.071,
+  "pearson_r2": 0.704,
+  "spearman_rho": 0.711,
+  "linear_fit": {
+    "slope": 1.002,
+    "intercept_eV": 0.07
+  },
+  "max_abs_dev_eV": 0.548,
+  "max_abs_dev_molecule": "2CzTPE (gas)"
+}

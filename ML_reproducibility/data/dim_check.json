@@ -1,0 +1,46 @@
+{
+  "Morgan_512_RF": {
+    "MAE": 0.0983,
+    "R2": 0.1504,
+    "R2_CI": [
+      -0.435,
+      0.461
+    ]
+  },
+  "Morgan_1024_RF": {
+    "MAE": 0.0955,
+    "R2": 0.2435,
+    "R2_CI": [
+      -0.254,
+      0.512
+    ]
+  },
+  "Morgan_2048_RF": {
+    "MAE": 0.0913,
+    "R2": 0.2744,
+    "R2_CI": [
+      -0.192,
+      0.526
+    ]
+  },
+  "RDKit_ElasticNet": {
+    "MAE": 0.103,
+    "R2": 0.2098,
+    "R2_CI": [
+      -0.072,
+      0.348
+    ]
+  },
+  "NTO_ElasticNet": {
+    "MAE": 0.1024,
+    "R2": 0.1039,
+    "R2_CI": [
+      -0.033,
+      0.17
+    ]
+  },
+  "_summary": {
+    "note": "lower R2 CI >= 0 means the model is distinguishable from the mean at 95%",
+    "settings_with_nonneg_R2_CI": []
+  }
+}

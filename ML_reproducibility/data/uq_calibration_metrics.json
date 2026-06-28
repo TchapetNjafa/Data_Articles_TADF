@@ -1,0 +1,12 @@
+{
+  "ECE": 0.4972,
+  "NLL": 14806.3433,
+  "CRPS": 0.2327,
+  "mean_sigma": 0.0025,
+  "n_validation": 640,
+  "calibration_quality": "over-confident",
+  "T_optimal": 49.749,
+  "ECE_calibrated": 0.3007,
+  "NLL_calibrated": 4.6354,
+  "calibration_note": "Raw GPR is over-confident (ECE=0.497). Temperature scaling (T=49.7) corrects to ECE=0.301. This is expected for standard GPR on molecular data and is addressed by reporting calibrated uncertainties in the AL loop."
+}

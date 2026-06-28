@@ -1,0 +1,21 @@
+{
+  "n_est_rows": 1490,
+  "phase_metadata_rows_present": 0,
+  "n_benchmark_molecules": 231,
+  "n_multi_report_molecules": 102,
+  "intra_molecule_range_eV": {
+    "mean": 0.062,
+    "median": 0.0,
+    "p90": 0.17,
+    "max": 1.086,
+    "frac_exceeding_model_MAE": 0.196
+  },
+  "intra_molecule_std_eV": {
+    "mean": 0.036,
+    "median": 0.0,
+    "max": 0.564
+  },
+  "single_report_rmse_about_median_eV": 0.072,
+  "model_mae_eV": 0.096,
+  "note": "phase/atmosphere unrecorded in corpus; heterogeneity quantified via inter-report spread, the empirical proxy for uncontrolled solvent/host/method"
+}

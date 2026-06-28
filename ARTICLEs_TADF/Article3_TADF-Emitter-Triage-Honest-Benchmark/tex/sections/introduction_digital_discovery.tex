@@ -1,0 +1,122 @@
+% ============================================================
+% Digital Discovery Introduction — ML/AI Emphasis with Application Context
+% Flow: Agricultural/human-centric lighting need → TADF opportunity →
+%       Computational bottleneck → Existing ML limitations →
+%       Our contributions (accelerated discovery framework)
+% ============================================================
+
+\section{Introduction}\label{sec:introduction}
+
+\subsection{Application-driven materials discovery: horticultural and human-centric lighting}
+
+Controlled-environment agriculture and human-centric lighting both demand
+spectrally tunable, energy-efficient light sources: lighting can reach 40--60\% of
+operating costs in vertical farms~\cite{Bugbee2016}, and matching emission to
+chlorophyll absorption or circadian (melanopic) response bands improves
+efficiency~\cite{Lichtenthaler1987, Lucas2014}. Commercial inorganic LEDs rely on
+rare-earth phosphors (Eu, Tb, Y) with broad emission and supply-chain
+risk~\cite{Yokoyama_2018}, motivating tunable, heavy-metal-free organic alternatives.
+
+Thermally activated delayed fluorescence (TADF) materials are such an alternative:
+organic emitters that harvest both singlet and triplet excitons through
+donor--acceptor architectures, achieving near-unity internal quantum efficiency
+\emph{without} heavy metals~\cite{Uoyama2012}.
+Their emission is molecularly tunable and their synthesis avoids rare-earth
+supply-chain risks~\cite{Golroudbary2022, Zapp2022}.
+However, realizing this potential requires navigating a vast chemical space
+of donor--acceptor combinations while satisfying competing requirements:
+a minimal singlet-triplet energy gap ($\Delta E_\text{ST} < \qty{0.2}{\electronvolt}$),
+efficient reverse intersystem crossing ($k_\text{RISC} > \qty{1e6}{\per\second}$),
+and spectral overlap with target photoreceptor absorption bands. This paper
+addresses only the first of these---the $\Delta E_\text{ST}$ gap. The
+rate-constant and device-efficiency requirements demand spin--orbit-coupling and
+device-level calculations beyond the cheap structural data studied here, and we
+make no quantitative claim about them (\cref{subsec:limitations}).
+
+\subsection{The computational bottleneck and the role of machine learning}
+
+Designing such emitters means searching a large space of donor--acceptor
+combinations for a small $\Delta E_\text{ST}$. The direct route---time-dependent
+DFT on excited states---scales steeply with system size~\cite{Curtarolo2013},
+so exhaustive screening of more than a few hundred candidates is impractical.
+Machine learning offers a cheaper surrogate~\cite{Butler2018, Pyzer-Knapp2022},
+and several groups have predicted TADF gaps from molecular
+descriptors~\cite{Gomez-Bombarelli2016, Barneschi2024}. Those low reported errors,
+however, are obtained against \emph{computed} (TD-DFT or higher) reference gaps;
+predicting the \emph{experimental} gap is markedly harder, to the point that one
+study abandoned direct regression for classification~\cite{Nigam2024}
+(\cref{subsec:comparison}).
+
+Two problems recur in this literature, and we confront both. First, accuracy is
+often quoted against a single random train--test split, which rewards
+interpolation within familiar scaffolds and overstates how a model behaves on new
+chemistry. Second, and more subtle, models are sometimes trained to reproduce a
+\emph{computed} gap from a feature set that already contains the constituent
+excitation energies; because $\Delta E_\text{ST}\equiv E_{S_1}-E_{T_1}$, this
+reduces to subtraction and the reported accuracy reflects arithmetic rather than
+learning.
+
+Our earlier work set the stage: Article~1~\cite{Tchapet2024_xTB} benchmarked
+GFN2-xTB/sTDA against \num{747} experimental molecules
+(MAE = \qty{0.162}{\electronvolt}), and Article~2~\cite{Tchapet2024_DataDriven}
+extracted structure--property design rules from that set. Here we ask the
+narrower, sharper question those studies left open: starting only from cheap
+structural information, how accurately can a model predict the \emph{measured}
+$\Delta E_\text{ST}$, and what sets the limit?
+
+\subsection{Our contributions: an honest benchmark of structure-based prediction}
+
+Rather than claim a new high-accuracy predictor, we ask---and answer
+carefully---how far cheap, structure-based machine learning can go in predicting
+the \emph{experimental} singlet--triplet gap, and we are explicit about where it
+fails. The primary result is a scaffold-validated benchmark with a calibrated
+accuracy ceiling: 2D structure alone predicts the measured gap as well as
+semi-empirical excited-state features, and we quantify why neither does better. A
+secondary, cautionary contribution is methodological---a reminder that
+excited-state-energy \emph{leakage} inflates reported accuracy for any property
+defined as a difference of computed quantities. The contributions are four.
+
+\paragraph{Structure alone, with no excited-state calculation, does as well as anything.}
+On \num{231} molecules across \num{212} Bemis--Murcko scaffolds, random forests built
+from the 2D structure alone---Morgan fingerprints (MAE = \qty{0.091}{\electronvolt}) and
+RDKit descriptors (\qty{0.100}{\electronvolt})---match descriptors derived from a
+semi-empirical excited-state calculation (NTO spatial features,
+\qty{0.096}{\electronvolt}). The result holds across scaffold, cluster and random
+cross-validation and against a label-permutation null, so it is not a splitting
+artefact. The excited-state step buys nothing for the $S_1$--$T_1$ gap; SHAP nonetheless
+ties the NTO variant to hole--electron overlap and charge transfer, giving an
+interpretable read on what structure encodes.
+
+\paragraph{An explicit, tested accuracy ceiling.}
+We quantify why accuracy saturates near \qty{0.1}{\electronvolt}: independent
+experimental reports for the same compound disagree by
+\qtyrange{0.1}{0.15}{\electronvolt}, and the computed reference is
+functional-dependent (B3LYP vs CAM-B3LYP differ by up to
+\qty{0.58}{\electronvolt}). The ceiling is not an excuse: no higher-capacity learner
+(gradient boosting, MLP, SVR) beats the random forest, and the result places itself
+honestly at $R^2 \approx 0.25$, a real but limited signal bounded by data quality
+rather than model capacity.
+
+\paragraph{A cautionary note on feature--target leakage.}
+Secondary to the benchmark, we flag that regressing $\Delta E_\text{ST}$ on features
+containing the $S_1$/$T_1$ energies is circular ($\Delta E_\text{ST} \equiv E_{S_1} -
+E_{T_1}$): the model returns arithmetic, invisible to cross-validation. Such
+feature--target leakage is a recognised cause of over-optimistic ML results~\cite{Kapoor2023}
+and is singled out in best-practice guidance for chemistry,\cite{Artrith2021} yet remains
+easy to introduce whenever the target is a derived energy difference.
+
+\paragraph{Modest, quantified triage utility---and no device claims.}
+As a pre-screen for TADF viability, the model enriches low-gap candidates
+(\numrange{1.2}{1.4}$\times$ over random selection), and we deposit a conformal-bounded
+ranked shortlist of the enumerated library---useful for prioritisation but far from
+decisive. $\Delta E_\text{ST}$ is necessary but not sufficient for TADF efficiency;
+emission-wavelength matching for any specific lighting niche is a separate, downstream
+step not addressed here. We make no device-level performance claims; our earlier
+spin--orbit-coupling estimates of $k_\text{RISC}$ and external quantum
+efficiency proved molecule-independent and were withdrawn.
+
+This study builds on our earlier work---\textbf{Article 1}~\cite{Tchapet2024_xTB}
+(xTB/sTDA validation) and \textbf{Article 2}~\cite{Tchapet2024_DataDriven} (design
+rules)---by asking, rigorously, what such cheap data can and cannot support.
+All data, trained models, and code are openly available (Zenodo DOI:
+10.5281/zenodo.17436069), enabling reproduction and extension of the benchmark.

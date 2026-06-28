@@ -1,0 +1,39 @@
+{
+  "n_molecules": 231,
+  "n_scaffolds": 212,
+  "singleton_scaffold_fraction": 0.929,
+  "scaffold_split": {
+    "shared_scaffolds_per_fold": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "nn_tanimoto_mean": 0.592,
+    "nn_tanimoto_median": 0.587
+  },
+  "random_split": {
+    "shared_scaffolds_per_fold": [
+      3,
+      5,
+      7,
+      8,
+      7
+    ],
+    "nn_tanimoto_mean": 0.615,
+    "nn_tanimoto_median": 0.618
+  },
+  "nn_similarity_delta": 0.022,
+  "permutation_test": {
+    "n_permutations": 1000,
+    "true_cv_mae": 0.0956,
+    "null_mae_mean": 0.121,
+    "null_mae_std": 0.0043,
+    "null_mae_ci": [
+      0.1121,
+      0.1294
+    ],
+    "p_value_left_tail": 0.001
+  }
+}

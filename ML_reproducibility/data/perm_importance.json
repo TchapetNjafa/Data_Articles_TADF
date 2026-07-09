@@ -1,0 +1,38 @@
+{
+  "method": "sklearn permutation_importance (held-out 30%, 50 repeats, neg-MAE)",
+  "perm_top5": [
+    "S1_S_he",
+    "Log_Abs_T1",
+    "Delta_S_he",
+    "Delta_Delta_r",
+    "S_NTO_ratio"
+  ],
+  "shap_top5": [
+    "S1_S_he",
+    "S_NTO_ratio",
+    "S1_osc_strength",
+    "S1_Delta_r",
+    "T1_S_he"
+  ],
+  "overlap_top5": [
+    "S1_S_he",
+    "S_NTO_ratio"
+  ],
+  "n_overlap": 2,
+  "shap_feature_perm_ranks": {
+    "S1_S_he": 1,
+    "S_NTO_ratio": 5,
+    "S1_osc_strength": 35,
+    "S1_Delta_r": 34,
+    "T1_S_he": 33
+  },
+  "perm_top5_importance_eV": [
+    0.0045,
+    0.0019,
+    0.0012,
+    0.0007,
+    0.0007
+  ],
+  "top1_agreement": true,
+  "verdict": "leading descriptor S1_S_he ranks #1 by BOTH methods; 2/5 of the SHAP top-5 recur in the permutation top-5. The dominant attribution is corroborated by two independent methods; the lower-ranked tail is not, consistent with reading only the leading feature mechanistically."
+}

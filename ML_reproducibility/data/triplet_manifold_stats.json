@@ -1,0 +1,13 @@
+{
+  "n_files": 27,
+  "n_molecules": 14,
+  "level": "CAM-B3LYP/def2-TZVP TDA, vertical (ORCA)",
+  "T1_T2_gap_eV": {
+    "mean": 0.414,
+    "median": 0.383,
+    "min": 0.018,
+    "max": 1.501
+  },
+  "n_small_gap_lt_0p3": 13,
+  "n_total": 27
+}

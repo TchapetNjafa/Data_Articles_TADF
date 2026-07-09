@@ -1,0 +1,25 @@
+{
+  "n_molecules": 231,
+  "n_features": 35,
+  "n_bootstrap": 200,
+  "topk": 5,
+  "canonical_top5": [
+    "S1_S_he",
+    "S_NTO_ratio",
+    "S1_osc_strength",
+    "S1_Delta_r",
+    "T1_S_he"
+  ],
+  "canonical_top5_attribution_share": 0.606,
+  "canonical_top1": "S1_S_he",
+  "canonical_top1_share": 0.287,
+  "per_feature_bootstrap_stability": {
+    "S1_S_he": 0.995,
+    "S_NTO_ratio": 0.74,
+    "S1_osc_strength": 0.72,
+    "S1_Delta_r": 0.68,
+    "T1_S_he": 0.595
+  },
+  "mean_top5_overlap": 3.73,
+  "frac_bootstrap_recovering_ge4_of_top5": 0.645
+}

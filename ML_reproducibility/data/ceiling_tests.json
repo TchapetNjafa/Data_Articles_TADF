@@ -1,0 +1,51 @@
+{
+  "capacity_test": {
+    "note": "same scaffold GroupKFold(5), NTO features, 231 molecules",
+    "results": {
+      "RandomForest (headline)": {
+        "MAE": 0.0956,
+        "R2": 0.2535,
+        "rho": 0.356
+      },
+      "HistGradientBoosting": {
+        "MAE": 0.1054,
+        "R2": 0.035,
+        "rho": 0.342
+      },
+      "MLP (100,50)": {
+        "MAE": 0.169,
+        "R2": -1.2254,
+        "rho": 0.113
+      },
+      "SVR (RBF)": {
+        "MAE": 0.12,
+        "R2": -0.1926,
+        "rho": 0.168
+      },
+      "ElasticNetCV": {
+        "MAE": 0.1024,
+        "R2": 0.1039,
+        "rho": 0.305
+      }
+    },
+    "rf_mae": 0.0956,
+    "models_beating_rf": [],
+    "verdict": "no model beats RF -> capacity is not the limit"
+  },
+  "clean_label_test": {
+    "sd_threshold_eV": 0.05,
+    "n_clean": 208,
+    "n_full": 231,
+    "clean_subset": {
+      "MAE": 0.1056,
+      "R2": 0.08,
+      "rho": 0.323
+    },
+    "full_set_rf": {
+      "MAE": 0.0956,
+      "R2": 0.2535,
+      "rho": 0.356
+    },
+    "verdict": "no improvement on clean labels"
+  }
+}

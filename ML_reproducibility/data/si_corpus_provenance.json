@@ -1,0 +1,17 @@
+{
+  "raw_rows": 1520,
+  "rows_specifier_EST": 1490,
+  "rows_value_parsed": 1490,
+  "rows_value_unparseable": 0,
+  "rows_in_physical_range": 1490,
+  "rows_dropped_out_of_range": 0,
+  "name_value_matches": 363,
+  "unique_molecules_matched": 231,
+  "molecules_with_multiple_reports": 102,
+  "median_inter_report_spread_eV": 0.0,
+  "max_inter_report_spread_eV": 0.564,
+  "molecules_dropped_no_valid_smiles": 0,
+  "final_benchmark_n": 231,
+  "final_scaffolds": 212,
+  "matching_rule": "compound.names exploded; exact string match to feature-set molecule ids; specifier must contain \"EST\"; standard_value in [-0.3,1.5] eV; per-molecule median over reports; SMILES from Data_Ref.csv (RDKit-parseable)."
+}

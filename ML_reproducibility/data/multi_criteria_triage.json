@@ -1,0 +1,72 @@
+{
+  "n_total": 231,
+  "n_after_composite_filter": 131,
+  "base_rate": 0.4935,
+  "delta_est_threshold_eV": 0.1,
+  "oscillator_threshold": 0.01,
+  "t1t2_threshold_eV": 0.1,
+  "single_criterion_curve": [
+    {
+      "fraction": 0.05,
+      "k": 12,
+      "precision": 0.5833,
+      "enrichment": 1.182
+    },
+    {
+      "fraction": 0.1,
+      "k": 23,
+      "precision": 0.6522,
+      "enrichment": 1.3215
+    },
+    {
+      "fraction": 0.2,
+      "k": 46,
+      "precision": 0.7826,
+      "enrichment": 1.5858
+    },
+    {
+      "fraction": 0.3,
+      "k": 69,
+      "precision": 0.7536,
+      "enrichment": 1.5271
+    },
+    {
+      "fraction": 0.5,
+      "k": 116,
+      "precision": 0.6379,
+      "enrichment": 1.2926
+    }
+  ],
+  "multi_criteria_curve": [
+    {
+      "fraction": 0.05,
+      "k": 7,
+      "precision": 0.7143,
+      "enrichment": 1.4474
+    },
+    {
+      "fraction": 0.1,
+      "k": 13,
+      "precision": 0.6923,
+      "enrichment": 1.4028
+    },
+    {
+      "fraction": 0.2,
+      "k": 26,
+      "precision": 0.8077,
+      "enrichment": 1.6366
+    },
+    {
+      "fraction": 0.3,
+      "k": 39,
+      "precision": 0.7179,
+      "enrichment": 1.4548
+    },
+    {
+      "fraction": 0.5,
+      "k": 66,
+      "precision": 0.6212,
+      "enrichment": 1.2588
+    }
+  ]
+}

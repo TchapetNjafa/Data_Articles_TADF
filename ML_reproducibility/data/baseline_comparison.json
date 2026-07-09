@@ -1,0 +1,46 @@
+{
+  "description": "Baseline comparison for NTO-RF model. MAE in eV; 95 % CI via percentile bootstrap (n=2000) on OOF scaffold-GroupKFold predictions.",
+  "n_molecules": 231,
+  "baselines": {
+    "mean_predictor": {
+      "constant_value": 0.149281,
+      "MAE": 0.106908,
+      "CI_95": [
+        0.091916,
+        0.124418
+      ]
+    },
+    "median_predictor": {
+      "constant_value": 0.11,
+      "MAE": 0.098242,
+      "CI_95": [
+        0.081077,
+        0.117878
+      ]
+    },
+    "random_permutation_null": {
+      "n_permutations": 1000,
+      "MAE_mean": 0.120299,
+      "CI_95_of_null_distribution": [
+        0.113327,
+        0.126705
+      ]
+    }
+  },
+  "model": {
+    "name": "NTO-RF (headline, scaffold GroupKFold)",
+    "MAE": 0.0956,
+    "CI_95": [
+      0.082,
+      0.109
+    ]
+  },
+  "improvement_over_mean_baseline": {
+    "absolute_eV": 0.011308,
+    "relative_pct": 10.58,
+    "CI_95_of_difference": [
+      0.002547,
+      0.021537
+    ]
+  }
+}

@@ -1,0 +1,134 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Digital Discovery Submission
+% Accelerated Discovery of TADF Emitters via Physics-Informed ML
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[twoside,onecolumn,9pt]{extarticle}
+\usepackage{extsizes}
+\usepackage[super,sort&compress,comma]{natbib}
+\usepackage{chemformula}
+\usepackage[left=1.5cm, right=1.5cm, top=1.785cm, bottom=2.0cm]{geometry}
+\usepackage{balance}
+\usepackage{mathptmx}
+\usepackage{graphicx}
+\usepackage{lastpage}
+\usepackage[format=plain,justification=justified,singlelinecheck=false,font={stretch=1.125,small,sf},labelfont=bf,labelsep=space]{caption}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{fnpos}
+\usepackage[english]{babel}
+\addto{\captionsenglish}{
+  \renewcommand{\refname}{Notes and references}
+}
+\usepackage{array}
+\usepackage{droidsans}
+\usepackage{charter}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{setspace}
+\usepackage[compact]{titlesec}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{seqsplit}
+\usepackage{multirow, booktabs}
+\usepackage{amsmath, lmodern}
+\usepackage[detect-all=true,group-minimum-digits=4]{siunitx}
+\usepackage{pgf, tcolorbox}  % physics removed: conflicts with siunitx \qty
+\usepackage{enumitem}
+\usepackage{xr}  % Cross-reference to SI document
+\externaldocument[SI-]{SI_Digital_Discovery}  % Prefix SI- for all SI references
+
+% Custom commands
+\newcommand{\modelA}{\textsc{Model~A}}
+\newcommand{\modelB}{\textsc{Model~B}}
+\newcommand{\modelC}{\textsc{Model~C}}
+\newcommand{\modelD}{\textsc{Model~D}}
+\newcommand{\deltaest}{$\Delta E_\text{ST}$}
+
+\definecolor{RSCblue}{RGB}{0,73,144}
+
+\begin{document}
+
+\pagestyle{fancy}
+\thispagestyle{plain}
+\fancypagestyle{plain}{
+\fancyhf{}
+\fancyhead[L]{\includegraphics[height=8pt]{../MCA_submission/head_foot/RSC_LOGO_CMYK}}
+\fancyhead[C]{\fontsize{6}{8}\selectfont\textit{Digital Discovery}}
+\fancyhead[R]{\fontsize{6}{8}\selectfont www.rsc.org/digitaldiscovery}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+\fancyfoot[L]{\fontsize{6}{8}\selectfont This journal is \copyright\ The Royal Society of Chemistry 2026}
+\fancyfoot[R]{\fontsize{6}{8}\selectfont \textit{Digital Discovery}, 2026, \textbf{XX}, 1--XX~\textbar~\thepage}
+}
+
+% Title
+\title{\fontsize{18pt}{20pt}\selectfont\textbf{How Far Can Structure-Based Machine Learning Predict Experimental Singlet--Triplet Gaps? An Honest Benchmark for TADF Emitter Triage}}
+
+% Authors
+\author{
+  \fontsize{10pt}{12pt}\selectfont
+  Jean-Pierre Tchapet Njafa,$^{a}$*
+  Steve Cabrel Teguia Kouam,$^{b}$
+  Patrick Sorrel Mvoto Kongo,$^{a}$\\
+  Panebei Samafou,$^{c}$
+  and Serge Guy Nana Engo$^{a}$
+}
+
+% Affiliations
+\footnotetext[1]{$^{a}$Department of Physics, Faculty of Science, University of Yaound\'{e}~1, Yaound\'{e}~812, Cameroon.}
+\footnotetext[2]{$^{b}$Department of Physics, Faculty of Science, University of Douala, Douala~24157, Cameroon.}
+\footnotetext[3]{$^{c}$Department of Medical Imaging and Radiation Sciences, Faculty of Medicine and Health Sciences, Universit\'{e} de Sherbrooke, 3001, 12th Avenue Nord, Sherbrooke, QC J1H~5N4, Canada.}
+\footnotetext{*E-mail: jean-pierre.tchapet@facsciences-uy1.cm; ORCID: https://orcid.org/0000-0002-1936-8353}
+
+\maketitle
+
+% Abstract
+\input{abstract_digital_discovery.tex}
+
+% Main sections
+\input{sections/introduction_digital_discovery.tex}
+\input{sections/methods_digital_discovery.tex}
+\input{sections/results_digital_discovery.tex}
+\input{sections/conclusions_digital_discovery.tex}
+
+% Conflicts of interest
+\section*{Conflicts of interest}
+There are no conflicts to declare.
+
+% Author contributions
+\section*{Author contributions}
+J.-P.T.N.: Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data curation, Writing -- original draft, Visualization.
+S.C.T.K.: Software, Validation, Writing -- review \& editing.
+P.S.M.K.: Validation, Writing -- review \& editing.
+P.S.: Resources, Validation, Writing -- review \& editing.
+S.G.N.E.: Supervision, Project administration, Writing -- review \& editing.
+
+% Acknowledgements
+\section*{Acknowledgements}
+The authors gratefully acknowledge Prof. Gian-Marco Rignanese (UCLouvain) for valuable scientific advice and
+for providing access to high-performance computing facilities.
+
+The authors acknowledge the use of Kiro/Claude 4.5 Sonnet (accessed May 2026) for literature search, LaTeX formatting, and consistency checking. All 
+scientific content, numerical values, and interpretations were verified and approved by the authors.
+
+% Data availability
+\section*{Data availability}
+All experimental data, descriptor tables, trained models, and analysis code are
+openly available on Zenodo under DOI: 10.5281/zenodo.17436069 (CC-BY-4.0 license).
+The deposit includes: (1)~the experimental \deltaest\ corpus and the
+\num{231}-molecule benchmark set (\num{212} scaffolds); (2)~the \num{35} NTO spatial
+descriptors and the structure-only Morgan and RDKit feature tables; (3)~the DFT
+functional benchmark and the CAM-B3LYP vertical-versus-adiabatic and triplet-manifold
+data (\num{14} emitters); (4)~the trained random-forest models, SHAP attributions, and
+validation outputs (scaffold and Butina-cluster cross-validation, label-permutation
+test, capacity tests); (5)~the heuristic \num{22194}-molecule library and the
+conformal-bounded top-\num{100} shortlist; and (6)~all analysis and figure-generation
+scripts that regenerate every reported number.
+
+% Bibliography
+\bibliographystyle{../MCA_submission/rsc}
+\bibliography{references_digital_discovery}
+
+\end{document}

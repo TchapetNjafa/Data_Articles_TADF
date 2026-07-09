@@ -1,0 +1,25 @@
+{
+  "n_molecules": 232,
+  "exp_range_eV": [
+    -0.22,
+    1.14
+  ],
+  "exp_mean_eV": 0.15,
+  "B0_raw_stda_vs_exp": {
+    "R2": -2.3374,
+    "MAE": 0.254,
+    "mean_bias_eV": 0.2231
+  },
+  "B1_constant_shift": {
+    "R2_mean": -0.8382,
+    "R2_sd": 0.8131,
+    "MAE_mean": 0.1561,
+    "MAE_sd": 0.0126
+  },
+  "M_svr_calibration": {
+    "R2_mean": -0.6222,
+    "R2_sd": 0.3323,
+    "MAE_mean": 0.1385,
+    "MAE_sd": 0.0151
+  }
+}

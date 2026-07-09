@@ -1,0 +1,38 @@
+{
+  "n": 231,
+  "threshold_eV": 0.1,
+  "base_rate_good": 0.494,
+  "spearman": 0.306,
+  "precision_at_10": 0.6,
+  "enrichment_at_10": 1.22,
+  "precision_at_20": 0.6,
+  "enrichment_at_20": 1.22,
+  "precision_at_30": 0.633,
+  "enrichment_at_30": 1.28,
+  "precision_at_50": 0.68,
+  "enrichment_at_50": 1.38,
+  "shortlist_projection": {
+    "library_n": 22194,
+    "shortlist_n": 1110,
+    "base_rate_gap_lt_0p2": 0.494,
+    "bands": {
+      "enrich_1.2x": {
+        "hit_rate": 0.593,
+        "ci": [
+          0.563,
+          0.622
+        ],
+        "extra_hits_vs_random": 110
+      },
+      "enrich_1.4x": {
+        "hit_rate": 0.692,
+        "ci": [
+          0.664,
+          0.719
+        ],
+        "extra_hits_vs_random": 220
+      }
+    }
+  },
+  "note": "precision@k = fraction of model top-k with exp gap<=0.10 eV; enrichment = precision@k / base rate (1.0 = no better than random). shortlist_projection applies the 1.2-1.4x enrichment band to a top-5% shortlist of the enumerated library at a 0.494 base rate (gap<=0.10 eV)."
+}

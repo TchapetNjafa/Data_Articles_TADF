@@ -1,0 +1,142 @@
+% ============================================================
+% Digital Discovery Methods — honest structure-based benchmark (repositioned 2026-06-23)
+% Numbers trace to data/final_model_metrics.json, structural_rebuild_metrics.json,
+% dft_benchmark_comparison.csv, and the scripts in code/.
+% ============================================================
+
+\section{Methods}\label{sec:methods}
+
+\subsection{Experimental target and dataset}\label{para:validation_hierarchy}
+
+The prediction target is the \emph{experimental} singlet--triplet gap
+$\Delta E_\text{ST}$. We extracted literature-reported values from a curated
+corpus of TADF publications and matched them, by compound name, to molecules in
+our descriptor set, retaining values in the physical range
+\qtyrange{-0.3}{1.5}{\electronvolt}. Where a compound carried multiple independent
+reports we used the median and recorded the inter-report spread; this scatter is
+typically \qtyrange{0.1}{0.15}{\electronvolt} and bounds achievable accuracy
+(\cref{subsec:ceilings}). The final benchmark comprises \num{231} donor--acceptor
+molecules spanning \num{212} distinct Bemis--Murcko scaffolds~\cite{Bemis1996}.
+
+The corpus does not record measurement medium (solvent, host) for individual
+values, so the per-molecule median is a consensus over uncontrolled conditions
+rather than a single, solvent-specific state. Because environmental electrostatics
+and conformational disorder are recognised as primary obstacles to accurate TADF
+modelling,\cite{Olivier2017} this consensus is best read as the central tendency of
+experimentally accessible $S_1$--$T_1$ gaps; it trades physical specificity for
+reduced variance. For the \num{102} molecules with repeat reports, a single random
+report deviates from this median by \qty{0.072}{\electronvolt} on
+average---comparable to the model error itself
+(\cref{SI-tab:solvent})---which sets a floor on attainable accuracy independent of
+model capacity.
+
+We deliberately do \emph{not} train on the semi-empirical gap
+$E_{S_1}-E_{T_1}$: because this quantity is, by construction, a difference of two
+input features, regressing onto it measures arithmetic rather than learning
+(\cref{subsec:circularity}).
+
+\subsection{Cheap electronic-structure inputs and physics-informed descriptors}
+
+Excited-state quantities used to build descriptors were obtained at the
+semi-empirical level: GFN2-xTB~\cite{Bannwarth2019} geometries
+(\texttt{xtb} 6.5.1) followed by sTDA~\cite{Grimme2017} for the lowest singlet
+and triplet states. From the natural transition orbitals
+(NTOs)~\cite{Martin2003} of each excitation we computed spatial overlap
+descriptors that encode exchange-integral physics:
+\begin{align}
+  S_\text{he} &= \int \phi_\text{hole}(\mathbf{r})\,\phi_\text{electron}(\mathbf{r})\,d\mathbf{r}, \label{eq:overlap}\\
+  \Delta\lambda_\text{A} &= |\lambda_\text{A}(S_1) - \lambda_\text{A}(T_1)|, \label{eq:delta_lambda}\\
+  \text{Char}_\text{diff}^2 &= \Big[\textstyle\sum_i |q_i(S_1) - q_i(T_1)|\Big]^2, \label{eq:char_diff}\\
+  \Delta S_\text{he} &= |S_\text{he}(S_1) - S_\text{he}(T_1)|. \label{eq:delta_overlap}
+\end{align}
+$S_\text{he}$ quantifies hole--electron overlap (related to the exchange
+integral), $\Delta\lambda_\text{A}$ acceptor-participation differences,
+$\text{Char}_\text{diff}^2$ charge-transfer character changes, and
+$\Delta S_\text{he}$ the singlet--triplet overlap difference. The full set of
+\num{35} NTO descriptors (the $S_1$/$T_1$ energy scalars excluded) is listed in
+the Supporting Information; these descriptors require the sTDA excited-state
+calculation, even though they omit the energies themselves.
+
+\subsection{Feature sets and machine-learning models}
+
+We compared three feature representations on the same molecules. Two require no
+quantum chemistry, being computed from the 2D structure alone:
+(i)~RDKit physicochemical descriptors~\cite{Landrum2016} and (ii)~Morgan
+fingerprints (radius~2, \num{2048} bits). The third, (iii)~the NTO spatial
+descriptors above, is derived from the sTDA excited state but excludes the energy
+scalars. A reference set that additionally includes the sTDA $S_1$/$T_1$
+energies was also evaluated. We used random-forest
+regressors~\cite{Breiman2001} (\num{400} trees, scikit-learn~\cite{Pedregosa2011}),
+which outperformed support-vector regression, ridge regression and a mean-value
+baseline on this task.
+
+\paragraph{Evaluation.}
+All performance figures use Bemis--Murcko scaffold \texttt{GroupKFold}
+($k=5$): every test molecule lies on a scaffold unseen in training, so reported
+errors estimate generalisation to new chemotypes rather than interpolation.
+We benchmark against a mean-value predictor and the raw sTDA gap, and report
+\qty{95}{\percent} confidence intervals from \num{2000} bootstrap resamples of the
+out-of-fold predictions.
+
+\paragraph{Interpretability and reproducibility.}
+Feature importance was quantified with exact TreeSHAP~\cite{Lundberg2017} on the
+fitted forest. All scripts (\texttt{code/finalize\_model.py},
+\texttt{code/rebuild\_structural\_model.py}) regenerate every reported number and
+\cref{fig:model_performance}.
+
+\paragraph{Bootstrap confidence intervals and power analysis.}
+Point estimates of the rank correlation are complemented by
+\num{5000}-replicate percentile bootstrap confidence intervals on the
+out-of-fold predictions (\texttt{code/r2\_ci\_power\_analysis.py}).
+For the headline model the Spearman $\rho = 0.36$ ($n = 231$) has a 95\%~CI of
+\numrange{0.24}{0.47} ($p = \num{2.6e-8}$) and the Pearson $r = 0.50$ a 95\%~CI
+of \numrange{0.26}{0.68}; both exclude zero, establishing statistically
+significant association despite the wide $R^2$ interval.
+A power analysis for the correlation test (Fisher $z$ transform, two-sided,
+$\alpha = 0.05$) shows that detecting $\rho = 0.36$ at \qty{80}{\percent} power
+requires only $n \approx 60$ (\qty{90}{\percent} power: $n \approx 79$); at
+$n = 231$ the achieved power is $\approx 1.0$. The ranking-ability question is
+thus amply powered, and the wide $R^2$ interval is \emph{not} a sample-size
+problem: it reflects the high variance of a variance-explained statistic when a
+handful of high-gap outliers dominate the residual sum of squares. We therefore
+report Spearman~$\rho$ as the primary metric for triage utility, with the full
+set of metrics and intervals collected in \cref{SI-tab:metrics_ci}.
+
+\subsection{Reference-level benchmark}
+
+To bound the meaning of any model accuracy, we compared the computed reference
+across functionals for \num{7} representative emitters in gas and toluene,
+contrasting B3LYP/6-31G(d) with CAM-B3LYP/def2-TZVP (Gaussian~16~\cite{Gaussian16};
+ORCA~6.1.0~\cite{Neese2020}). The two levels differ in $\Delta E_\text{ST}$ by a
+mean absolute \qty{0.30}{\electronvolt} (up to \qty{0.58}{\electronvolt}, with
+cases of reversed relative magnitude); full values are tabulated in
+\cref{SI-tab:dft_benchmark}. This functional dependence, together with
+experimental inter-report scatter, sets the accuracy ceiling discussed in
+\cref{subsec:ceilings}. The same CAM-B3LYP/def2-TZVP calculations additionally
+yielded excited-state-optimised (adiabatic) gaps and the two lowest triplets
+($T_1$, $T_2$) for \num{14} emitters, used to bound the vertical approximation
+(\cref{subsec:ceilings}) and the triplet-manifold scope (\cref{subsec:limitations});
+see SI.
+
+\subsection{Heuristic enumeration of an extended library}\label{sec:library_expansion}
+
+To explore chemical space beyond the annotated set, we enumerated \num{22194}
+donor--acceptor combinations from literature-validated fragments (carbazole,
+phenoxazine, acridine donors; triazine, benzonitrile, sulfone acceptors) under
+simple constraints (molecular weight $<\qty{900}{\dalton}$, $\geq 2$ aromatic
+rings, $\geq 1$ N/O/S heteroatom). These were ranked by a rule-based TADF score
+\begin{equation}
+  \text{TADF score} = 0.35\,f_\text{MW} + 0.25\,f_\text{LogP} + 0.20\,f_\text{rings} + 0.20\,f_\text{hetero},
+  \label{eq:tadf_score}
+\end{equation}
+with each $f_i\in[0,1]$ a normalised feature score based on established design
+heuristics~\cite{Liu2012,Uoyama2012,Wong2017}. The score is a coarse
+synthesis-planning filter, \emph{not} a calibrated $\Delta E_\text{ST}$ predictor;
+the enumerated molecules are not quantum-validated and are reported as leads only.
+
+\subsection{Data and code availability}
+
+The experimental corpus, descriptor tables, trained models, and all analysis and
+figure-generation scripts are openly available on Zenodo
+(DOI: 10.5281/zenodo.17436069) under a CC-BY-4.0 licence, so that every number and
+figure in this work can be reproduced and the benchmark extended.

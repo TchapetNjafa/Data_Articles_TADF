@@ -1,0 +1,30 @@
+{
+  "single_split_42": {
+    "R2": 0.8823,
+    "MAE": 0.0497,
+    "n_test": 147
+  },
+  "repeated_cv_5x5": {
+    "R2_mean": 0.8669,
+    "R2_sd": 0.0367,
+    "MAE_mean": 0.0522,
+    "MAE_sd": 0.0046
+  },
+  "group_kfold_5": {
+    "R2": 0.8683,
+    "MAE": 0.0529
+  },
+  "target_is_S1_minus_T1": {
+    "corr(y, S1-T1)": 1.0,
+    "MAE(y, S1-T1)": 0.0,
+    "R2(y, S1-T1)": 1.0,
+    "note": "If MAE~0 the target is arithmetically the energy gap; SVR has little to learn."
+  },
+  "model_D_spatial_only_cv": {
+    "R2_mean": 0.4311,
+    "R2_sd": 0.1256,
+    "MAE_mean": 0.128,
+    "MAE_sd": 0.0103,
+    "n_features": 35
+  }
+}

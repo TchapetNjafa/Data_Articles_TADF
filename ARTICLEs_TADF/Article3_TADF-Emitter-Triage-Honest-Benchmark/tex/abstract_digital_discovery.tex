@@ -8,7 +8,7 @@ costly and disagree with experiment by several tenths of an electronvolt.
 We ask a deliberately narrow question: how accurately can machine learning estimate
 \emph{experimental} \deltaest\ from the molecular structure alone, and what limits it?
 %
-We first show that the common practice of regressing \deltaest\ on features that include
+Regressing \deltaest\ on features that include
 the $S_1$ and $T_1$ energies is circular---since
 \deltaest~$\equiv E_{S_1}-E_{T_1}$, the model merely subtracts two inputs---so we target
 the measured gap instead.
@@ -22,7 +22,8 @@ descriptors derived from a semi-empirical excited-state calculation
 (\qty{0.096}{\electronvolt}); the excited-state step adds nothing.
 %
 All sets reach $R^2 \approx 0.25$--$0.31$ with wide confidence intervals and weak ranking
-(Spearman \numrange{0.26}{0.36}), only slightly above a mean-value baseline
+(Spearman \numrange{0.26}{0.36}); the signal is modest but real---below a label-permutation
+null at $p = 0.001$---and only slightly above a mean-value baseline
 (MAE \qty{0.107}{\electronvolt}).
 %
 Accuracy is bounded near \qty{0.1}{\electronvolt} by two effects we quantify: scatter
@@ -30,8 +31,7 @@ among independent experimental reports (\qtyrange{0.1}{0.15}{\electronvolt}) and
 functional dependence of the computed reference (up to \qty{0.58}{\electronvolt}).
 %
 As a triage filter for low-gap emitters the model enriches only modestly
-(\numrange{1.2}{1.4}$\times$ over random). The practical message is cautionary:
-cheap structural features carry real but limited signal for \deltaest, and accuracy is
+(\numrange{1.2}{1.4}$\times$ over random). The practical message is cautionary: accuracy is
 set by data quality, not model capacity.
 %
 All data, models, and code are openly available (Zenodo DOI: 10.5281/zenodo.17436069).

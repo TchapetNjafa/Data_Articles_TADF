@@ -43,11 +43,11 @@ We assembled \num{231} donor--acceptor molecules for which an experimental
 $\Delta E_\text{ST}$ could be matched to a structure, and evaluated random-forest
 regressors under Bemis--Murcko scaffold cross-validation (\num{212} distinct
 scaffolds), so that no scaffold appears in both training and test.
-Because \qty{92.9}{\percent} of scaffolds are singletons, this split and a random
-split produce numerically similar folds---test-set nearest-neighbour Tanimoto to
-the training set differs by only \num{0.022}---so the protection is chemical (zero
-shared scaffolds per fold, versus \numrange{3}{8} under a random split) rather than
-a large change in task difficulty. That the model learns real signal rather than
+Because \qty{92.9}{\percent} of scaffolds are singletons, scaffold and random splits
+produce numerically similar folds (test--train nearest-neighbour Tanimoto differs by
+only \num{0.022}). The protection is therefore chemical: zero shared scaffolds per
+fold, versus \numrange{3}{8} under a random split. Task difficulty does not change
+substantially. That the model learns real signal rather than
 scaffold-group structure is confirmed by a label-permutation test: the true
 scaffold-CV MAE (\qty{0.096}{\electronvolt}) lies far below the null from
 \num{1000} target shuffles (mean \qty{0.121}{\electronvolt}, $p = 0.001$;
@@ -108,7 +108,11 @@ predictors---spatial quantities that encode the exchange integral governing
 $\Delta E_\text{ST}$. This ranking is stable rather than an artefact of one fit:
 across \num{200} bootstrap refits the leading descriptor $S_\text{he}(S_1)$ stays
 in the top five \qty{99.5}{\percent} of the time, and on average \num{3.7} of the
-five canonical descriptors recur (\cref{SI-tab:shapboot}). An independent, model-agnostic permutation-importance analysis ranks the same
+five canonical descriptors recur (\cref{SI-tab:shapboot}). Restricting the attribution to
+the reliable-prediction subset---the \num{152} molecules whose out-of-fold residual is
+below \qty{0.10}{\electronvolt}---leaves $S_\text{he}(S_1)$ ranked first in
+\qty{99.5}{\percent} of refits, so the leading attribution does not rest on the
+poorly-predicted tail. An independent, model-agnostic permutation-importance analysis ranks the same
 descriptor, $S_\text{he}(S_1)$, first, so the leading attribution is corroborated by
 two methods (the lower-ranked tail is not; SI Section~S6.3). Given the model's modest
 ranking power, we read only the dominant attribution as a mechanistic hypothesis for
@@ -152,17 +156,27 @@ irreducible label noise of this magnitude.
 Second, the computed reference itself is functional-dependent: across the
 \num{7} molecules (gas and toluene) for which we ran both B3LYP/6-31G(d) and CAM-B3LYP/def2-TZVP,
 $\Delta E_\text{ST}$ differs by up to \qty{0.58}{\electronvolt} and changes
-relative magnitude (\cref{SI-tab:dft_benchmark}). Any claim of sub-\num{0.05}~eV
-accuracy against such a reference is not physically meaningful. These two ceilings,
+relative magnitude (\cref{SI-tab:dft_benchmark}); a higher-tier benchmark across
+six range-separated functionals on \num{27} emitters~\cite{Froitzheim2024} shows the same
+effect at finer resolution, a median inter-functional spread of \qty{0.05}{\electronvolt}. Any claim of sub-\num{0.05}~eV
+accuracy against such a reference is not physically meaningful. Combined as independent
+contributions, the inter-report scatter (\cref{SI-tab:solvent}) and the residual
+vertical-descriptor offset (\cref{SI-tab:adiabatic}) place the expected error floor near
+\qty{0.13}{\electronvolt} by root-sum-square, matching the observed MAE of
+\qty{0.096}{\electronvolt}. These two ceilings,
 not model capacity, explain why richer feature sets and alternative regressors do
 not improve performance. We tested both directly. No higher-capacity learner beats the
 random forest under the same scaffold CV---gradient boosting (\qty{0.105}{\electronvolt}),
 an MLP (\qty{0.169}{\electronvolt}) and an SVR (\qty{0.120}{\electronvolt}) are all
 worse---so capacity is not the limit; and the negative lower $R^2$ bound is not a
 fingerprint-width artefact, since \num{512}-, \num{1024}- and \num{2048}-bit Morgan models
-share it (\cref{SI-tab:capacity}). Restricting to the \num{208} molecules whose repeat
-reports agree to within \qty{0.05}{\electronvolt} does not lower the error either, so the
-floor is intrinsic to the signal available, not a fixable modelling choice.
+share it (\cref{SI-tab:capacity}). Restricting to the \num{208} molecules whose
+inter-report standard deviation is $\le\qty{0.05}{\electronvolt}$ does not lower the error
+either, so the floor is intrinsic to the signal available, not a fixable modelling choice.
+Enlarging the corpus is equally unproductive: featurising \num{497} additional experimental
+emitters (a \num{728}-molecule set) raises the MAE to \qty{0.124}{\electronvolt} and drives
+$R^2$ to zero, and even the replicate-measured subset stays below the curated baseline
+(\cref{SI-tab:expansion}). The ceiling is a property of the measurement, not of the sample size.
 
 A separate concern is the descriptor side: the NTO features are computed at the
 \emph{vertical} (ground-state) geometry, whereas the measured gap reflects relaxed
@@ -178,9 +192,8 @@ are therefore an acceptable input for ranking, the use we make of them.
 
 \subsection{Candidate prioritisation as a triage filter}\label{subsec:candidates}
 
-The model's practical value is as a coarse triage filter: it supports \emph{triage}
-(eliminating the bottom tier of candidates) rather than \emph{ranking} (ordering within
-the viable subset). We quantify this directly. Taking emitters with experimental
+The model's practical value is as a coarse triage filter: it eliminates the bottom
+tier of candidates rather than ordering the viable subset. We quantify this directly. Taking emitters with experimental
 $\Delta E_\text{ST}\le\qty{0.10}{\electronvolt}$ as the targets (\qty{49}{\percent}
 of the set), the structure-only model's top-ranked candidates are enriched in
 targets relative to random selection by \numrange{1.2}{1.4}$\times$
@@ -221,12 +234,12 @@ With an enrichment factor of \numrange{1.2}{1.4}$\times$ over random selection a
 a base positive rate of \qty{49}{\percent} (molecules with
 $\Delta E_\text{ST} \le \qty{0.10}{\electronvolt}$ in the training set),
 a threshold-based shortlist comprising the top \qty{5}{\percent}
-($\approx$\num{1100} molecules out of \num{22194}) has an expected hit rate
-of \qtyrange{59}{69}{\percent} (binomial 95\%~CI: \qtyrange{56}{72}{\percent}).
-For a laboratory processing \num{1100} compounds, this represents
-$\approx$\numrange{110}{220}~additional hits relative to random screening---a
-concrete, quantifiable benefit that is useful but not predictive at the
-individual-molecule level.
+($\approx$\num{1100} molecules out of \num{22194}) has an expected hit rate of
+\qty{59}{\percent} (binomial \qty{95}{\percent} CI \qtyrange{56}{62}{\percent}) at the
+lower \num{1.2}$\times$ enrichment and \qty{69}{\percent} (CI \qtyrange{66}{72}{\percent})
+at the upper \num{1.4}$\times$. For a laboratory processing \num{1100} compounds, this is
+\numrange{110}{220}~additional hits relative to random screening---a concrete,
+quantifiable benefit that is useful but not predictive at the individual-molecule level.
 The model therefore supports \emph{triage}, not selection: it systematically
 enriches a subset of chemical space for experimental prioritisation,
 without guaranteeing the quality of individual recommendations. The full
@@ -372,13 +385,25 @@ CAM-B3LYP TD-DFT calculations for \num{14} emitters (\cref{SI-tab:manifold}): th
 $T_1$--$T_2$ gap ranges \qtyrange{0.02}{1.50}{\electronvolt} and varies widely
 \emph{among molecules with near-equal $\Delta E_\text{ST}$}, so a scalar-gap triage
 cannot rank them on RISC propensity. This is, however, exactly the regime where the
-excited-state pipeline earns its cost: the semi-empirical step is redundant for the
-$S_1$--$T_1$ gap (\cref{subsec:nto_null}) but supplies the triplet-manifold information
-that 2D structure cannot, a natural next target for the descriptors. Emitters with an
+excited-state pipeline earns its cost qualitatively: the semi-empirical step is redundant for the
+$S_1$--$T_1$ gap (\cref{subsec:nto_null}) but supplies triplet-manifold information
+that 2D structure cannot. Extending the sTDA extraction to all \num{231} emitters,
+\qty{74}{\percent} carry a $T_1$--$T_2$ gap below \qty{0.3}{\electronvolt}, so most
+low-\deltaest\ candidates remain exposed to inefficient reverse intersystem crossing.
+We read this full-corpus manifold only qualitatively: benchmarked against the
+\num{14}-molecule CAM-B3LYP reference (six molecules overlapping), the sTDA $T_1$--$T_2$
+gap carries a mean absolute deviation of \qty{0.24}{\electronvolt}
+(Spearman $\rho = 0.43$), so quantitative ranking on RISC propensity still requires the
+higher-level calculation (\cref{SI-tab:manifold}). Emitters with an
 \emph{inverted} gap ($\Delta E_\text{ST} < 0$), which violate Hund's rule through
-double-excitation character,\cite{Veglianti2025} are essentially unrepresented---only
-\num{2} of \num{231} molecules carry a marginally negative reported gap, far too few to
-characterise inverted-gap behaviour---so this emerging class is an explicit out-of-scope
-future axis.
+double-excitation character,\cite{Veglianti2025} are essentially unrepresented in our
+corpus---only \num{2} of \num{231} molecules carry a marginally negative reported gap.
+A screen of the \num{25482}-record literature database nonetheless identifies \num{61}
+compounds with a reported inverted gap (deposited, \texttt{data/ist\_candidates.csv});
+the random forest, built on GFN2-xTB features
+that enforce Aufbau ordering, predicts a positive gap for all \num{5} that overlap our
+corpus, so inverted-singlet screening lies outside its physical reach and would require
+ROKS- or EOM-CCSD-level descriptors.\cite{Salvi2025} This emerging class is therefore an
+explicit out-of-scope future axis.
 Future work targets a curated experimental benchmark and uncertainty-aware models
 that report calibrated confidence alongside each prediction.

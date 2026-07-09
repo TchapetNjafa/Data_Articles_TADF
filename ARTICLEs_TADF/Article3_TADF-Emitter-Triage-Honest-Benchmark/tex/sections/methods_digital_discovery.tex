@@ -74,12 +74,15 @@ baseline on this task.
 All performance figures use Bemis--Murcko scaffold \texttt{GroupKFold}
 ($k=5$): every test molecule lies on a scaffold unseen in training, so reported
 errors estimate generalisation to new chemotypes rather than interpolation.
-We report \qty{95}{\percent} confidence intervals from \num{2000} bootstrap
-resamples of the out-of-fold predictions, and benchmark against a mean-value
-predictor and the raw sTDA gap. Feature importance was quantified with exact
-TreeSHAP~\cite{Lundberg2017} on the fitted forest. All scripts
-(\texttt{code/finalize\_model.py}, \texttt{code/rebuild\_structural\_model.py})
-regenerate every reported number and \cref{fig:model_performance}.
+We benchmark against a mean-value predictor and the raw sTDA gap, and report
+\qty{95}{\percent} confidence intervals from \num{2000} bootstrap resamples of the
+out-of-fold predictions.
+
+\paragraph{Interpretability and reproducibility.}
+Feature importance was quantified with exact TreeSHAP~\cite{Lundberg2017} on the
+fitted forest. All scripts (\texttt{code/finalize\_model.py},
+\texttt{code/rebuild\_structural\_model.py}) regenerate every reported number and
+\cref{fig:model_performance}.
 
 \paragraph{Bootstrap confidence intervals and power analysis.}
 Point estimates of the rank correlation are complemented by

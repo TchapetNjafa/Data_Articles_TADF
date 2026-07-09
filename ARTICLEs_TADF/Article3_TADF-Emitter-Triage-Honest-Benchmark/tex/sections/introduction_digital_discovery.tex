@@ -25,8 +25,8 @@ Their emission is molecularly tunable and their synthesis avoids rare-earth
 supply-chain risks~\cite{Golroudbary2022, Zapp2022}.
 However, realizing this potential requires navigating a vast chemical space
 of donor--acceptor combinations while satisfying competing requirements:
-a minimal singlet-triplet energy gap ($\Delta E_\text{ST} < \qty{0.2}{\electronvolt}$),
-efficient reverse intersystem crossing ($k_\text{RISC} > \qty{1e6}{\per\second}$),
+a minimal singlet--triplet energy gap ($\Delta E_\text{ST} < \qty{0.2}{\electronvolt}$);
+efficient reverse intersystem crossing ($k_\text{RISC} > \qty{1e6}{\per\second}$);
 and spectral overlap with target photoreceptor absorption bands. This paper
 addresses only the first of these---the $\Delta E_\text{ST}$ gap. The
 rate-constant and device-efficiency requirements demand spin--orbit-coupling and
@@ -66,15 +66,15 @@ $\Delta E_\text{ST}$, and what sets the limit?
 
 \subsection{Our contributions: an honest benchmark of structure-based prediction}
 
-Rather than claim a new high-accuracy predictor, we ask---and answer
-carefully---how far cheap, structure-based machine learning can go in predicting
-the \emph{experimental} singlet--triplet gap, and we are explicit about where it
-fails. The primary result is a scaffold-validated benchmark with a calibrated
-accuracy ceiling: 2D structure alone predicts the measured gap as well as
-semi-empirical excited-state features, and we quantify why neither does better. A
-secondary, cautionary contribution is methodological---a reminder that
-excited-state-energy \emph{leakage} inflates reported accuracy for any property
-defined as a difference of computed quantities. The contributions are four.
+Rather than claim a new high-accuracy predictor, we ask how far cheap,
+structure-based machine learning can go in predicting the \emph{experimental}
+singlet--triplet gap---and answer carefully, explicit about where it fails. The
+primary result is a scaffold-validated benchmark with a calibrated accuracy ceiling:
+2D structure alone predicts the measured gap as well as semi-empirical excited-state
+features, and we quantify why neither does better. A secondary, cautionary
+contribution is methodological---a reminder that excited-state-energy \emph{leakage}
+inflates reported accuracy for any property defined as a difference of computed
+quantities. We make four contributions.
 
 \paragraph{Structure alone, with no excited-state calculation, does as well as anything.}
 On \num{231} molecules across \num{212} Bemis--Murcko scaffolds, random forests built

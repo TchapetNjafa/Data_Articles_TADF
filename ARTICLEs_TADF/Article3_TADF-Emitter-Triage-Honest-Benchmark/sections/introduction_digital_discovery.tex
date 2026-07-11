@@ -9,29 +9,22 @@
 
 \subsection{Application-driven materials discovery: horticultural and human-centric lighting}
 
-Controlled-environment agriculture and human-centric lighting both demand
-spectrally tunable, energy-efficient light sources: lighting can reach 40--60\% of
-operating costs in vertical farms~\cite{Bugbee2016}, and matching emission to
-chlorophyll absorption or circadian (melanopic) response bands improves
-efficiency~\cite{Lichtenthaler1987, Lucas2014}. Commercial inorganic LEDs rely on
+Controlled-environment agriculture and human-centric lighting demand spectrally
+tunable, energy-efficient light sources, yet commercial inorganic LEDs rely on
 rare-earth phosphors (Eu, Tb, Y) with broad emission and supply-chain
-risk~\cite{Yokoyama_2018}, motivating tunable, heavy-metal-free organic alternatives.
-
-Thermally activated delayed fluorescence (TADF) materials are such an alternative:
-organic emitters that harvest both singlet and triplet excitons through
-donor--acceptor architectures, achieving near-unity internal quantum efficiency
-\emph{without} heavy metals~\cite{Uoyama2012}.
-Their emission is molecularly tunable and their synthesis avoids rare-earth
-supply-chain risks~\cite{Golroudbary2022, Zapp2022}.
-However, realizing this potential requires navigating a vast chemical space
-of donor--acceptor combinations while satisfying competing requirements:
-a minimal singlet--triplet energy gap ($\Delta E_\text{ST} < \qty{0.2}{\electronvolt}$);
-efficient reverse intersystem crossing ($k_\text{RISC} > \qty{1e6}{\per\second}$);
-and spectral overlap with target photoreceptor absorption bands. This paper
-addresses only the first of these---the $\Delta E_\text{ST}$ gap. The
-rate-constant and device-efficiency requirements demand spin--orbit-coupling and
-device-level calculations beyond the cheap structural data studied here, and we
-make no quantitative claim about them (\cref{subsec:limitations}).
+risk~\cite{Yokoyama_2018, Bugbee2016}. Thermally activated delayed fluorescence
+(TADF) materials are a tunable, heavy-metal-free alternative: organic
+donor--acceptor emitters that harvest both singlet and triplet excitons for
+near-unity internal quantum efficiency~\cite{Uoyama2012}.
+Realizing this potential means navigating a vast donor--acceptor space under
+competing requirements---a minimal singlet--triplet gap
+($\Delta E_\text{ST} < \qty{0.2}{\electronvolt}$), efficient reverse intersystem
+crossing ($k_\text{RISC} > \qty{1e6}{\per\second}$), and spectral overlap with
+target photoreceptor bands. This paper addresses only the first,
+$\Delta E_\text{ST}$; the rate and device-efficiency requirements demand
+spin--orbit-coupling and device-level calculations beyond the cheap structural
+data studied here, and we make no quantitative claim about them
+(\cref{subsec:limitations}).
 
 \subsection{The computational bottleneck and the role of machine learning}
 
@@ -80,8 +73,8 @@ quantities. We make four contributions.
 On \num{231} molecules across \num{212} Bemis--Murcko scaffolds, random forests built
 from the 2D structure alone---Morgan fingerprints (MAE = \qty{0.091}{\electronvolt}) and
 RDKit descriptors (\qty{0.100}{\electronvolt})---match descriptors derived from a
-semi-empirical excited-state calculation (NTO spatial features,
-\qty{0.096}{\electronvolt}). The result holds across scaffold, cluster and random
+semi-empirical excited-state calculation (natural transition orbital, NTO, spatial
+features, \qty{0.096}{\electronvolt}). The result holds across scaffold, cluster and random
 cross-validation and against a label-permutation null, so it is not a splitting
 artefact. The excited-state step buys nothing for the $S_1$--$T_1$ gap; SHAP nonetheless
 ties the NTO variant to hole--electron overlap and charge transfer, giving an
@@ -89,8 +82,8 @@ interpretable read on what structure encodes.
 
 \paragraph{An explicit, tested accuracy ceiling.}
 We quantify why accuracy saturates near \qty{0.1}{\electronvolt}: independent
-experimental reports for the same compound disagree by
-\qtyrange{0.1}{0.15}{\electronvolt}, and the computed reference is
+experimental reports for the same compound disagree by \qty{0.072}{\electronvolt}
+(RMS, up to \qty{0.56}{\electronvolt}), and the computed reference is
 functional-dependent (B3LYP vs CAM-B3LYP differ by up to
 \qty{0.58}{\electronvolt}). The ceiling is not an excuse: no higher-capacity learner
 (gradient boosting, MLP, SVR) beats the random forest, and the result places itself
@@ -111,12 +104,13 @@ As a pre-screen for TADF viability, the model enriches low-gap candidates
 ranked shortlist of the enumerated library---useful for prioritisation but far from
 decisive. $\Delta E_\text{ST}$ is necessary but not sufficient for TADF efficiency;
 emission-wavelength matching for any specific lighting niche is a separate, downstream
-step not addressed here. We make no device-level performance claims; our earlier
-spin--orbit-coupling estimates of $k_\text{RISC}$ and external quantum
-efficiency proved molecule-independent and were withdrawn.
+step not addressed here. We make no device-level performance claims.
+% ; our earlier
+% spin--orbit-coupling estimates of $k_\text{RISC}$ and external quantum
+% efficiency proved molecule-independent and were withdrawn.
 
 This study builds on our earlier work---\textbf{Article 1}~\cite{Tchapet2024_xTB}
 (xTB/sTDA validation) and \textbf{Article 2}~\cite{Tchapet2024_DataDriven} (design
 rules)---by asking, rigorously, what such cheap data can and cannot support.
 All data, trained models, and code are openly available (Zenodo DOI:
-10.5281/zenodo.17436069), enabling reproduction and extension of the benchmark.
+10.5281/zenodo.17436070), enabling reproduction and extension of the benchmark.

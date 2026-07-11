@@ -5,7 +5,7 @@ Discovering thermally activated delayed fluorescence (TADF) emitters hinges on t
 singlet--triplet energy gap (\deltaest), yet high-level excited-state calculations are
 costly and disagree with experiment by several tenths of an electronvolt.
 %
-We ask a deliberately narrow question: how accurately can machine learning estimate
+We ask a narrow question: how accurately can machine learning estimate
 \emph{experimental} \deltaest\ from the molecular structure alone, and what limits it?
 %
 Regressing \deltaest\ on features that include
@@ -17,9 +17,11 @@ Using \num{231} donor--acceptor molecules with literature-reported gaps, we trai
 random forests on three descriptor sets and evaluate them under Bemis--Murcko scaffold
 cross-validation (\num{212} distinct scaffolds), holding whole scaffolds out of
 training. Models built from the 2D structure alone---Morgan fingerprints
-(MAE \qty{0.091}{\electronvolt}) and RDKit descriptors (\qty{0.100}{\electronvolt})---match
+(mean absolute error, MAE \qty{0.091}{\electronvolt}) and RDKit descriptors
+(\qty{0.100}{\electronvolt})---match
 descriptors derived from a semi-empirical excited-state calculation
-(\qty{0.096}{\electronvolt}); the excited-state step adds nothing.
+(\qty{0.096}{\electronvolt}); the excited-state step adds nothing for the
+$S_1$--$T_1$ gap.
 %
 All sets reach $R^2 \approx 0.25$--$0.31$ with wide confidence intervals and weak ranking
 (Spearman \numrange{0.26}{0.36}); the signal is modest but real---below a label-permutation
@@ -27,8 +29,9 @@ null at $p = 0.001$---and only slightly above a mean-value baseline
 (MAE \qty{0.107}{\electronvolt}).
 %
 Accuracy is bounded near \qty{0.1}{\electronvolt} by two effects we quantify: scatter
-among independent experimental reports (\qtyrange{0.1}{0.15}{\electronvolt}) and
-functional dependence of the computed reference (up to \qty{0.58}{\electronvolt}).
+among independent experimental reports (\qty{0.072}{\electronvolt} RMS, up to
+\qty{0.56}{\electronvolt}) and functional dependence of the computed reference
+(up to \qty{0.58}{\electronvolt}).
 %
 As a triage filter for low-gap emitters the model enriches only modestly
 (\numrange{1.2}{1.4}$\times$ over random). The practical message is cautionary: accuracy is

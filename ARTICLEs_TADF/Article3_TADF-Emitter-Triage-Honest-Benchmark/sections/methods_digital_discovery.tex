@@ -13,9 +13,9 @@ $\Delta E_\text{ST}$. We extracted literature-reported values from a curated
 corpus of TADF publications and matched them, by compound name, to molecules in
 our descriptor set, retaining values in the physical range
 \qtyrange{-0.3}{1.5}{\electronvolt}. Where a compound carried multiple independent
-reports we used the median and recorded the inter-report spread; this scatter is
-typically \qtyrange{0.1}{0.15}{\electronvolt} and bounds achievable accuracy
-(\cref{subsec:ceilings}). The final benchmark comprises \num{231} donor--acceptor
+reports we used the median and recorded the inter-report spread; a single report sits
+\qty{0.072}{\electronvolt} (RMS) from the median and this scatter bounds achievable
+accuracy (\cref{subsec:ceilings}). The final benchmark comprises \num{231} donor--acceptor
 molecules spanning \num{212} distinct Bemis--Murcko scaffolds~\cite{Bemis1996}.
 
 The corpus does not record measurement medium (solvent, host) for individual
@@ -39,7 +39,7 @@ input features, regressing onto it measures arithmetic rather than learning
 
 Excited-state quantities used to build descriptors were obtained at the
 semi-empirical level: GFN2-xTB~\cite{Bannwarth2019} geometries
-(\texttt{xtb} 6.5.1) followed by sTDA~\cite{Grimme2017} for the lowest singlet
+(\texttt{xtb} 6.7.1) followed by sTDA~\cite{Grimme2017} for the lowest singlet
 and triplet states. From the natural transition orbitals
 (NTOs)~\cite{Martin2003} of each excitation we computed spatial overlap
 descriptors that encode exchange-integral physics:
@@ -80,14 +80,14 @@ out-of-fold predictions.
 
 \paragraph{Interpretability and reproducibility.}
 Feature importance was quantified with exact TreeSHAP~\cite{Lundberg2017} on the
-fitted forest. All scripts (\texttt{code/finalize\_model.py},
-\texttt{code/rebuild\_structural\_model.py}) regenerate every reported number and
+fitted forest. All scripts (\texttt{ML\_reproducibility/code/finalize\_model.py},
+\texttt{ML\_reproducibility/code/rebuild\_structural\_model.py}) regenerate every reported number and
 \cref{fig:model_performance}.
 
 \paragraph{Bootstrap confidence intervals and power analysis.}
 Point estimates of the rank correlation are complemented by
 \num{5000}-replicate percentile bootstrap confidence intervals on the
-out-of-fold predictions (\texttt{code/r2\_ci\_power\_analysis.py}).
+out-of-fold predictions (\texttt{ML\_reproducibility/code/r2\_ci\_power\_analysis.py}).
 For the headline model the Spearman $\rho = 0.36$ ($n = 231$) has a 95\%~CI of
 \numrange{0.24}{0.47} ($p = \num{2.6e-8}$) and the Pearson $r = 0.50$ a 95\%~CI
 of \numrange{0.26}{0.68}; both exclude zero, establishing statistically
@@ -106,8 +106,8 @@ set of metrics and intervals collected in \cref{SI-tab:metrics_ci}.
 
 To bound the meaning of any model accuracy, we compared the computed reference
 across functionals for \num{7} representative emitters in gas and toluene,
-contrasting B3LYP/6-31G(d) with CAM-B3LYP/def2-TZVP (Gaussian~16~\cite{Gaussian16};
-ORCA~6.1.0~\cite{Neese2020}). The two levels differ in $\Delta E_\text{ST}$ by a
+contrasting B3LYP/6-31G(d) with CAM-B3LYP/def2-TZVP (%Gaussian~16~\cite{Gaussian16};
+ORCA~6.1.1~\cite{Neese2020}). The two levels differ in $\Delta E_\text{ST}$ by a
 mean absolute \qty{0.30}{\electronvolt} (up to \qty{0.58}{\electronvolt}, with
 cases of reversed relative magnitude); full values are tabulated in
 \cref{SI-tab:dft_benchmark}. This functional dependence, together with
@@ -138,5 +138,5 @@ the enumerated molecules are not quantum-validated and are reported as leads onl
 
 The experimental corpus, descriptor tables, trained models, and all analysis and
 figure-generation scripts are openly available on Zenodo
-(DOI: 10.5281/zenodo.17436069) under a CC-BY-4.0 licence, so that every number and
+(DOI: 10.5281/zenodo.17436070) under a CC-BY-4.0 licence, so that every number and
 figure in this work can be reproduced and the benchmark extended.

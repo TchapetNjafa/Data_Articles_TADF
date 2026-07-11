@@ -16,14 +16,16 @@ as NTO descriptors derived from a semi-empirical excited-state calculation
 (\qty{0.096}{\electronvolt}), over \num{231} molecules and \num{212} scaffolds, and
 the result holds across scaffold, cluster and random cross-validation. All reach only
 $R^2 \approx 0.25$--$0.31$ with confidence intervals that include zero, and weak
-ranking ($\rho \approx 0.3$): modestly above a mean-value baseline. The excited-state
+ranking ($\rho \approx 0.26$--$0.36$); the signal falls below a label-permutation null
+($p = 0.001$) yet stands only modestly above a mean-value baseline. The excited-state
 calculation is unnecessary for the gap; SHAP on the NTO variant nonetheless ties the
 signal to hole--electron overlap and charge-transfer character, keeping it interpretable.
 
 \paragraph{Data, not model capacity, sets the accuracy ceiling.}
-Inter-laboratory disagreement (\qtyrange{0.1}{0.15}{\electronvolt}) and the
-functional dependence of the computed reference (up to \qty{0.58}{\electronvolt}
-between B3LYP and CAM-B3LYP) bound achievable accuracy near
+Inter-laboratory disagreement (\qty{0.072}{\electronvolt} RMS, up to
+\qty{0.56}{\electronvolt}) and the
+functional dependence of the computed reference (mean \qty{0.30}{\electronvolt}, up to
+\qty{0.58}{\electronvolt} between B3LYP and CAM-B3LYP) bound achievable accuracy near
 \qty{0.1}{\electronvolt}; no higher-capacity learner beats the random forest, so the
 limit is the data, not the model. Claims of near-DFT precision against such references
 are not physically meaningful.

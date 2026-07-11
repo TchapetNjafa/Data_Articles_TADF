@@ -1,4 +1,4 @@
-# TADF Emitters Computational Data Repository [![DOI](https://zenodo.org/badge/1082469447.svg)](https://doi.org/10.5281/zenodo.17436069)
+# TADF Emitters Computational Data Repository [![DOI](https://zenodo.org/badge/1082469447.svg)](https://doi.org/10.5281/zenodo.17436070)
 
 This repository contains computational data, scripts, and manuscripts for three
 related research articles on thermally activated delayed fluorescence (TADF)
@@ -47,7 +47,7 @@ of molecular architecture, geometry, and electronic structure, it identifies
 **Status:** 📝 Submitted to *Digital Discovery*, RSC (June 2026)
 **Authors:** Jean-Pierre Tchapet Njafa, Steve Cabrel Teguia Kouam, Patrick Sorrel
 Mvoto Kongo, Panebei Samafou, Serge Guy Nana Engo
-**Zenodo DOI:** [10.5281/zenodo.17436069](https://doi.org/10.5281/zenodo.17436069)
+**Zenodo DOI:** [10.5281/zenodo.17436070](https://doi.org/10.5281/zenodo.17436070)
 
 A scaffold-validated, deliberately honest benchmark of how accurately cheap
 structure-based machine learning can predict the **experimental** singlet–triplet
@@ -115,7 +115,7 @@ and deposits its honest analysis code and outputs in `ML_reproducibility/code/` 
 - **`interactive_umap.html`** — Interactive UMAP visualization of the 747-molecule
   chemical space (hover for molecule details: name, ΔE_ST, architecture). Open in
   any modern web browser. Referenced in the Article 3 Data Availability statement
-  (DOI: 10.5281/zenodo.17436069).
+  (DOI: 10.5281/zenodo.17436070).
 - **`Data_AllGas_results.csv`** — Physical properties and computational results for
   all 747 molecules (gas phase)
 - **`Data_AllTol_results.csv`** — Physical properties and computational results for
@@ -249,7 +249,6 @@ Manuscript LaTeX sources and supporting information for Articles 1–2.
 - **ORCA (v6.1.0)** — Adiabatic S1/T1 optimization (14 molecules); CAM-B3LYP/def2-TZVP
   SOC calculations (8 top candidates)
 - **PySCF** — ΔROKS LC-ωPBE/def2-SVP for BACN (ω = 0.16 bohr⁻¹)
-- **Gaussian 16 (B3LYP/6-31G(d))** — TD-DFT benchmark (27 molecules)
 
 ---
 
@@ -259,24 +258,24 @@ Manuscript LaTeX sources and supporting information for Articles 1–2.
 
 ```
 ML_reproducibility/
-├── code/                                       # Honest analysis scripts
-│   ├── _dataset.py                             # Shared 231-molecule / 212-scaffold loader
-│   ├── finalize_model.py                       # Headline RF, metrics, Fig 1
-│   ├── compute_baselines.py                    # Mean/median/permutation baselines + CIs
-│   ├── r2_ci_power_analysis.py                 # R² bootstrap CI + correlation power
-│   ├── scaffold_split_analysis.py             # Label-permutation test, scaffold overlap
-│   ├── cluster_cv_analysis.py                 # Butina cluster cross-validation
-│   ├── capacity_and_noise_ceiling.py          # RF vs GBR/MLP/SVR/EN; clean-label test
-│   ├── dimensionality_check.py                # Morgan 512/1024/2048 + regularised refs
-│   ├── permutation_importance_check.py        # SHAP cross-check
-│   ├── extract_triplet_manifold.py            # T1/T2 from ORCA outputs
-│   ├── adiabatic_validation_analysis.py       # Vertical vs adiabatic gap
-│   ├── enrichment_curve.py                    # Triage precision curve + conformal
-│   ├── triage_evaluation.py                   # Enrichment / precision@k + shortlist band
-│   └── build_shortlist.py                     # Top-100 conformal-bounded shortlist
-├── data/                                       # Verified outputs (every headline number)
-├── features/                                   # Pre-computed descriptor tables (inputs)
-└── scripts/data_processing/                    # Feature-building (sTDA parse, CT/NTO, merge)
+├── code/                                     # Honest analysis scripts
+│   ├── _dataset.py                           # Shared 231-molecule / 212-scaffold loader
+│   ├── finalize_model.py                     # Headline RF, metrics, Fig 1
+│   ├── compute_baselines.py                  # Mean/median/permutation baselines + CIs
+│   ├── r2_ci_power_analysis.py               # R² bootstrap CI + correlation power
+│   ├── scaffold_split_analysis.py            # Label-permutation test, scaffold overlap
+│   ├── cluster_cv_analysis.py                # Butina cluster cross-validation
+│   ├── capacity_and_noise_ceiling.py         # RF vs GBR/MLP/SVR/EN; clean-label test
+│   ├── dimensionality_check.py               # Morgan 512/1024/2048 + regularised refs
+│   ├── permutation_importance_check.py       # SHAP cross-check
+│   ├── extract_triplet_manifold.py           # T1/T2 from ORCA outputs
+│   ├── adiabatic_validation_analysis.py      # Vertical vs adiabatic gap
+│   ├── enrichment_curve.py                   # Triage precision curve + conformal
+│   ├── triage_evaluation.py                  # Enrichment / precision@k + shortlist band
+│   └── build_shortlist.py                    # Top-100 conformal-bounded shortlist
+├── data/                                     # Verified outputs (every headline number)
+├── features/                                 # Pre-computed descriptor tables (inputs)
+└── scripts/data_processing/                  # Feature-building (sTDA parse, CT/NTO, merge)
 ```
 
 ### Feature set (35 NTO spatial descriptors, energy scalars excluded)
@@ -365,7 +364,7 @@ chemical space as a UMAP scatter plot. Hover over any point to see:
 - Molecular architecture
 - TADF score
 
-This file is part of the Article 3 open-data package (DOI: 10.5281/zenodo.17436069).
+This file is part of the Article 3 open-data package (DOI: 10.5281/zenodo.17436070).
 
 ---
 
@@ -401,7 +400,7 @@ If you use this data or scripts, please cite the relevant article(s):
              Nana Engo, Serge Guy},
   journal = {Digital Discovery},
   year    = {2026},
-  doi     = {10.5281/zenodo.17436069}
+  doi     = {10.5281/zenodo.17436070}
 }
 ```
 

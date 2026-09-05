@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Digital Discovery Submission
+% RSC Advances Submission
 % Accelerated Discovery of TADF Emitters via Physics-Informed ML
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -37,7 +37,7 @@
 \usepackage{pgf, tcolorbox}  % physics removed: conflicts with siunitx \qty
 \usepackage{enumitem}
 \usepackage{xr}  % Cross-reference to SI document
-\externaldocument[SI-]{SI_Digital_Discovery}  % Prefix SI- for all SI references
+\externaldocument[SI-]{SI_RSC_Advances}  % Prefix SI- for all SI references
 
 % Custom commands
 \newcommand{\modelA}{\textsc{Model~A}}
@@ -55,12 +55,12 @@
 \fancypagestyle{plain}{
 \fancyhf{}
 \fancyhead[L]{\includegraphics[height=8pt]{../MCA_submission/head_foot/RSC_LOGO_CMYK}}
-\fancyhead[C]{\fontsize{6}{8}\selectfont\textit{Digital Discovery}}
+\fancyhead[C]{\fontsize{6}{8}\selectfont\textit{RSC Advances}}
 \fancyhead[R]{\fontsize{6}{8}\selectfont www.rsc.org/digitaldiscovery}
 \renewcommand{\headrulewidth}{1pt}
 \renewcommand{\footrulewidth}{1pt}
 \fancyfoot[L]{\fontsize{6}{8}\selectfont This journal is \copyright\ The Royal Society of Chemistry 2026}
-\fancyfoot[R]{\fontsize{6}{8}\selectfont \textit{Digital Discovery}, 2026, \textbf{XX}, 1--XX~\textbar~\thepage}
+\fancyfoot[R]{\fontsize{6}{8}\selectfont \textit{RSC Advances}, 2026, \textbf{XX}, 1--XX~\textbar~\thepage}
 }
 
 % Title
@@ -85,13 +85,20 @@
 \maketitle
 
 % Abstract
-\input{abstract_digital_discovery.tex}
+\input{abstract_rsc_advances.tex}
 
 % Main sections
-\input{sections/introduction_digital_discovery.tex}
-\input{sections/methods_digital_discovery.tex}
-\input{sections/results_digital_discovery.tex}
-\input{sections/conclusions_digital_discovery.tex}
+\input{sections/introduction_rsc_advances.tex}
+\input{sections/methods_rsc_advances.tex}
+\input{sections/results_rsc_advances.tex}
+\input{sections/conclusions_rsc_advances.tex}
+
+% Funding
+% [ADD: authors must complete before submission — see final-audit.md blocker B4]
+% RSC expects a funding statement, including an explicit negative declaration if none applies.
+\section*{Funding}
+\textbf{[ADD: funding sources, or ``This research received no specific grant from any funding
+agency in the public, commercial, or not-for-profit sectors.'']}
 
 % Conflicts of interest
 \section*{Conflicts of interest}
@@ -110,25 +117,34 @@ S.G.N.E.: Supervision, Project administration, Writing -- review \& editing.
 The authors gratefully acknowledge Prof. Gian-Marco Rignanese (UCLouvain) for valuable scientific advice and
 for providing access to high-performance computing facilities.
 
-The authors acknowledge the use of Kiro/Claude 4.5 Sonnet (accessed May 2026) for literature search, LaTeX formatting, and consistency checking. All 
-scientific content, numerical values, and interpretations were verified and approved by the authors.
+The authors acknowledge the use of AI assistants (Kiro/Claude Sonnet~4.5, accessed May~2026;
+Claude Sonnet~5 and Claude Opus~5, accessed September~2026) in preparing this manuscript. Their
+use extended beyond literature search, \LaTeX{} formatting and consistency checking to include
+drafting and revision of manuscript text, and writing analysis scripts whose outputs are reported
+here (the paired equivalence and nested cross-validation tests, the enrichment reconciliation and
+the label-precision audit; see the deposited analysis ledger for the provenance of every value).
+The AI assistants are not authors and made no independent scientific judgement. All scientific
+content, numerical values and interpretations were checked against the deposited data and approved
+by the authors, who take full responsibility for them.
 
 % Data availability
 \section*{Data availability}
 All experimental data, descriptor tables, trained models, and analysis code are
-openly available on Zenodo under DOI: 10.5281/zenodo.17436070 (CC-BY-4.0 license).
+openly available on Zenodo under DOI: 10.5281/zenodo.17436069 (CC-BY-4.0 license).
 The deposit includes: (1)~the experimental \deltaest\ corpus and the
 \num{231}-molecule benchmark set (\num{212} scaffolds); (2)~the \num{35} NTO spatial
 descriptors and the structure-only Morgan and RDKit feature tables; (3)~the DFT
 functional benchmark and the CAM-B3LYP vertical-versus-adiabatic and triplet-manifold
 data (\num{14} emitters); (4)~the trained random-forest models, SHAP attributions, and
 validation outputs (scaffold and Butina-cluster cross-validation, label-permutation
-test, capacity tests); (5)~the heuristic \num{22194}-molecule library and the
-conformal-bounded top-\num{100} shortlist; and (6)~all analysis and figure-generation
+test, capacity tests); (5)~the heuristic \num{22194}-molecule library with the
+conformal calibration script and its interval widths---no ranked candidate list is
+deposited, because at this accuracy the intervals do not support molecule-level
+selection; and (6)~all analysis and figure-generation
 scripts that regenerate every reported number.
 
 % Bibliography
 \bibliographystyle{rsc}
-\bibliography{references_digital_discovery}
+\bibliography{references_rsc_advances}
 
 \end{document}

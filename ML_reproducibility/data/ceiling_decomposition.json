@@ -1,0 +1,21 @@
+{
+  "A_inter_lab_rms_eV": 0.072,
+  "A_inter_lab_max_sd_eV": 0.564,
+  "A_frac_exceeding_model_mae": 0.196,
+  "B_vertical_adiabatic_mae_eV": 0.195,
+  "B_vertical_adiabatic_rmse_eV": 0.245,
+  "B_pearson_r2": 0.704,
+  "C_functional_spread_mean_eV": 0.2964,
+  "C_functional_spread_max_eV": 0.583,
+  "D_roks_mae_eV": null,
+  "D_roks_n_matched": 0,
+  "rf_mae_eV": 0.0956,
+  "rf_mae_ci": [
+    0.082,
+    0.109
+  ],
+  "rf_r2": 0.2535,
+  "dummy_mae_eV": 0.1069,
+  "rss_floor_eV": 0.1282,
+  "interpretation": "The ML accuracy ceiling of 0.096 eV [0.082, 0.109] eV is consistent with the RSS floor of 0.128 eV computed from three independent measured noise sources: (A) inter-laboratory spread 0.072 eV RMS (20% of molecules exceed model MAE), (B) the vertical descriptor systematic offset 0.195 eV MAE (r\u00b2=0.70 correlation sTDA\u2013ORCA adiabatic), and (C) functional dependence spanning 0.296 eV mean (0.58 eV max). The model outperforms the dummy baseline (0.107 eV) but cannot penetrate below the noise floor."
+}

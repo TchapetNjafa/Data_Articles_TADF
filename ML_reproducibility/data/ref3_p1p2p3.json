@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "script": "code/ref3_p1p2p3.py",
+    "seed": 0,
+    "n_splits": 5,
+    "n_bootstrap": 2000,
+    "rf": "400 trees, random_state=0"
+  },
+  "P1_paired_vs_baseline": {
+    "morgan_vs_mean": {
+      "delta_MAE": 0.01603040240480054,
+      "CI": [
+        0.0022375135557449713,
+        0.029183928735540297
+      ],
+      "frac_bootstrap_model_better": 0.984
+    },
+    "nto_vs_mean": {
+      "delta_MAE": 0.011720105754625273,
+      "CI": [
+        0.0024147743262636643,
+        0.022353785644505273
+      ],
+      "frac_bootstrap_model_better": 0.9925
+    },
+    "wilcoxon_morgan": {
+      "stat": 9756.5,
+      "p": 0.0003418369264997695
+    },
+    "wilcoxon_nto": {
+      "stat": 10702.0,
+      "p": 0.008014467635148164
+    },
+    "note": "paired on identical folds; positive delta_MAE = model beats mean baseline"
+  },
+  "P2a_label_noise": {
+    "n_molecules_matched": 231,
+    "n_single_report": 129,
+    "n_multi_report": 102,
+    "sd_median": 0.0,
+    "sd_mean": 0.03607063751273468,
+    "sd_max": 0.5641278667110853,
+    "rms_sd": 0.08556194552452691,
+    "spread_median": 0.0,
+    "spread_max": 1.086,
+    "frac_multi_with_zero_sd": 0.5784313725490197,
+    "note": "sd across independent literature reports of the SAME molecule = label noise"
+  },
+  "P2b_doi_cv": {
+    "n": 231,
+    "n_doi_groups": 173,
+    "n_splits": 5,
+    "morgan": {
+      "MAE": 0.1024947179035251,
+      "R2": 0.18408945714640923,
+      "rho": 0.1547170615379959
+    },
+    "nto": {
+      "MAE": 0.09878409350649353,
+      "R2": 0.14229289374369192,
+      "rho": 0.34591290916852946
+    },
+    "mean_baseline": {
+      "MAE": 0.10766254497891453,
+      "R2": -0.01041601038659934
+    },
+    "morgan_vs_mean": {
+      "delta_MAE": 0.005167827075389431,
+      "CI": [
+        -0.0074238118649577,
+        0.0169511599942771
+      ],
+      "frac_bootstrap_model_better": 0.7915
+    }
+  },
+  "P2c_report_subsets": {
+    "single_report": {
+      "n": 129,
+      "morgan_MAE": 0.10059292054263569,
+      "morgan_R2": 0.3810267679625712,
+      "morgan_rho": 0.19294000796213678,
+      "mean_baseline_MAE": 0.12289445981034093,
+      "delta": {
+        "delta_MAE": 0.022301539267705242,
+        "CI": [
+          0.00082285631863279,
+          0.04413178873664101
+        ],
+        "frac_bootstrap_model_better": 0.981
+      }
+    },
+    "multi_report": {
+      "n": 102,
+      "morgan_MAE": 0.08012625,
+      "morgan_R2": 0.063884523202002,
+      "morgan_rho": 0.2654952248250791,
+      "mean_baseline_MAE": 0.08908479609850563,
+      "delta": {
+        "delta_MAE": 0.008958546098505632,
+        "CI": [
+          -3.602287720076145e-05,
+          0.018090208065891584
+        ],
+        "frac_bootstrap_model_better": 0.974
+      }
+    }
+  },
+  "P3_split_comparison": {
+    "n_scaffolds": 212,
+    "n_singleton": 197,
+    "frac_singleton": 0.9292452830188679,
+    "max_scaffold_size": 3,
+    "molecules_per_scaffold": 1.0896226415094339,
+    "morgan_scaffold_CV": {
+      "MAE": 0.09132033819830963,
+      "R2": 0.2743829268088134
+    },
+    "morgan_random_CV": {
+      "MAE": 0.09435986504844363,
+      "R2": 0.3175512684393349
+    },
+    "morgan_doi_CV": {
+      "MAE": 0.1024947179035251,
+      "R2": 0.18408945714640923
+    },
+    "note": "if scaffold CV == random CV the referee is right that scaffold split adds nothing; DOI CV is the strictly harder split that does carry information"
+  }
+}

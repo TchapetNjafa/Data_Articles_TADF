@@ -1,0 +1,90 @@
+{
+ "meta": {
+  "script": "code/a007_leakage_and_nested_cv.py",
+  "seed": 0,
+  "n_splits": 5,
+  "cv": "GroupKFold on Bemis-Murcko scaffolds (identical to A-001/A-005/A-006)"
+ },
+ "H12_leakage_demonstration": {
+  "target": "sTDA computed gap  E_S1 - E_T1  (the quantity a leaked study regresses on)",
+  "n": 231,
+  "leaked_features": {
+   "description": "35 NTO spatial descriptors PLUS the S1 and T1 energy scalars",
+   "cv_MAE_eV": 0.08089,
+   "cv_R2": 0.58743,
+   "pearson_r": 0.76886
+  },
+  "energy_free_features": {
+   "description": "the same 35 NTO spatial descriptors, energies excluded",
+   "cv_MAE_eV": 0.08905,
+   "cv_R2": 0.52243,
+   "pearson_r": 0.72336
+  },
+  "by_learner_leaked": {
+   "RandomForest": {
+    "cv_MAE_eV": 0.080893,
+    "cv_R2": 0.587427
+   },
+   "Ridge": {
+    "cv_MAE_eV": 0.017658,
+    "cv_R2": 0.981408
+   },
+   "SVR": {
+    "cv_MAE_eV": 0.094789,
+    "cv_R2": 0.410667
+   },
+   "LinearRegression": {
+    "cv_MAE_eV": 0.0,
+    "cv_R2": 1.0
+   }
+  },
+  "by_learner_energy_free": {
+   "RandomForest": {
+    "cv_MAE_eV": 0.08905,
+    "cv_R2": 0.522429
+   },
+   "Ridge": {
+    "cv_MAE_eV": 0.101576,
+    "cv_R2": 0.382285
+   },
+   "SVR": {
+    "cv_MAE_eV": 0.109907,
+    "cv_R2": 0.263163
+   },
+   "LinearRegression": {
+    "cv_MAE_eV": 0.103875,
+    "cv_R2": 0.361168
+   }
+  },
+  "note": "Both cross-validated on the same Bemis-Murcko scaffold GroupKFold(5) as the rest of the study. The contrast between the two rows IS the leakage demonstration. Learner choice matters: a random forest is axis-aligned and cannot represent a difference of two continuous inputs, so it UNDERSTATES the leakage; a linear model recovers the identity exactly. The leakage claim is about recoverability, so the linear row is the honest demonstration."
+ },
+ "H3_nested_cv": {
+  "flat_protocol": {
+   "description": "every learner scored on the identical outer folds; the best is reported",
+   "MAE_by_learner": {
+    "RandomForest": 0.09563,
+    "SVR": 0.11198,
+    "Ridge": 0.11361,
+    "GradientBoosting": 0.09777,
+    "MLP": 0.16056
+   },
+   "best_learner": "RandomForest",
+   "reported_MAE_eV": 0.09563
+  },
+  "nested_protocol": {
+   "description": "learner selected inside each training fold, scored on the untouched outer fold",
+   "MAE_eV": 0.09563,
+   "R2": 0.25347,
+   "learner_chosen_per_fold": [
+    "RandomForest",
+    "RandomForest",
+    "RandomForest",
+    "RandomForest",
+    "RandomForest"
+   ]
+  },
+  "selection_optimism_eV": 0.0,
+  "mean_baseline_MAE_eV": 0.10735,
+  "note": "positive selection_optimism = the flat protocol was optimistic by that many eV"
+ }
+}

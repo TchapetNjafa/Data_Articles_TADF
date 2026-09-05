@@ -1,0 +1,37 @@
+{
+ "meta": {
+  "script": "code/a011_condition_controlled_proxy.py",
+  "seed": 0,
+  "n_splits": 5,
+  "n_bootstrap": 2000,
+  "cv": "GroupKFold on Bemis-Murcko scaffolds (as A-001/A-006/A-007)"
+ },
+ "why_proxy": "phase and atmosphere are non-null for 0/1520 source rows (A-009), so a strictly solvent-controlled subset cannot be constructed; source paper is the closest proxy for a single set of measurement conditions.",
+ "single_source": {
+  "name": "single-source (one DOI)",
+  "n": 218,
+  "morgan_MAE": 0.0933,
+  "nto_MAE": 0.0965,
+  "constant_predictor_MAE": 0.1004,
+  "target_SD": 0.1703,
+  "morgan_advantage_over_constant": 0.0071
+ },
+ "multi_source": {
+  "name": "multi-source (>=2 DOIs)",
+  "n": 13,
+  "morgan_MAE": 0.0584,
+  "nto_MAE": 0.0802,
+  "constant_predictor_MAE": 0.0608,
+  "target_SD": 0.0814,
+  "morgan_advantage_over_constant": 0.0024
+ },
+ "difference_in_advantage_over_constant": {
+  "delta": 0.0047,
+  "CI": [
+   -0.0138,
+   0.0345
+  ],
+  "excludes_zero": false
+ },
+ "note": "Comparing each group against its OWN constant predictor controls for differing target dispersion between groups \u2014 the artefact that invalidated A-006 T5 (see A-008)."
+}

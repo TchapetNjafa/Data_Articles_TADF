@@ -1,0 +1,33 @@
+{
+  "n_multi_report_molecules": 102,
+  "n_reports_distribution": {
+    "2": 80,
+    "3": 18,
+    "4": 3,
+    "8": 1
+  },
+  "estimators": {
+    "rms_of_per_molecule_SD_ddof1": 0.0856,
+    "rms_of_per_molecule_SD_ddof0": 0.0701,
+    "rms_single_report_about_median": 0.0905,
+    "rms_single_report_about_mean": 0.0875,
+    "rms_SEM_of_median_label": 0.049,
+    "mean_abs_dev_about_median": 0.0312,
+    "median_of_per_molecule_SD": 0.0,
+    "max_per_molecule_SD": 0.5641,
+    "median_spread": 0.0,
+    "max_spread": 1.086,
+    "frac_zero_spread": 0.5784
+  },
+  "ratio_check": {
+    "sd_ddof1_over_about_median": 0.9458,
+    "expected_ratio_if_all_n2": "sqrt(2) = 1.4142",
+    "note": "ddof=1 SD inflates by sqrt(n/(n-1)) relative to the RMS deviation about the centre; for n=2 that factor is sqrt(2). The observed ratio sits below sqrt(2) because some molecules have n=3,4,8."
+  },
+  "recommendation": {
+    "for_accuracy_ceiling": "rms_SEM_of_median_label",
+    "reason": "the regression target IS the per-molecule median, so the floor on predicting it is the uncertainty of that median, not the spread of individual reports",
+    "for_describing_corpus_heterogeneity": "rms_single_report_about_median (0.072 eV, already published)",
+    "do_not_use": "rms_of_per_molecule_SD_ddof1 alone \u2014 it answers neither question and is the largest of the three, so quoting it looks like inflation"
+  }
+}

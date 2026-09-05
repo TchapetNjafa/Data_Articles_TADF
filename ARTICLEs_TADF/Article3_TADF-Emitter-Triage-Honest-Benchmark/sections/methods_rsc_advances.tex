@@ -1,5 +1,5 @@
 % ============================================================
-% Digital Discovery Methods — honest structure-based benchmark (repositioned 2026-06-23)
+% RSC Advances Methods — honest structure-based benchmark (repositioned 2026-06-23)
 % Numbers trace to data/final_model_metrics.json, structural_rebuild_metrics.json,
 % dft_benchmark_comparison.csv, and the scripts in code/.
 % ============================================================
@@ -14,8 +14,10 @@ corpus of TADF publications and matched them, by compound name, to molecules in
 our descriptor set, retaining values in the physical range
 \qtyrange{-0.3}{1.5}{\electronvolt}. Where a compound carried multiple independent
 reports we used the median and recorded the inter-report spread; a single report sits
-\qty{0.072}{\electronvolt} (RMS) from the median and this scatter bounds achievable
-accuracy (\cref{subsec:ceilings}). The final benchmark comprises \num{231} donor--acceptor
+\qty{0.072}{\electronvolt} from the median (RMS, weighting each molecule equally; the
+report-pooled value is \qty{0.0905}{\electronvolt}), and the median itself carries an RMS
+standard error of \qty{0.049}{\electronvolt}, which is the precision of the target
+actually regressed on (\cref{subsec:ceilings}). The final benchmark comprises \num{231} donor--acceptor
 molecules spanning \num{212} distinct Bemis--Murcko scaffolds~\cite{Bemis1996}.
 
 The corpus does not record measurement medium (solvent, host) for individual
@@ -27,8 +29,8 @@ experimentally accessible $S_1$--$T_1$ gaps; it trades physical specificity for
 reduced variance. For the \num{102} molecules with repeat reports, a single random
 report deviates from this median by \qty{0.072}{\electronvolt} on
 average---comparable to the model error itself
-(\cref{SI-tab:solvent})---which sets a floor on attainable accuracy independent of
-model capacity.
+(\cref{SI-tab:solvent}). The median itself is known more precisely, to
+\qty{0.049}{\electronvolt} RMS, and that is the figure relevant to attainable accuracy.
 
 We deliberately do \emph{not} train on the semi-empirical gap
 $E_{S_1}-E_{T_1}$: because this quantity is, by construction, a difference of two
@@ -39,7 +41,7 @@ input features, regressing onto it measures arithmetic rather than learning
 
 Excited-state quantities used to build descriptors were obtained at the
 semi-empirical level: GFN2-xTB~\cite{Bannwarth2019} geometries
-(\texttt{xtb} 6.7.1) followed by sTDA~\cite{Grimme2017} for the lowest singlet
+(\texttt{xtb} version 6.7.1) followed by sTDA~\cite{Grimme2017} for the lowest singlet
 and triplet states. From the natural transition orbitals
 (NTOs)~\cite{Martin2003} of each excitation we computed spatial overlap
 descriptors that encode exchange-integral physics:
@@ -72,22 +74,40 @@ baseline on this task.
 
 \paragraph{Evaluation.}
 All performance figures use Bemis--Murcko scaffold \texttt{GroupKFold}
-($k=5$): every test molecule lies on a scaffold unseen in training, so reported
-errors estimate generalisation to new chemotypes rather than interpolation.
-We benchmark against a mean-value predictor and the raw sTDA gap, and report
+($k=5$). Because \qty{92.9}{\percent} of scaffolds are singletons, this split is
+numerically close to a random split; we therefore also report a source-paper
+(DOI-grouped) split, which holds out a synthetic series and whatever measurement
+practice is shared within a laboratory, and is the harder test of transfer
+(\cref{subsec:benchmark}). The corpus records no solvent, host or temperature per value,
+so the source paper is a \emph{proxy} for protocol, not a measured one.
+We benchmark against a mean-value predictor, the raw sTDA gap, and a
+range-separated TD-DFT reference gap (\cref{subsec:benchmark}), and report
 \qty{95}{\percent} confidence intervals from \num{2000} bootstrap resamples of the
 out-of-fold predictions.
 
+\paragraph{TD-DFT reference gap.}
+For a higher-level reference we computed vertical \deltaest\ for all \num{231}
+molecules at wB97X-D4/def2-SVP with RIJCOSX and the Tamm--Dancoff approximation
+(ORCA~6~\cite{Neese2020}; \texttt{nroots}~8, triplets included; GFN2-xTB
+ground-state geometry). All \num{231}/\num{231} jobs converged
+(\qty{76.2}{\hour} elapsed on \num{8} processes, so \num{609} core-hours; median
+\qty{16.1}{\minute} per molecule, slowest \qty{2.1}{\hour}). These are measured wall times
+from \texttt{results/tddft\_reference\_231.csv}, not a scaling extrapolation. The raw
+gap, an in-fold linearly calibrated gap, and the gap as an added descriptor in
+the random forest model are evaluated against the mean-value baseline on the same
+scaffold and DOI cross-validation folds (\cref{subsec:benchmark};
+\cref{SI-tab:tddft_headtohead}).
+
 \paragraph{Interpretability and reproducibility.}
 Feature importance was quantified with exact TreeSHAP~\cite{Lundberg2017} on the
-fitted forest. All scripts (\texttt{ML\_reproducibility/code/finalize\_model.py},
-\texttt{ML\_reproducibility/code/rebuild\_structural\_model.py}) regenerate every reported number and
+fitted forest. All scripts (\texttt{code/finalize\_model.py},
+\texttt{code/rebuild\_structural\_model.py}) regenerate every reported number and
 \cref{fig:model_performance}.
 
 \paragraph{Bootstrap confidence intervals and power analysis.}
 Point estimates of the rank correlation are complemented by
 \num{5000}-replicate percentile bootstrap confidence intervals on the
-out-of-fold predictions (\texttt{ML\_reproducibility/code/r2\_ci\_power\_analysis.py}).
+out-of-fold predictions (\texttt{code/r2\_ci\_power\_analysis.py}).
 For the headline model the Spearman $\rho = 0.36$ ($n = 231$) has a 95\%~CI of
 \numrange{0.24}{0.47} ($p = \num{2.6e-8}$) and the Pearson $r = 0.50$ a 95\%~CI
 of \numrange{0.26}{0.68}; both exclude zero, establishing statistically
@@ -95,12 +115,13 @@ significant association despite the wide $R^2$ interval.
 A power analysis for the correlation test (Fisher $z$ transform, two-sided,
 $\alpha = 0.05$) shows that detecting $\rho = 0.36$ at \qty{80}{\percent} power
 requires only $n \approx 60$ (\qty{90}{\percent} power: $n \approx 79$); at
-$n = 231$ the achieved power is $\approx 1.0$. The ranking-ability question is
-thus amply powered, and the wide $R^2$ interval is \emph{not} a sample-size
-problem: it reflects the high variance of a variance-explained statistic when a
-handful of high-gap outliers dominate the residual sum of squares. We therefore
-report Spearman~$\rho$ as the primary metric for triage utility, with the full
-set of metrics and intervals collected in \cref{SI-tab:metrics_ci}.
+$n = 231$ the achieved power is $\approx 1.0$. This bears on the ranking question only:
+it establishes that the $\rho$ estimate is not sample-size-limited, and it says nothing
+about the width of the $R^2$ interval, which is a different statistic and is discussed on
+its own terms in \cref{subsec:benchmark}. We report Spearman~$\rho$ as the primary metric
+for triage utility because triage is a ranking task, not because it is the more favourable
+number; the full set of metrics and intervals is collected in
+\cref{SI-tab:metrics_ci}.
 
 \subsection{Reference-level benchmark}
 
@@ -110,21 +131,33 @@ contrasting B3LYP/6-31G(d) with CAM-B3LYP/def2-TZVP (%Gaussian~16~\cite{Gaussian
 ORCA~6.1.1~\cite{Neese2020}). The two levels differ in $\Delta E_\text{ST}$ by a
 mean absolute \qty{0.30}{\electronvolt} (up to \qty{0.58}{\electronvolt}, with
 cases of reversed relative magnitude); full values are tabulated in
-\cref{SI-tab:dft_benchmark}. This functional dependence, together with
-experimental inter-report scatter, sets the accuracy ceiling discussed in
-\cref{subsec:ceilings}. The same CAM-B3LYP/def2-TZVP calculations additionally
+\cref{SI-tab:dft_benchmark}. This functional dependence bounds what a \emph{computed}
+gap can mean; it is reported separately from the label-precision term that applies to
+the present regression, and the two are not combined (\cref{subsec:ceilings}). The same CAM-B3LYP/def2-TZVP calculations additionally
 yielded excited-state-optimised (adiabatic) gaps and the two lowest triplets
 ($T_1$, $T_2$) for \num{14} emitters, used to bound the vertical approximation
 (\cref{subsec:ceilings}) and the triplet-manifold scope (\cref{subsec:limitations});
 see SI.
 
-\subsection{Heuristic enumeration of an extended library}\label{sec:library_expansion}
+\subsection{Substructure-filtered extended library}\label{sec:library_expansion}
 
-To explore chemical space beyond the annotated set, we enumerated \num{22194}
-donor--acceptor combinations from literature-validated fragments (carbazole,
-phenoxazine, acridine donors; triazine, benzonitrile, sulfone acceptors) under
-simple constraints (molecular weight $<\qty{900}{\dalton}$, $\geq 2$ aromatic
-rings, $\geq 1$ N/O/S heteroatom). These were ranked by a rule-based TADF score
+To gauge the scale of chemical space beyond the annotated set, we screened the PubChem
+CID--SMILES collection for compounds carrying \emph{both} a donor and an acceptor motif,
+retaining \num{22194} structures. The donor patterns were carbazole, phenothiazine,
+phenoxazine, acridine, diphenylamine, triphenylamine and dimethylaniline; the acceptor
+patterns triazine, benzonitrile, pyridine, pyrimidine, quinoxaline, benzothiadiazole,
+naphthoquinone and a bare cyano group. Additional constraints were molecular weight
+$<\qty{900}{\dalton}$, $\geq 2$ aromatic rings and $\geq 1$ N/O/S heteroatom
+(\texttt{code/build\_shortlist.py} and the screening script in the deposit).
+This is a substructure filter over an existing database, not a combinatorial enumeration
+of fragment pairs, and the distinction matters for how the set should be read: every
+member satisfies the donor--acceptor pattern test, but the matches are dominated by the
+weaker motifs (dimethylaniline in \qty{85}{\percent} and pyridine in \qty{59}{\percent}
+of the \num{100} lowest-predicted structures, against carbazole in \num{2} and triazine
+in \num{3}). The set also inherits the composition of the source database rather than of
+a designed emitter series: \qty{97}{\percent} of those structures carry a halogen and
+\qty{53}{\percent} a stereocentre, and enantiomer pairs appear as separate entries with
+identical predicted gaps, which a 2D fingerprint cannot distinguish. These were ranked by a rule-based TADF score
 \begin{equation}
   \text{TADF score} = 0.35\,f_\text{MW} + 0.25\,f_\text{LogP} + 0.20\,f_\text{rings} + 0.20\,f_\text{hetero},
   \label{eq:tadf_score}
@@ -132,11 +165,15 @@ rings, $\geq 1$ N/O/S heteroatom). These were ranked by a rule-based TADF score
 with each $f_i\in[0,1]$ a normalised feature score based on established design
 heuristics~\cite{Liu2012,Uoyama2012,Wong2017}. The score is a coarse
 synthesis-planning filter, \emph{not} a calibrated $\Delta E_\text{ST}$ predictor;
-the enumerated molecules are not quantum-validated and are reported as leads only.
+the filtered molecules are not quantum-validated and are reported as leads only.
+The random-forest model trained on the labelled benchmark is applied to this set only to
+obtain split-conformal prediction intervals (\cref{subsec:library}); no candidate is put
+forward on the strength of its predicted gap, and the descriptor pipeline and
+cross-validation protocol are those of the labelled benchmark throughout.
 
 \subsection{Data and code availability}
 
 The experimental corpus, descriptor tables, trained models, and all analysis and
 figure-generation scripts are openly available on Zenodo
-(DOI: 10.5281/zenodo.17436070) under a CC-BY-4.0 licence, so that every number and
+(DOI: 10.5281/zenodo.17436069) under a CC-BY-4.0 licence, so that every number and
 figure in this work can be reproduced and the benchmark extended.

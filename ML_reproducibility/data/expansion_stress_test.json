@@ -1,0 +1,32 @@
+{
+  "feature_set": "NTO(35)",
+  "model": "RF(400)",
+  "cv": "scaffold GroupKFold(5)",
+  "drop_breakdown": {
+    "no_target": 0,
+    "dup_of_training": 127,
+    "dup_within_new": 0,
+    "usable_new": 497
+  },
+  "baseline_231": {
+    "n": 231,
+    "mae_eV": 0.098,
+    "r2": 0.1823,
+    "spearman_rho": 0.3358
+  },
+  "expanded_all": {
+    "n": 728,
+    "mae_eV": 0.1237,
+    "r2": -0.0083,
+    "spearman_rho": 0.1624,
+    "n_new": 497
+  },
+  "expanded_multireport": {
+    "n": 465,
+    "mae_eV": 0.1099,
+    "r2": 0.0518,
+    "spearman_rho": 0.2403,
+    "n_new": 234
+  },
+  "note": "Expansion to a 3x larger, more diverse experimental corpus does not improve structure-only DeltaE_ST prediction. Multi-report labels (n_reports>=2) partially recover accuracy (label noise) but stay below the curated baseline (chemical diversity). The inter-report SD filter is confounded: single-report entries have sd=0 by construction, so n_reports is the meaningful confidence signal."
+}

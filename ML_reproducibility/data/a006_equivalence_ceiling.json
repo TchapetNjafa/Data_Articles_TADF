@@ -1,0 +1,236 @@
+{
+ "meta": {
+  "script": "code/a006_equivalence_ceiling.py",
+  "seed": 0,
+  "n_splits": 5,
+  "n_bootstrap": 2000,
+  "rf": "400 trees, random_state=0",
+  "cv": "GroupKFold on Bemis-Murcko scaffolds (identical to A-001/A-005)"
+ },
+ "T1_morgan_vs_nto_equivalence": {
+  "morgan": {
+   "MAE": 0.09132033819830963,
+   "R2": 0.2743829268088136,
+   "rho": 0.3055217846298636
+  },
+  "nto": {
+   "MAE": 0.0956306348484849,
+   "R2": 0.2534675020305083,
+   "rho": 0.3561529605443552
+  },
+  "mean_baseline_MAE": 0.10735074060311017,
+  "nto_minus_morgan": {
+   "delta_MAE": -0.004310296650175266,
+   "CI": [
+    -0.017135375509173437,
+    0.009192688885539011
+   ],
+   "frac_bootstrap_a_better": 0.269
+  },
+  "wilcoxon": {
+   "stat": 12946.0,
+   "p": 0.6566575928087112
+  },
+  "smallest_equivalence_margin_eV": 0.017135375509173437,
+  "note": "positive delta_MAE = NTO better. TOST: the two feature sets are equivalent at any margin >= smallest_equivalence_margin_eV, and NOT distinguishable below it."
+ },
+ "T2_doi_split_rho": {
+  "n": 231,
+  "n_doi_groups": 173,
+  "morgan": {
+   "MAE": 0.1024947179035251,
+   "R2": 0.18408945714640945,
+   "rho": 0.1547170615379959
+  },
+  "nto": {
+   "MAE": 0.09878409350649353,
+   "R2": 0.14229289374369192,
+   "rho": 0.34591290916852946
+  },
+  "delta_rho_nto_minus_morgan": 0.19119584763053357,
+  "delta_rho_CI": [
+   0.03744409445288557,
+   0.3442062452187834
+  ],
+  "delta_rho_excludes_zero": true,
+  "nto_minus_morgan_MAE": {
+   "delta_MAE": 0.00371062439703157,
+   "CI": [
+    -0.009480848756957285,
+    0.01663919457998351
+   ],
+   "frac_bootstrap_a_better": 0.734
+  },
+  "note": "paired bootstrap on identical DOI folds; resamples molecules, recomputes both rho"
+ },
+ "T3_enrichment_reconciliation": {
+  "threshold_eV": 0.1,
+  "base_rate": 0.4459,
+  "n": 231,
+  "morgan_curve": [
+   {
+    "fraction": 0.01,
+    "k": 2,
+    "precision": 0.5,
+    "enrichment": 1.1214
+   },
+   {
+    "fraction": 0.02,
+    "k": 5,
+    "precision": 0.6,
+    "enrichment": 1.3456
+   },
+   {
+    "fraction": 0.05,
+    "k": 12,
+    "precision": 0.5833,
+    "enrichment": 1.3083
+   },
+   {
+    "fraction": 0.1,
+    "k": 23,
+    "precision": 0.4783,
+    "enrichment": 1.0726
+   },
+   {
+    "fraction": 0.2,
+    "k": 46,
+    "precision": 0.6087,
+    "enrichment": 1.3651
+   },
+   {
+    "fraction": 0.3,
+    "k": 69,
+    "precision": 0.5797,
+    "enrichment": 1.3001
+   },
+   {
+    "fraction": 0.5,
+    "k": 116,
+    "precision": 0.5603,
+    "enrichment": 1.2567
+   }
+  ],
+  "nto_curve": [
+   {
+    "fraction": 0.01,
+    "k": 2,
+    "precision": 0.0,
+    "enrichment": 0.0
+   },
+   {
+    "fraction": 0.02,
+    "k": 5,
+    "precision": 0.6,
+    "enrichment": 1.3456
+   },
+   {
+    "fraction": 0.05,
+    "k": 12,
+    "precision": 0.4167,
+    "enrichment": 0.9345
+   },
+   {
+    "fraction": 0.1,
+    "k": 23,
+    "precision": 0.4783,
+    "enrichment": 1.0726
+   },
+   {
+    "fraction": 0.2,
+    "k": 46,
+    "precision": 0.6739,
+    "enrichment": 1.5114
+   },
+   {
+    "fraction": 0.3,
+    "k": 69,
+    "precision": 0.6667,
+    "enrichment": 1.4951
+   },
+   {
+    "fraction": 0.5,
+    "k": 116,
+    "precision": 0.5603,
+    "enrichment": 1.2567
+   }
+  ],
+  "definition": "good = experimental gap < 0.1 eV; rank ascending by predicted gap; precision = fraction good in the top-k; enrichment = precision / base_rate; scaffold-GroupKFold out-of-fold predictions, seed 0",
+  "deposited_values_at_top10pct": {
+   "enrichment_curve.json": {
+    "fraction": 0.1,
+    "k": 23,
+    "precision": 0.565,
+    "enrichment": 1.15
+   },
+   "triage_metrics.json": {
+    "precision_at_10": 0.6,
+    "enrichment_at_10": 1.22,
+    "precision_at_20": 0.6,
+    "enrichment_at_20": 1.22,
+    "precision_at_50": 0.68,
+    "enrichment_at_50": 1.38
+   },
+   "multi_criteria_triage.json": {
+    "fraction": 0.1,
+    "k": 23,
+    "precision": 0.6522,
+    "enrichment": 1.3215
+   }
+  }
+ },
+ "T4_ceiling_audit": {
+  "stored_rss_floor_eV": 0.1282,
+  "stored_rf_mae_eV": 0.0956,
+  "model_is_below_stored_floor": true,
+  "recomputed_rss_of_A_B_C_eV": 0.362,
+  "components": {
+   "A_inter_report_rms_sd": 0.072,
+   "B_vertical_vs_adiabatic_MAE": 0.195,
+   "C_functional_spread_mean": 0.2964
+  },
+  "category_error": "B and C are dispersions of COMPUTED references (sTDA-vs-adiabatic, B3LYP-vs-CAM-B3LYP). They bound agreement between levels of theory, not the attainable error of a model regressed on EXPERIMENTAL labels. Only A is a property of the label.",
+  "defensible_label_precision": {
+   "rms_standard_error_of_median_eV": 0.049,
+   "n_multi_report": 102,
+   "n_single_report": 129,
+   "model_MAE_eV": 0.0956,
+   "note": "RMS standard error of the per-molecule median label, over molecules with replicates. This is the precision of the quantity actually regressed on. Single-report molecules have no replicate and contribute no estimate."
+  }
+ },
+ "T5_clean_label_test": {
+  "as_published_subset": {
+   "n": 208,
+   "MAE": 0.09445782836538467,
+   "n_singletons_counted_as_clean": 129,
+   "n_actually_discarded": 23,
+   "note": "sd.fillna(0) <= 0.05 -- molecules with no replicate are scored clean"
+  },
+  "replicated_clean": {
+   "n": 79,
+   "MAE": 0.07412590569620259,
+   "note": "n_reports > 1 AND sd <= 0.05 eV"
+  },
+  "replicated_noisy": {
+   "n": 23,
+   "MAE": 0.1062368847826087,
+   "note": "n_reports > 1 AND sd > 0.05 eV"
+  },
+  "singletons": {
+   "n": 129,
+   "MAE": 0.10690916085271326,
+   "note": "no replicate: label precision unmeasurable"
+  },
+  "full_set_MAE": 0.0956306348484849,
+  "interpretation_test": "If label noise is the binding constraint, MAE on replicated_clean must be materially below MAE on replicated_noisy. Compare them.",
+  "noisy_minus_clean_MAE": {
+   "delta": 0.032110979086406116,
+   "CI": [
+    -0.015322993431480523,
+    0.08814405707897623
+   ],
+   "excludes_zero": false,
+   "note": "unpaired bootstrap; positive = higher error where the label is noisier"
+  }
+ }
+}

@@ -1,4 +1,4 @@
-# TADF Emitters Computational Data Repository [![DOI](https://zenodo.org/badge/1082469447.svg)](https://doi.org/10.5281/zenodo.17436070)
+# TADF Emitters Computational Data Repository [![DOI](https://zenodo.org/badge/1082469447.svg)](https://doi.org/10.5281/zenodo.17436069)
 
 This repository contains computational data, scripts, and manuscripts for three
 related research articles on thermally activated delayed fluorescence (TADF)
@@ -44,10 +44,12 @@ of molecular architecture, geometry, and electronic structure, it identifies
 ---
 
 ### Article 3: How Far Can Structure-Based Machine Learning Predict Experimental Singlet–Triplet Gaps? An Honest Benchmark for TADF Emitter Triage
-**Status:** 📝 Submitted to *Digital Discovery*, RSC (June 2026)
+**Status:** 📝 Under submission to *RSC Advances* (September 2026)
+**Prior submission:** *Digital Discovery*, RSC — declined 27 Aug 2026; the referee
+reports were addressed and the manuscript substantially revised (see below)
 **Authors:** Jean-Pierre Tchapet Njafa, Steve Cabrel Teguia Kouam, Patrick Sorrel
 Mvoto Kongo, Panebei Samafou, Serge Guy Nana Engo
-**Zenodo DOI:** [10.5281/zenodo.17436070](https://doi.org/10.5281/zenodo.17436070)
+**Zenodo DOI:** [10.5281/zenodo.17436069](https://doi.org/10.5281/zenodo.17436069)
 
 A scaffold-validated, deliberately honest benchmark of how accurately cheap
 structure-based machine learning can predict the **experimental** singlet–triplet
@@ -55,11 +57,17 @@ gap (ΔE_ST). On 231 donor–acceptor molecules spanning 212 Bemis–Murcko scaf
 random forests built from the 2D structure alone (Morgan fingerprints, RDKit
 descriptors) predict the measured ΔE_ST with MAE ≈ 0.096 eV — matching
 physics-informed NTO descriptors that require a semi-empirical excited-state
-calculation, so the excited-state step adds nothing. Accuracy is bounded near
-0.1 eV by experimental inter-report scatter (0.1–0.15 eV) and DFT functional
-dependence (up to 0.58 eV), not by model capacity. The model is a modest triage
-filter (1.2–1.4× enrichment over random); a conformal-bounded top-100 shortlist of
-a 22,194-molecule virtual library is deposited.
+calculation. The two agree to within **0.017 eV** on paired folds, so the
+excited-state step buys no *accuracy*; it does, however, buy *ranking* that
+survives a change of source laboratory (Spearman ρ 0.35 vs 0.16 under a
+source-paper split, Δρ = 0.19, CI excluding zero). Accuracy is bounded by the
+label: repeat reports of the same compound scatter by 0.072 eV RMS and the median
+actually regressed on is known only to 0.049 eV. A 609-core-hour range-separated
+TD-DFT reference does not beat the structure-only model. The model is a modest
+triage filter (1.2–1.4× enrichment over random). **No ranked candidate shortlist
+is deposited:** on the 22,194-molecule filtered library the conformal intervals
+are ~7.6× the predicted gap and every one of the 100 lowest-predicted intervals
+spans a negative gap, so the procedure refuses molecule-level selection.
 
 > ⚠️ **Supersedes an earlier, withdrawn version.** A prior preprint of this work
 > (Zenodo 10.5281/zenodo.14241084) reported an SVR model at MAE 0.025 eV / R² 0.956,
@@ -80,15 +88,36 @@ a 22,194-molecule virtual library is deposited.
 | Ranking | Spearman ρ ≈ 0.26–0.36; mean-value baseline MAE = 0.107 eV |
 | Validation | scaffold GroupKFold + label-permutation test (p = 0.001) + Butina cluster-CV (MAE 0.099–0.104) |
 | Capacity test | RF best; HistGBR (0.105), MLP (0.169), SVR (0.120), ElasticNet (0.102) do **not** beat it |
-| Accuracy ceiling | experimental scatter 0.1–0.15 eV; DFT functional dependence up to 0.58 eV |
-| Vertical vs adiabatic | MAE 0.195 eV — systematic, rank-preserving offset (slope 1.00, ρ 0.71) |
-| Triplet manifold | T₁–T₂ extracted for 14 emitters (CAM-B3LYP), mean 0.41 eV, 13/27 < 0.3 eV |
-| Triage | 1.2–1.4× enrichment; deposited top-100 conformal-bounded shortlist (±0.18 eV, 90%) |
-| Circularity / leakage | naive ΔE_ST-on-energies regression is arithmetic, not learning (diagnosed, avoided) |
+| Morgan vs NTO | equivalent to within **0.017 eV** (paired, identical folds, Wilcoxon p = 0.66) |
+| Ranking under protocol transfer | source-paper split: NTO ρ = 0.35 vs Morgan 0.16, **Δρ = 0.19** (CI 0.04–0.34) |
+| Label bound | single-report scatter 0.072 eV RMS (molecule-weighted); **precision of the median target 0.049 eV** |
+| TD-DFT reference | wB97X-D4/def2-SVP TDA, 231/231, **609 core-hours**; raw gap MAE 0.654 eV, R² = −16.3 (worst predictor); as a feature 0.091 → 0.087 eV |
+| Functional dependence | B3LYP vs CAM-B3LYP up to 0.58 eV — bounds a **computed** reference, not this regression; not combined into one floor |
+| Vertical vs adiabatic | MAE 0.195 eV, largely additive (slope 1.00, ρ 0.71) but residual RMS 0.245 eV, n = 14 |
+| Triplet manifold | T₁–T₂ for 14 emitters (CAM-B3LYP); sTDA-vs-CAM agreement unresolved (ρ = 0.43, p = 0.40, n = 6) |
+| Triage | 1.2–1.4× enrichment on held-out labelled data; **no ranked shortlist deposited** (conformal intervals refuse molecule-level selection) |
+| Condition-controlled test | source-paper proxy (no solvent metadata exists): **null**, Δ advantage 0.005 eV, CI −0.014 to 0.035 |
+| Circularity / leakage | quantified: linear model given the constituent energies recovers the target exactly (CV R² = 1.000) vs 0.36 without; a random forest shows only 0.59, understating the leak |
+| Estimator selection | nested CV reproduces the reported MAE exactly; selection optimism 0.000 eV |
 
 Headline numbers trace to `ML_reproducibility/data/final_model_metrics.json` and the
 other JSON/CSV outputs in `ML_reproducibility/data/`, regenerated by the scripts in
 `ML_reproducibility/code/`.
+
+**Provenance.** `ML_reproducibility/analysis-ledger.md` records, for every number above,
+the method, uncertainty, written interpretation and caveats — including entries that
+*withdraw* earlier claims. Notably: **A-008** retracts a label-quality result after a
+constant predictor was shown to reproduce it; **A-008b** restores a figure that an
+earlier internal check had wrongly rejected; **A-010** corrects run-cost figures that were
+a power-law projection quoted as a measurement (604 → 609 core-hours, median 18.2 → 16.1
+min). Superseded entries are in `ML_reproducibility/analysis-ledger-archive/`.
+
+**A note on the enrichment files.** Three deposited files report enrichment under
+different but individually correct conventions: `enrichment_curve.json` is the Morgan
+model by top-*fraction*, `multi_criteria_triage.json` is the NTO model by top-fraction,
+and `triage_metrics.json` is the Morgan model by top-*N molecules* (10/20/30/50).
+Comparing across them without matching the convention will appear to show a
+contradiction; it is not one.
 
 ---
 
@@ -115,7 +144,7 @@ and deposits its honest analysis code and outputs in `ML_reproducibility/code/` 
 - **`interactive_umap.html`** — Interactive UMAP visualization of the 747-molecule
   chemical space (hover for molecule details: name, ΔE_ST, architecture). Open in
   any modern web browser. Referenced in the Article 3 Data Availability statement
-  (DOI: 10.5281/zenodo.17436070).
+  (DOI: 10.5281/zenodo.17436069).
 - **`Data_AllGas_results.csv`** — Physical properties and computational results for
   all 747 molecules (gas phase)
 - **`Data_AllTol_results.csv`** — Physical properties and computational results for
@@ -176,7 +205,9 @@ headline number traces to a file in `data/`, regenerated by a script in `code/`.
 - `permutation_importance_check.py` — SHAP cross-check
 - `extract_triplet_manifold.py` — T₁/T₂ extraction from ORCA outputs
 - `adiabatic_validation_analysis.py` — vertical vs adiabatic gap
-- `enrichment_curve.py`, `triage_evaluation.py`, `build_shortlist.py` — triage + conformal shortlist
+- `enrichment_curve.py`, `triage_evaluation.py`, `build_shortlist.py` — triage + conformal intervals
+  (`build_shortlist.py` is retained because it produces the reported *negative* result: the
+  intervals are ~7.6× the predicted gap, so no ranked list is released)
 - `create_dft_benchmark_table.py`, `uq_calibration.py`, `si_supplementary_data.py`, `interactive_umap.py` — SI artifacts
 
 **`data/`** — Verified model outputs:
@@ -185,7 +216,7 @@ headline number traces to a file in `data/`, regenerated by a script in `code/`.
 - `ceiling_tests.json`, `dim_check.json` — capacity / dimensionality
 - `triplet_manifold.csv` (+ `triplet_manifold_stats.json`) — T₁–T₂ manifold (14 emitters)
 - `vertical_vs_adiabatic_comparison.csv`, `adiabatic_validation_stats.json` — adiabatic check
-- `enrichment_curve.json`, `triage_metrics.json`, `shortlist_top100.csv` — triage + deposited shortlist
+- `enrichment_curve.json`, `triage_metrics.json` — triage curves (no shortlist is deposited)
 - `shap_*`, `perm_importance.json`, `dft_benchmark_*` — supporting analyses
 
 **`features/`** — Pre-computed descriptor tables (model inputs):
@@ -271,8 +302,8 @@ ML_reproducibility/
 │   ├── extract_triplet_manifold.py           # T1/T2 from ORCA outputs
 │   ├── adiabatic_validation_analysis.py      # Vertical vs adiabatic gap
 │   ├── enrichment_curve.py                   # Triage precision curve + conformal
-│   ├── triage_evaluation.py                  # Enrichment / precision@k + shortlist band
-│   └── build_shortlist.py                    # Top-100 conformal-bounded shortlist
+│   ├── triage_evaluation.py                  # Enrichment / precision@k
+│   └── build_shortlist.py                    # Conformal intervals (no list released)
 ├── data/                                     # Verified outputs (every headline number)
 ├── features/                                 # Pre-computed descriptor tables (inputs)
 └── scripts/data_processing/                  # Feature-building (sTDA parse, CT/NTO, merge)
@@ -307,10 +338,10 @@ python cluster_cv_analysis.py       # Butina cluster-CV (MAE 0.099-0.104)
 python capacity_and_noise_ceiling.py
 python dimensionality_check.py
 
-# 5. Triplet manifold, triage curve, conformal shortlist
+# 5. Triplet manifold, triage curve, conformal intervals
 python extract_triplet_manifold.py
 python enrichment_curve.py
-python build_shortlist.py           # -> ../data/shortlist_top100.csv
+python build_shortlist.py           # conformal intervals; no ranked list is deposited
 ```
 
 > Scripts use paths as published; the feature matrix is in
@@ -364,7 +395,7 @@ chemical space as a UMAP scatter plot. Hover over any point to see:
 - Molecular architecture
 - TADF score
 
-This file is part of the Article 3 open-data package (DOI: 10.5281/zenodo.17436070).
+This file is part of the Article 3 open-data package (DOI: 10.5281/zenodo.17436069).
 
 ---
 
@@ -398,9 +429,9 @@ If you use this data or scripts, please cite the relevant article(s):
   author  = {Tchapet Njafa, Jean-Pierre and Teguia Kouam, Steve Cabrel and
              Mvoto Kongo, Patrick Sorrel and Samafou, Panebei and
              Nana Engo, Serge Guy},
-  journal = {Digital Discovery},
+  journal = {RSC Advances},
   year    = {2026},
-  doi     = {10.5281/zenodo.17436070}
+  doi     = {10.5281/zenodo.17436069}
 }
 ```
 
@@ -422,6 +453,6 @@ jean-pierre.tchapet@facsciences-uy1.cm
 ---
 
 *Last updated: June 2026 — Added virtual library expansion (22,194 molecules,
-REQ-1), interactive UMAP, and Digital Discovery manuscript figures. Full Article 3
+REQ-1), interactive UMAP, and Article 3 manuscript figures. Full Article 3
 README rewrite: removed Chemistry of Materials preparation notes, updated to
-Digital Discovery submission.*
+RSC Advances submission.*

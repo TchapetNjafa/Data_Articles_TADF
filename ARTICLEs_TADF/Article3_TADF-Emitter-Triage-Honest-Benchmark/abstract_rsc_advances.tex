@@ -1,0 +1,36 @@
+% RSC Advances Abstract — max 250 words
+% Repositioned 2026-06-23; review#2 F1–F4 fixes 2026-06-23 (see CRITICAL260623_NEWREVIEW.md)
+
+Thermally activated delayed fluorescence (TADF) discovery hinges on the
+singlet--triplet gap (\deltaest), yet excited-state calculations are costly and
+disagree with experiment by tenths of an electronvolt. We ask how accurately machine
+learning can estimate the \emph{experimental} gap from structure alone, and what limits it.
+%
+Regressing on features containing the $S_1$ and $T_1$ energies is circular
+($\Delta E_\text{ST}\equiv E_{S_1}-E_{T_1}$), so we target the measured gap.
+%
+On \num{231} donor--acceptor molecules, random forests over three descriptor sets use
+scaffold cross-validation (\num{212} scaffolds). Structure-only
+features---Morgan fingerprints (mean absolute error, MAE \qty{0.091}{\electronvolt}) and
+RDKit descriptors (\qty{0.100}{\electronvolt})---match descriptors from a semi-empirical
+excited-state calculation (\qty{0.096}{\electronvolt}); the fingerprint and
+excited-state models agree to within \qty{0.017}{\electronvolt} on paired folds, so the
+excited-state step buys no accuracy. A \num{609}-core-hour
+TD-DFT reference overestimates the gap by \qty{0.65}{\electronvolt} and as a feature
+cuts error by only \qty{0.004}{\electronvolt}.
+%
+All reach $R^2 \approx 0.25$--$0.31$ with wide intervals and weak ranking
+(Spearman \numrange{0.26}{0.36}); the signal clears a permutation null ($p = 0.001$)
+but sits just above a mean-value baseline (\qty{0.107}{\electronvolt}).
+%
+Accuracy is bounded by the label: repeat reports scatter by
+\qty{0.072}{\electronvolt} RMS, and the median gap trained on is known only to
+\qty{0.049}{\electronvolt}.
+%
+As a triage filter it enriches low-gap emitters \numrange{1.2}{1.4}$\times$ over
+random. Under a source-paper split that accuracy advantage is no longer resolved, yet the
+excited-state features keep rank correlation the fingerprints lose
+($\Delta\rho = \num{0.19}$): they order candidates across laboratories without
+predicting the gap. Accuracy is set by data quality, not model capacity.
+%
+Data, models, and code are available (Zenodo DOI: 10.5281/zenodo.17436069).

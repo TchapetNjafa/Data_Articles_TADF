@@ -1,0 +1,65 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Data Availability Statement — standalone
+% RSC Advances submission: TADF ΔE_ST structure-based benchmark
+% Content mirrors the "Data availability" section of Article_RSC_Advances.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt]{article}
+\usepackage[left=2.2cm,right=2.2cm,top=2.4cm,bottom=2.4cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{charter}
+\usepackage{amsmath}
+\usepackage[detect-all=true,group-minimum-digits=4]{siunitx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,urlcolor=RSCblue,linkcolor=RSCblue]{hyperref}
+\usepackage{enumitem}
+
+\definecolor{RSCblue}{RGB}{0,73,144}
+\newcommand{\deltaest}{$\Delta E_\text{ST}$}
+\newcommand{\doi}{10.5281/zenodo.17436069}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+
+\begin{document}
+
+{\large\bfseries\color{RSCblue} Data Availability Statement}
+
+\vspace{0.4em}
+{\small\itshape Accelerated discovery of TADF emitters: how accurately can machine
+learning estimate the experimental singlet--triplet gap from structure alone?\par}
+
+\vspace{1.0em}
+
+All experimental data, descriptor tables, trained models, and analysis code that
+support the findings of this study are openly available in the Zenodo repository under
+DOI \href{https://doi.org/\doi}{\doi} (CC-BY-4.0 licence).
+
+The deposit includes:
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=0.35em]
+  \item the experimental \deltaest\ corpus and the \num{231}-molecule benchmark set
+        (\num{212} Bemis--Murcko scaffolds);
+  \item the \num{35} natural-transition-orbital (NTO) spatial descriptors and the
+        structure-only Morgan and RDKit feature tables;
+  \item the DFT functional benchmark and the CAM-B3LYP vertical-versus-adiabatic and
+        triplet-manifold data (\num{14} emitters);
+  \item the trained random-forest models, SHAP attributions, and validation outputs
+        (scaffold and Butina-cluster cross-validation, label-permutation test, and
+        capacity tests);
+  \item the heuristic \num{22194}-molecule library, together with the conformal
+        calibration script and its interval widths---no ranked candidate list is
+        deposited, because at this accuracy the intervals do not support
+        molecule-level selection; and
+  \item all analysis and figure-generation scripts that regenerate every reported
+        number and figure.
+\end{enumerate}
+
+Within the deposit, analysis scripts are in \texttt{code/}, curated inputs in
+\texttt{inputs/} and derived tables, metrics and the analysis ledger in
+\texttt{results/}; file paths cited in the text and Supporting Information follow that
+layout. No restrictions apply to the availability of these data. Further information is
+available from the corresponding author upon reasonable request.
+
+\end{document}

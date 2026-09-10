@@ -1,0 +1,61 @@
+{
+  "meta": {
+    "script": "code/a013_pretrained_encoder_baseline.py",
+    "seed": 0,
+    "n_splits": 5,
+    "n_molecules": 231,
+    "n_scaffolds": 212,
+    "encoder": "DeepChem/ChemBERTa-77M-MLM",
+    "embedding_dim": 384,
+    "pooling": "mean over attention mask, frozen encoder",
+    "cv": "GroupKFold on Bemis-Murcko scaffolds (identical folds to A-006)",
+    "downstream": "canonical rf() 400 trees seed 0; RidgeCV fitted in-fold",
+    "note": "frozen-embedding protocol; fine-tuning a pretrained encoder on 231 labels is not a meaningful capacity test at this scale"
+  },
+  "reference": {
+    "morgan_rf": {
+      "MAE": 0.09132033819830963,
+      "R2": 0.2743829268088134,
+      "rho": 0.3055217846298636
+    },
+    "nto_rf": {
+      "MAE": 0.0956306348484849,
+      "R2": 0.2534675020305083,
+      "rho": 0.3561529605443552
+    }
+  },
+  "pretrained_encoder": {
+    "rf_head": {
+      "MAE": 0.11282689873222015,
+      "R2": 0.06187187473089428,
+      "rho": 0.20579319023131784
+    },
+    "ridge_head": {
+      "MAE": 0.10858847683522813,
+      "R2": 0.10374870185751162,
+      "rho": 0.22224507497913865
+    }
+  },
+  "paired_vs_morgan": {
+    "encoder_rf_minus_morgan": {
+      "delta_MAE": -0.02150656053391052,
+      "CI": [
+        -0.03440831771979995,
+        -0.0076663551386312225
+      ],
+      "frac_boot_a_better": 0.0005
+    },
+    "wilcoxon_p": 3.832773793519395e-05
+  },
+  "paired_vs_nto": {
+    "encoder_rf_minus_nto": {
+      "delta_MAE": -0.017196263883735255,
+      "CI": [
+        -0.027557447456709926,
+        -0.006814206358740477
+      ],
+      "frac_boot_a_better": 0.0005
+    }
+  },
+  "verdict": "pretrained encoder does NOT beat the hand-built descriptors: best encoder MAE 0.1086 eV vs Morgan-RF 0.0913 eV, NTO-RF 0.0956 eV; paired encoder-RF minus Morgan CI [-0.0344, -0.0077] eV"
+}

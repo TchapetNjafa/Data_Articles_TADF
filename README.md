@@ -87,9 +87,9 @@ spans a negative gap, so the procedure refuses molecule-level selection.
 | Best accuracy | MAE = 0.091 eV (Morgan) / 0.096 eV (NTO); R² ≈ 0.25–0.31 |
 | Ranking | Spearman ρ ≈ 0.26–0.36; mean-value baseline MAE = 0.107 eV |
 | Validation | scaffold GroupKFold + label-permutation test (p = 0.001) + Butina cluster-CV (MAE 0.099–0.104) |
-| Capacity test | RF best; HistGBR (0.105), MLP (0.169), SVR (0.120), ElasticNet (0.102) do **not** beat it |
+| Capacity test | RF best; HistGBR (0.105), MLP (0.169), SVR (0.120), ElasticNet (0.102) and a frozen pretrained transformer (ChemBERTa-77M, MAE 0.109–0.113) do **not** beat it |
 | Morgan vs NTO | equivalent to within **0.017 eV** (paired, identical folds, Wilcoxon p = 0.66) |
-| Ranking under protocol transfer | source-paper split: NTO ρ = 0.35 vs Morgan 0.16, **Δρ = 0.19** (CI 0.04–0.34) |
+| Ranking under protocol transfer | source-paper split: NTO ρ = 0.35 vs Morgan 0.16, **Δρ = 0.19** (CI 0.04–0.34, excludes zero only narrowly, single split, resampling over molecules not the 173 papers) |
 | Label bound | single-report scatter 0.072 eV RMS (molecule-weighted); **precision of the median target 0.049 eV** |
 | TD-DFT reference | wB97X-D4/def2-SVP TDA, 231/231, **609 core-hours**; raw gap MAE 0.654 eV, R² = −16.3 (worst predictor); as a feature 0.091 → 0.087 eV |
 | Functional dependence | B3LYP vs CAM-B3LYP up to 0.58 eV — bounds a **computed** reference, not this regression; not combined into one floor |
@@ -97,7 +97,7 @@ spans a negative gap, so the procedure refuses molecule-level selection.
 | Triplet manifold | T₁–T₂ for 14 emitters (CAM-B3LYP); sTDA-vs-CAM agreement unresolved (ρ = 0.43, p = 0.40, n = 6) |
 | Triage | 1.2–1.4× enrichment on held-out labelled data; **no ranked shortlist deposited** (conformal intervals refuse molecule-level selection) |
 | Condition-controlled test | source-paper proxy (no solvent metadata exists): **null**, Δ advantage 0.005 eV, CI −0.014 to 0.035 |
-| Circularity / leakage | quantified: linear model given the constituent energies recovers the target exactly (CV R² = 1.000) vs 0.36 without; a random forest shows only 0.59, understating the leak |
+| Circularity / leakage | quantified: linear model given the constituent energies recovers the target exactly (CV R² = 1.000) vs 0.36 without; an axis-aligned random forest reaches only 0.59 on the same leaked features, so the leak passes CV unremarked |
 | Estimator selection | nested CV reproduces the reported MAE exactly; selection optimism 0.000 eV |
 
 Headline numbers trace to `ML_reproducibility/data/final_model_metrics.json` and the
@@ -110,7 +110,9 @@ the method, uncertainty, written interpretation and caveats — including entrie
 constant predictor was shown to reproduce it; **A-008b** restores a figure that an
 earlier internal check had wrongly rejected; **A-010** corrects run-cost figures that were
 a power-law projection quoted as a measurement (604 → 609 core-hours, median 18.2 → 16.1
-min). Superseded entries are in `ML_reproducibility/analysis-ledger-archive/`.
+min); **A-013** adds a frozen pretrained-transformer (ChemBERTa-77M) baseline that also
+fails to beat the hand-built descriptors (MAE 0.109–0.113 eV; paired vs Morgan +0.022 eV,
+CI 0.008–0.034). Superseded entries are in `ML_reproducibility/analysis-ledger-archive/`.
 
 **A note on the enrichment files.** Three deposited files report enrichment under
 different but individually correct conventions: `enrichment_curve.json` is the Morgan
@@ -299,6 +301,7 @@ ML_reproducibility/
 │   ├── capacity_and_noise_ceiling.py         # RF vs GBR/MLP/SVR/EN; clean-label test
 │   ├── dimensionality_check.py               # Morgan 512/1024/2048 + regularised refs
 │   ├── permutation_importance_check.py       # SHAP cross-check
+│   ├── a013_pretrained_encoder_baseline.py   # Frozen ChemBERTa-77M vs hand-built descriptors
 │   ├── extract_triplet_manifold.py           # T1/T2 from ORCA outputs
 │   ├── adiabatic_validation_analysis.py      # Vertical vs adiabatic gap
 │   ├── enrichment_curve.py                   # Triage precision curve + conformal
@@ -325,6 +328,7 @@ led by S_he(S₁); the ranking is reproduced by permutation importance.
 # 1. Install dependencies
 python3 -m venv venv && source venv/bin/activate
 pip install numpy pandas scikit-learn shap rdkit matplotlib scipy
+# a013_pretrained_encoder_baseline.py additionally needs:  pip install torch transformers
 
 # 2. Headline model + metrics (MAE 0.096 eV, R² 0.25, rho 0.36)
 cd ML_reproducibility/code

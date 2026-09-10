@@ -322,3 +322,47 @@ fold): **MAE 0.09563 eV**, RandomForest selected in **5/5** outer folds.
 - **Claims:** new **C18** (nearest-available condition-controlled test is null, CI includes zero).
   Converts Referee 3 point 2 from "cannot be tested" to "tested by proxy, null, with the reason the
   strict test is impossible stated".
+
+### A-012 — internal verification-B diagnostic (not deposited)
+A-012 was an internal cross-check of the A-011 comparator and the ceiling
+arithmetic during verification round B. It produced no manuscript result and its
+independent-interpretation step was blocked; it is omitted here by design. The
+diagnostic is retained in the working repository.
+
+### A-013 — Pretrained molecular-transformer baseline (DA-5, L3 pass 2)
+- **Date:** 2026-09-10. **Trigger:** L3 novelty death-angle DA-5
+  (`divergence-death-angle-L3-novelty-2026-09-10.md`): the claim "data quality, not
+  model capacity, is the limit" had been tested only with tabular learners on
+  hand-built vectors; no pretrained encoder or GNN was run on this task. Author
+  authorised one frozen-encoder baseline.
+- **Source:** `code/a013_pretrained_encoder_baseline.py` -> `data/a013_pretrained_encoder.json`.
+  Encoder `DeepChem/ChemBERTa-77M-MLM` (RoBERTa, 384-dim), frozen, mean-pooled over the
+  attention mask. Downstream: the canonical `rf()` (400 trees, seed 0) and a RidgeCV head
+  fitted inside each fold. Same `GroupKFold(5)` on Bemis-Murcko scaffolds, seed 0, as A-006.
+
+| model | MAE (eV) | R2 | Spearman rho |
+|---|---|---|---|
+| Morgan-RF (reproduced) | 0.0913 | +0.274 | 0.306 |
+| NTO-RF (reproduced) | 0.0956 | +0.253 | 0.356 |
+| ChemBERTa-77M frozen + RF | **0.1128** | +0.062 | 0.206 |
+| ChemBERTa-77M frozen + RidgeCV | **0.1086** | +0.104 | 0.222 |
+
+  Paired (identical folds): ChemBERTa+RF minus Morgan-RF, delta MAE **+0.0215 eV**
+  (95% CI **[+0.0077, +0.0344]**, excludes zero; Wilcoxon p reported in JSON) -- the
+  pretrained representation is significantly *worse*. Its best head (0.109 eV) does not
+  beat the mean-value baseline (0.107 eV).
+- **Interpretation.** A pretrained SMILES-transformer embedding, the representation a
+  2025-26 reader would reach for first, carries less usable signal for experimental
+  dEST on this corpus than a 2048-bit Morgan fingerprint. The Morgan/NTO reference
+  numbers reproduce the published 0.091/0.096 exactly, so the CV recipe matches the
+  rest of the study. This removes DA-5: the "capacity is not the missing ingredient"
+  statement now holds against a pretrained encoder, not only tabular learners.
+- **Caveats.** (i) Frozen-embedding protocol. Fine-tuning a 77M-parameter encoder on
+  231 labels is guaranteed to overfit and is not a meaningful capacity test at this
+  scale; not run. (ii) One encoder checkpoint (ChemBERTa-77M-MLM); a larger model
+  (MoLFormer-XL) was not tested. (iii) A message-passing GNN trained end-to-end on 231
+  molecules is also expected to overfit and was not run; the claim is about
+  representations usable at this data scale, not about deep learning in general.
+- **Claims:** strengthens C-capacity (no higher-capacity learner or pretrained
+  representation beats the forest). New wording in results subsec:ceilings and
+  Limitations bullet (6). Manuscript number: 0.109-0.113 eV for the pretrained encoder.

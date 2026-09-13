@@ -17,12 +17,17 @@ we verified this directly. Regressing the computed gap on the NTO descriptors
 throughout, a linear model recovers the target exactly (MAE $= 0$, $R^2 = 1.000$) while
 the identical features without the energies reach only $R^2 = 0.36$
 (\cref{SI-tab:leakage}). The recovered quantity is arithmetic, not learning. How
-severe the leak looks depends on whether the learner can express the identity: a random
-forest, being axis-aligned, cannot represent a difference of two continuous inputs and
-reports only $R^2 = 0.59$ on the same leaked features---which is how a tree-based study
-can carry this defect without its cross-validated score appearing anomalous. We therefore discard the
+severe the leak looks depends on the learner: a random forest, being axis-aligned,
+approximates a difference of two continuous inputs through its splits rather than
+expressing it, and reaches only $R^2 = 0.59$ on the same leaked features (a joint
+effect of that inductive bias, tree depth and the \num{231}-molecule sample)---which
+is how a tree-based study can carry this defect without its cross-validated score
+appearing anomalous. We therefore discard the
 computed gap as a target and benchmark on the only non-trivial quantity: the
-\emph{experimentally measured} $\Delta E_\text{ST}$.
+\emph{experimentally measured} $\Delta E_\text{ST}$. This risk is not particular to
+TADF: any regression target that is an algebraic combination of features already in
+the descriptor set is vulnerable to the same leak, and how visible it is under
+cross-validation depends on the learner, not only on the target.
 
 \subsection{Structure-based models predict experimental gaps with modest, honestly-bounded accuracy}\label{subsec:benchmark}
 
@@ -61,6 +66,7 @@ The headline accuracy is also stable across validation schemes: replacing the si
 scaffolds with genuine multi-molecule Butina clusters (down to \num{70} groups, largest
 \num{38} molecules) leaves the MAE at \qtyrange{0.099}{0.104}{\electronvolt}, between
 scaffold-CV (\qty{0.096}{\electronvolt}) and random-CV (\qty{0.106}{\electronvolt})
+while preserving the rank correlation (Spearman $\rho$ spanning \numrange{0.31}{0.40} across cutoffs), showing that the ranking capability does not degrade under aggressive clustering
 (\cref{SI-tab:clustercv}).
 The three feature sets perform within \qty{0.009}{\electronvolt} of one another
 (\cref{tab:feature_comparison}); for the fingerprint and excited-state models, which we
@@ -75,6 +81,9 @@ excludes the $S_1$/$T_1$ energy scalars; it reaches MAE = \qty{0.096}{\electronv
 That the structure-only sets match the NTO set is the central methodological point:
 the excited-state calculation buys no accuracy, and adding back the $S_1$/$T_1$ energies
 does not help either (\cref{tab:feature_comparison}).
+Equivalently, the spatial NTO features carry no information beyond what the energy
+difference already provides: the MAE of the \emph{Energies~+~NTO} set (\qty{0.097}{\electronvolt})
+matches the spatial-only NTO set (\qty{0.096}{\electronvolt}) to \qty{0.001}{\electronvolt}.
 The natural comparator is the mean-value baseline (MAE = \qty{0.107}{\electronvolt}),
 over which every model improves by only about \qty{10}{\percent}; the large apparent
 gain over the raw sTDA gap (\qty{0.25}{\electronvolt}) reflects that the semi-empirical
@@ -162,9 +171,9 @@ error reflects the narrower spread of those labels more than any gain in predict
 
 For the NTO variant, SHAP (SHapley Additive exPlanations) analysis
 (\cref{fig:model_performance}B) identifies
-hole--electron overlap $S_\text{he}$, the NTO overlap ratio, oscillator strength
-$f_{S_1}$ and the charge-transfer distance $\Delta r$ as the dominant
-predictors---spatial quantities that encode the exchange integral governing
+hole--electron overlap $S_\text{he}$ (which governs the magnitude of the exchange interaction), the NTO overlap ratio (tracking transition purity), oscillator strength
+$f_{S_1}$ (a proxy for transition dipole coupling), and the charge-transfer distance $\Delta r$ (which dictates spatial separation) as the dominant
+predictors---physical quantities that jointly constrain the exchange integral governing
 $\Delta E_\text{ST}$. This ranking is stable rather than an artefact of one fit:
 across \num{200} bootstrap refits the leading descriptor $S_\text{he}(S_1)$ stays
 in the top five \qty{99.5}{\percent} of the time, and on average \num{3.7} of the
@@ -180,10 +189,10 @@ experimental test rather than a validated causal claim; the structure-only
 fingerprint and descriptor models reach the same accuracy without any excited-state
 calculation.
 
-\subsection{Structural descriptors are sufficient: an informative null result}\label{subsec:nto_null}
+\subsection{Accuracy is equivalent; ranking under laboratory transfer is not}\label{subsec:nto_null}
 
 Do quantum-mechanical features beat pure structural descriptors when the target is an
-experimental property? For accuracy, no---and we can now put a bound on the word.
+experimental property? For accuracy, no, and we can put a bound on the equivalence.
 Paired on identical folds, the NTO model (MAE $= \qty{0.096}{\electronvolt}$) and the
 Morgan model ($\qty{0.091}{\electronvolt}$) differ by
 $\Delta\text{MAE} = \qty{-0.004}{\electronvolt}$ (\qty{95}{\percent} CI
@@ -228,12 +237,27 @@ substantially: a single randomly chosen report sits \qty{0.072}{\electronvolt} f
 molecule's median (RMS with each molecule weighted equally), the disagreement exceeds the
 model MAE for \qty{19.6}{\percent} of molecules, and the worst molecule reaches a standard
 deviation of \qty{0.56}{\electronvolt}; the eight independent values for 4CzIPN alone span
-\qtyrange{0.01}{0.48}{\electronvolt} (\cref{SI-tab:solvent}).
+\qtyrange{0.01}{0.48}{\electronvolt} (\cref{SI-tab:solvent}). This scatter reflects uncontrolled measurement conditions---such as solvent polarity, concentration, and host matrix effects---that are known to heavily influence photophysical measurements~\cite{Dang2025}. That $\Delta E_\text{ST}$
+is reported inconsistently has been shown for individual emitters~\cite{Shuaib2026};
+quantified across \num{231} molecules and \num{173} source papers it is, to our
+knowledge, the first inter-laboratory variability budget for the TADF
+singlet--triplet gap, and it is the term that caps every predictor tested here.
 The quantity the model is regressed on, however, is the per-molecule \emph{median},
 whose precision is better than any single report: the RMS standard error of that median
 is \qty{0.049}{\electronvolt}, about half the model MAE. Label imprecision is therefore
 a real term in the error budget but does not by itself account for it, and we do not
 claim the forest sits at a noise floor.
+Applying the noise-ceiling framework of \citeauthor{Crusius2025}~\cite{Crusius2025}
+($R^2_\text{max} = 1 - \sigma^2_\text{noise}/\sigma^2_y$) quantifies this:
+the \qty{0.049}{\electronvolt} median precision gives $R^2_\text{max} \approx 0.91$
+(\qty{95}{\percent} CI \numrange{0.85}{0.94}), and the single-report scatter
+(\qty{0.091}{\electronvolt}) gives $R^2_\text{max} \approx 0.71$
+(CI \numrange{0.48}{0.81})---both well above the observed $R^2 = 0.26$.
+The model captures only 28--36\% of the noise-floor-limited ceiling depending on which
+floor applies, meaning label noise alone is not the dominant constraint.
+Progress requires both a better dataset \emph{and} improvements in features or
+corpus scale; the data argument is justified because the label precision today
+(\qty{0.049}{\electronvolt}) is the term a curated benchmark would directly attack.
 A second, separate dispersion applies to computed references rather than to this
 regression: the computed gap is functional-dependent. Across the
 \num{7} molecules (gas and toluene) for which we ran both B3LYP/6-31G(d) and CAM-B3LYP/def2-TZVP,
@@ -256,9 +280,17 @@ differently configured set of learners places plain gradient boosting at
 \qty{0.098}{\electronvolt}, within \qty{0.002}{\electronvolt} of the forest and so
 inside the equivalence margin established above
 (\texttt{code/a007\_leakage\_and\_nested\_cv.py}; \cref{SI-tab:capacity} lists the
-histogram-boosting configuration). Added
-capacity therefore does not help, though we would not claim the forest is uniquely
-suited; and the negative lower $R^2$ bound is not a
+histogram-boosting configuration). A frozen pretrained SMILES transformer (ChemBERTa,
+\num{77}M parameters), the representation a current screening pipeline would reach for
+first, is no exception: its mean-pooled embeddings feed a random-forest or ridge head
+to MAE \qtyrange{0.109}{0.113}{\electronvolt} on the same scaffold folds---it does not
+beat the \qty{0.107}{\electronvolt} mean-value baseline, and is worse than Morgan by a
+paired \qty{0.022}{\electronvolt} (\qty{95}{\percent} CI \numrange{0.008}{0.034},
+excluding zero; \texttt{code/a013\_pretrained\_encoder\_baseline.py}). Fine-tuning such an
+encoder on \num{231} labels would overfit and is not a meaningful test at this scale.
+Added model capacity therefore does not help, and no learned representation we tried
+improves on the hand-built descriptors, though we would not claim the forest is
+uniquely suited; and the negative lower $R^2$ bound is not a
 fingerprint-width artefact, since \num{512}-, \num{1024}- and \num{2048}-bit Morgan models
 share it (\cref{SI-tab:capacity}).
 
@@ -328,12 +360,19 @@ $\Delta E_\text{ST}\le\qty{0.10}{\electronvolt}$ as the targets (\qty{49}{\perce
 of the set), the structure-only model's top-ranked candidates are enriched in
 targets relative to random selection by \numrange{1.2}{1.4}$\times$
 (precision rising from the \qty{49}{\percent} base rate to \qty{60}{\percent} at
-the top \num{10}--\num{20} and \qty{68}{\percent} at the top \num{50}).
+the top \num{10}--\num{20} and \qty{68}{\percent} at the top \num{50}); a bootstrap
+confidence interval on this cross-validation enrichment, given below, shows the smaller cutoffs are
+not statistically distinguishable from chance.
 Note that $\Delta E_\text{ST}$ is a necessary but not sufficient condition for TADF
 efficiency; emission wavelength matching is a subsequent, independent design step
 not addressed by this model.
 The filter therefore works, but weakly: it is a coarse
-first pass that modestly concentrates good emitters, not a selector.
+first pass that modestly concentrates good emitters, not a selector. Part of that
+weakness is the threshold itself: \qty{0.10}{\electronvolt} is only
+\qty{0.03}{\electronvolt} above the \qty{0.072}{\electronvolt} RMS inter-report
+scatter (\cref{subsec:ceilings}), so a molecule's true class membership near that
+line is itself uncertain at the level of label noise---tightening the triage
+threshold runs directly into the same ceiling that bounds the regression task.
 Among well-characterised emitters, DMAC-DPS
 (experimental $\Delta E_\text{ST}\approx\qty{0.09}{\electronvolt}$) and PXZ-NAI are
 examples of low-gap emitters the filter retains.
@@ -367,11 +406,21 @@ retained molecules are not quantum-validated.
 
 \paragraph{Quantifying triage utility.}
 On held-out labelled molecules the structure-only model enriches the low-gap
-class by \numrange{1.2}{1.4}$\times$ over random selection: against the
-\qty{49}{\percent} base rate
-($\Delta E_\text{ST} \le \qty{0.10}{\electronvolt}$), top-ranked precision rises
-to \qty{60}{\percent} at the top \numrange{10}{20} candidates and
-\qty{68}{\percent} at the top \num{50}. The full enrichment curve
+class by \numrange{1.2}{1.4}$\times$ over random selection, but a
+\qty{95}{\percent} bootstrap confidence interval (\num{5000} resamples over
+molecules, the ranking re-derived from the fixed cross-validation out-of-fold predictions within
+each resample) shows this holds only at the less aggressive cutoffs. Against the
+\qty{49}{\percent} base rate ($\Delta E_\text{ST} \le \qty{0.10}{\electronvolt}$),
+top-ranked precision reaches \qty{60}{\percent} at both the top \num{10} and top
+\num{20} candidates (enrichment \num{1.22}$\times$, \qty{95}{\percent} CI
+\numrange{0.63}{1.89} and \numrange{0.80}{1.70}: both intervals include no
+enrichment), and \qty{68}{\percent} at the top \num{50} (\num{1.38}$\times$, CI
+\numrange{1.10}{1.60}) or \qty{67.4}{\percent} at the top \qty{20}{\percent} of the
+benchmark (\num{1.37}$\times$, CI \numrange{1.08}{1.61}: both intervals exclude no
+enrichment). The enrichment is therefore only statistically established at cutoffs
+of roughly \num{50} molecules or a fifth of the benchmark; at the ten-to-twenty
+candidate scale a laboratory would actually shortlist, it cannot be distinguished
+from chance at this sample size. The full enrichment curve
 (\cref{fig:enrichment}) peaks near \num{1.37}$\times$ at the top
 \numrange{5}{20}\% and does not improve at more aggressive cuts; a split-conformal
 calibration lets a laboratory fix an operating point at a stated confidence. This
@@ -559,6 +608,10 @@ the vertical approximation (mean absolute deviation \qty{0.195}{\electronvolt}, 
 \qty{0.245}{\electronvolt}) but cannot remove it, and excited-state optimisation for the
 full corpus was outside the compute budget. Descriptors built on relaxed excited-state
 geometries are the natural next test of whether the equivalence reported here survives.
+On the model side, the comparison covers tabular learners and one frozen pretrained
+molecular-transformer embedding (\cref{subsec:ceilings}); an end-to-end message-passing
+network or an encoder fine-tuned on a larger labelled set was not attempted, and either
+would need a benchmark larger than \num{231} molecules to be informative.
 
 (7)~Under a source-paper (DOI-grouped) split the model's advantage over a
 mean-value predictor is not statistically resolved (\cref{subsec:benchmark});

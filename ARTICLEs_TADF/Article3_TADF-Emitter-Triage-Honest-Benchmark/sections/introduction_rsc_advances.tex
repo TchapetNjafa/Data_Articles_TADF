@@ -7,24 +7,19 @@
 
 \section{Introduction}\label{sec:introduction}
 
-\subsection{Application-driven materials discovery: horticultural and human-centric lighting}
+\subsection{Predicting the singlet--triplet gap of TADF emitters}
 
-Controlled-environment agriculture and human-centric lighting demand spectrally
-tunable, energy-efficient light sources, yet commercial inorganic LEDs rely on
-rare-earth phosphors (Eu, Tb, Y) with broad emission and supply-chain
-risk~\cite{Yokoyama_2018, Bugbee2016}. Thermally activated delayed fluorescence
-(TADF) materials are a tunable, heavy-metal-free alternative: organic
-donor--acceptor emitters that harvest both singlet and triplet excitons for
-near-unity internal quantum efficiency~\cite{Uoyama2012}.
-Realizing this potential means navigating a vast donor--acceptor space under
-competing requirements---a minimal singlet--triplet gap
-($\Delta E_\text{ST} < \qty{0.2}{\electronvolt}$), efficient reverse intersystem
-crossing ($k_\text{RISC} > \qty{1e6}{\per\second}$), and spectral overlap with
-target photoreceptor bands. This paper addresses only the first,
-$\Delta E_\text{ST}$; the rate and device-efficiency requirements demand
-spin--orbit-coupling and device-level calculations beyond the cheap structural
-data studied here, and we make no quantitative claim about them
-(\cref{subsec:limitations}).
+Thermally activated delayed fluorescence (TADF) emitters---organic donor--acceptor
+molecules that harvest both singlet and triplet excitons for near-unity internal
+quantum efficiency~\cite{Uoyama2012}---are the heavy-metal-free route to tunable,
+efficient light sources for displays and for human-centric and horticultural
+lighting~\cite{Yokoyama_2018, Bugbee2016}. An efficient emitter has to meet several
+requirements at once: a small singlet--triplet gap
+($\Delta E_\text{ST} < \qty{0.2}{\electronvolt}$), fast reverse intersystem crossing
+($k_\text{RISC} > \qty{1e6}{\per\second}$), and emission matched to the target band.
+This paper addresses only the first. The rate and device-efficiency requirements need
+spin--orbit-coupling and device-level calculations beyond the cheap structural data
+used here, and we make no quantitative claim about them (\cref{subsec:limitations}).
 
 \subsection{The computational bottleneck and the role of machine learning}
 
@@ -49,73 +44,110 @@ excitation energies; because $\Delta E_\text{ST}\equiv E_{S_1}-E_{T_1}$, this
 reduces to subtraction and the reported accuracy reflects arithmetic rather than
 learning.
 
-Our earlier work set the stage: Article~1~\cite{Tchapet2024_xTB} benchmarked
+Our earlier work set the stage: Article~1~\cite{Tchapet2024_xTB} benchmarked in JCIM
 GFN2-xTB/sTDA against \num{747} experimental molecules
-(MAE = \qty{0.162}{\electronvolt}), and Article~2~\cite{Tchapet2024_DataDriven}
-extracted structure--property design rules from that set. Here we ask the
-narrower, sharper question those studies left open: starting only from cheap
-structural information, how accurately can a model predict the \emph{measured}
-$\Delta E_\text{ST}$, and what sets the limit?
+(MAE = \qty{0.162}{\electronvolt}), xTB geometry relaxations, and scaffold
+cross-validation, and Article~2~\cite{Tchapet2024_DataDriven}
+extracted structure--property design rules from that set. Here we ask a sharper question: what sets the ceiling on predicting the
+\emph{measured} $\Delta E_{\text{ST}}$ from molecular structure, and what would it
+take to raise it?
 
-\subsection{Our contributions: an honest benchmark of structure-based prediction}
+\subsection{Our contributions}
 
-Rather than claim a new high-accuracy predictor, we ask how far cheap,
-structure-based machine learning can go in predicting the \emph{experimental}
-singlet--triplet gap---and answer carefully, explicit about where it fails. The
-primary result is a scaffold-validated benchmark with a calibrated accuracy ceiling:
-2D structure alone predicts the measured gap as well as semi-empirical excited-state
-features, and we quantify why neither does better. A secondary, cautionary
-contribution is methodological---a reminder that excited-state-energy \emph{leakage}
-inflates reported accuracy for any property defined as a difference of computed
-quantities. We make four contributions.
+We do not claim a new high-accuracy predictor. The primary finding is that 2D
+structure alone predicts the measured singlet--triplet gap as well as semi-empirical
+excited-state features, because the experimental label, not the model, is the binding
+constraint. Two further results are specific to this task and, to our knowledge, are
+not reported elsewhere: the rank order that 2D structure encodes and the rank order
+that only an excited-state calculation encodes come apart under a change of source
+laboratory, and the feature--target leakage that inflates computed-gap models is
+visible to some learners and hidden from others. Four points follow.
 
-\paragraph{Structure alone, with no excited-state calculation, does as well as anything.}
+\paragraph{Structure alone predicts as well as the semi-empirical excited state.}
 On \num{231} molecules across \num{212} Bemis--Murcko scaffolds, random forests built
 from the 2D structure alone---Morgan fingerprints (MAE = \qty{0.091}{\electronvolt}) and
 RDKit descriptors (\qty{0.100}{\electronvolt})---match descriptors derived from a
 semi-empirical excited-state calculation (natural transition orbital, NTO, spatial
 features, \qty{0.096}{\electronvolt}). The result holds across scaffold, cluster and random
 cross-validation and against a label-permutation null, so it is not a splitting
-artefact. The excited-state step buys no accuracy on the $S_1$--$T_1$ gap---the two
-agree to within \qty{0.017}{\electronvolt} on paired folds---though it does retain rank
-correlation across source papers where the fingerprints do not; SHAP nonetheless
-ties the NTO variant to hole--electron overlap and charge transfer, giving an
-interpretable read on what structure encodes.
+artefact. On accuracy the excited-state step buys nothing: the two representations
+agree to within \qty{0.017}{\electronvolt} on paired folds. On ranking under
+laboratory transfer, however, the two representations separate. Under a DOI-grouped
+split---holding out whole source publications rather than individual
+molecules---the NTO model retains Spearman $\rho = \num{0.35}$ while Morgan drops to
+\num{0.16} ($\Delta\rho = \num{0.19}$, \qty{95}{\percent} CI
+\numrange{0.04}{0.34}, excluding zero only narrowly and on a single split, with
+resampling over molecules rather than the \num{173} source papers). The excited-state
+features do not improve accuracy on the gap; they preserve rank order that transfers
+across source laboratories---a dissociation we have not seen reported for this
+property. SHAP analysis ties the NTO
+signal to hole--electron overlap and charge transfer, giving an interpretable read on
+what structure encodes. Unlike a physics-guided model trained on NTO descriptors
+against a \emph{computed} reference gap~\cite{Das2025}, we test the same class of
+descriptor against the \emph{measured} gap and find the physical-guidance step buys
+no accuracy there either.
 
-\paragraph{An explicit, tested accuracy ceiling.}
-We quantify why accuracy saturates near \qty{0.1}{\electronvolt}: independent
-experimental reports for the same compound scatter by \qty{0.072}{\electronvolt} RMS
-(the worst molecule reaching a standard deviation of \qty{0.56}{\electronvolt}), so the
-median gap the model is trained on is itself known only to \qty{0.049}{\electronvolt}.
-A separate limit applies to computed references, which are functional-dependent (B3LYP vs
-CAM-B3LYP differ by up to \qty{0.58}{\electronvolt}); that bounds what a computed gap
-can mean, not what a model fitted to measured labels can achieve. The ceiling is not an excuse: no higher-capacity learner
-(gradient boosting, MLP, SVR) beats the random forest, and the result places itself
-honestly at $R^2 \approx 0.25$, a real but limited signal bounded by data quality
-rather than model capacity.
+\paragraph{The experimental noise floor, quantified.}
+Why does accuracy plateau near \qty{0.1}{\electronvolt} regardless of descriptor set?
+Independent experimental reports for the same compound scatter by
+\qty{0.072}{\electronvolt} RMS (the worst molecule reaching a standard deviation of
+\qty{0.56}{\electronvolt}), and the median gap the model is trained on is itself known
+only to \qty{0.049}{\electronvolt}---about half the model error. That
+$\Delta E_\text{ST}$ is reported inconsistently has been shown for individual
+emitters~\cite{Shuaib2026}; what we add is the size of that inconsistency over
+\num{231} molecules and \num{173} source papers and its direct consequence for
+prediction---to our knowledge the first inter-laboratory variability budget for the
+TADF singlet--triplet gap. The label bounds what any predictor can reach, consistent
+with the broader finding that many machine-learning benchmarks in drug-, materials-
+and molecular-discovery are limited by dataset noise rather than model
+capacity~\cite{Crusius2025}---applying their $R^2_\text{max} = 1-\sigma^2_\text{noise}/\sigma^2_y$
+framework to our label distribution gives $R^2_\text{max} \approx 0.71$--\num{0.91}
+depending on which noise floor applies (\cref{subsec:ceilings})---and with the aleatoric/epistemic distinction under
+which label noise is an irreducible floor no model can cross~\cite{Heid2023}.
+Computed references face a separate limit: B3LYP and
+CAM-B3LYP gaps differ by up to \qty{0.58}{\electronvolt}, so a gap computed at one
+level of theory does not transfer to another; that bound constrains the meaning of a
+computed reference, not the error of a model fitted to measured labels. The
+\qty{0.1}{\electronvolt} plateau is not a model-capacity failure: neither a
+higher-capacity tabular learner (gradient boosting, MLP, SVR) nor a frozen pretrained
+molecular-transformer embedding beats the random forest (the latter reaches only MAE
+\qtyrange{0.109}{0.113}{\electronvolt}), and the result places itself honestly at
+$R^2 \approx 0.25$, a real but limited signal.
 
-\paragraph{A cautionary note on feature--target leakage.}
-Secondary to the benchmark, we flag that regressing $\Delta E_\text{ST}$ on features
-containing the $S_1$/$T_1$ energies is circular ($\Delta E_\text{ST} \equiv E_{S_1} -
-E_{T_1}$): the model returns arithmetic, invisible to cross-validation. Such
-feature--target leakage is a recognised cause of over-optimistic ML results~\cite{Kapoor2023}
-and is singled out in best-practice guidance for chemistry,\cite{Artrith2021} yet remains
-easy to introduce whenever the target is a derived energy difference.
+\paragraph{Feature--target leakage, and why it survives review.}
+A feature that is a proxy for the target---here, an exact one---is a long-recognised
+cause of over-optimistic ML results~\cite{Kaufman2012,Kapoor2023,Artrith2021}, and the
+apparent severity of such a leak is known to depend on the model class. What we add is
+the controlled measurement for this specific case.
+Regressing $\Delta E_\text{ST}$ on features containing the $S_1$ and $T_1$ energies is
+circular ($\Delta E_\text{ST} \equiv E_{S_1} - E_{T_1}$): under the scaffold
+cross-validation used throughout, a linear model given those energies recovers the gap
+exactly ($R^2 = 1.000$, MAE $= 0$) against $R^2 = 0.36$ without them. An axis-aligned
+random forest does not recover that subtraction---its splits approximate a difference
+of two continuous inputs rather than express it, a familiar limitation of tree
+ensembles---so it reaches only $R^2 = 0.59$ on the identical leaked features, a score
+that does not look anomalous, which is how a tree-based study can carry this defect
+through cross-validation unremarked. The lesson
+transfers to any computational-chemistry ML pipeline that regresses on computed energy
+components.
 
-\paragraph{Modest, quantified triage utility---and no device claims.}
-As a pre-screen for TADF viability, the model enriches low-gap candidates
-(\numrange{1.2}{1.4}$\times$ over random selection) on held-out labelled data;
-on the filtered library the conformal prediction intervals are too wide to
-support molecule-level selection, so no ranked shortlist is deposited.
-$\Delta E_\text{ST}$ is necessary but not sufficient for TADF efficiency;
-emission-wavelength matching for any specific lighting niche is a separate, downstream
-step not addressed here. We make no device-level performance claims.
-% ; our earlier
-% spin--orbit-coupling estimates of $k_\text{RISC}$ and external quantum
-% efficiency proved molecule-independent and were withdrawn.
+\paragraph{Modest triage utility, and what would be needed to push past the ceiling.}
+As a pre-screen, the model enriches low-gap candidates
+(\numrange{1.2}{1.4}$\times$ over random selection) on held-out labelled data, though
+a bootstrap confidence interval shows this only holds at cutoffs of \num{50}
+molecules or more---at the ten-to-twenty-candidate scale a laboratory would actually
+shortlist, the enrichment is not distinguishable from chance. On
+the filtered virtual library the conformal prediction intervals are too wide to support
+molecule-level selection; no ranked shortlist is deposited. $\Delta E_\text{ST}$ is
+necessary but not sufficient for TADF efficiency, and we make no device-level
+performance claims. Progress past the $\approx\qty{0.1}{\electronvolt}$ ceiling requires
+not a better model but a better dataset: a curated, single-source, solvent-controlled
+experimental benchmark of sufficient size to push the label precision below the present
+\qty{0.049}{\electronvolt} floor. This study provides the quantitative justification
+for that investment.
 
-This study builds on our earlier work---\textbf{Article 1}~\cite{Tchapet2024_xTB}
-(xTB/sTDA validation) and \textbf{Article 2}~\cite{Tchapet2024_DataDriven} (design
-rules)---by asking, rigorously, what such cheap data can and cannot support.
+This study builds on our earlier work---\textbf{Article~1}~\cite{Tchapet2024_xTB}
+(xTB/sTDA validation) and \textbf{Article~2}~\cite{Tchapet2024_DataDriven} (design
+rules)---by measuring, rigorously, what such cheap data can and cannot support.
 All data, trained models, and code are openly available (Zenodo DOI:
 10.5281/zenodo.17436069), enabling reproduction and extension of the benchmark.

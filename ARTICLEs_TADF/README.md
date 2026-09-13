@@ -33,6 +33,16 @@ This article leverages the validated computational workflow from Article 1 to ex
 
 **Folder:** `Article2_Data-Driven Design Guidelines for TADF-Emitters from a High-Throughput Screening of 747 Molecules/`
 
+### Article 3: Experimental Inter-Report Scatter Bounds Machine-Learning Accuracy for TADF Singlet–Triplet Gaps — Structure and Semi-Empirical Features Reach the Same Limit
+
+**Status:** 📝 Under submission to *RSC Advances* (September 2026)  
+**Zenodo DOI:** [10.5281/zenodo.17436069](https://doi.org/10.5281/zenodo.17436069)  
+**Authors:** Jean-Pierre Tchapet Njafa, Steve Cabrel Teguia Kouam, Patrick Sorrel Mvoto Kongo, Panebei Samafou, Serge Guy Nana Engo
+
+A scaffold-validated, deliberately honest benchmark establishing where data quality — not model capacity — sets the ceiling on predicting the experimental ΔE_ST from molecular structure. On 231 donor–acceptor molecules (212 Bemis–Murcko scaffolds), structure-only random forests (MAE 0.091 eV, Morgan) match semi-empirical NTO descriptors (MAE 0.096 eV) to within 0.017 eV on paired folds. The label precision (0.049 eV per-molecule median) is approximately half the model error. Two additional findings are corpus-specific: (i) excited-state descriptors preserve rank ordering across laboratories where fingerprints fail (Δρ = 0.19, CI 0.04–0.34); (ii) feature–target leakage in many published ML pipelines is quantified and its learner-dependence explained.
+
+**Manuscript sources (submission-ready, post-audit September 2026):** `Article3_TADF-Emitter-Triage-Honest-Benchmark/`
+
 ## Relationship Between Articles
 
 These two articles form a cohesive research program:
@@ -123,4 +133,5 @@ MIT License - See individual article folders for details.
 
 ---
 
-*Last updated: March 2026*
+*Last updated: September 2026 — Added Article 3 entry; manuscript sources updated
+to submission-ready state following pre-submission audit (September 2026).*

@@ -456,7 +456,15 @@ jean-pierre.tchapet@facsciences-uy1.cm
 
 ---
 
-*Last updated: June 2026 — Added virtual library expansion (22,194 molecules,
-REQ-1), interactive UMAP, and Article 3 manuscript figures. Full Article 3
-README rewrite: removed Chemistry of Materials preparation notes, updated to
-RSC Advances submission.*
+*Last updated: September 2026 — Article 3 manuscript sources updated to reflect
+the pre-submission audit revision (September 2026). Key changes incorporated:
+(i) conclusions restructured into two explicit messages (data quality bounds
+accuracy; curated dataset needed to push past the ceiling); (ii) SHAP
+feature interpretations expanded for all top NTO descriptors; (iii) Butina
+cluster-CV Spearman ρ range (0.31–0.40) now explicitly reported in the main
+text; (iv) inter-report scatter attributed to uncontrolled measurement
+conditions, citing Dang et al. (Dalton Trans., 2025); (v) bibliography header
+corrected to RSC Advances; (vi) numerical consistency check file updated to
+RSC Advances numbers (231 molecules, MAE 0.096 eV). Sources in
+`ARTICLEs_TADF/Article3_TADF-Emitter-Triage-Honest-Benchmark/sections/`
+reflect the submission-ready state of the manuscript.*

@@ -25,7 +25,7 @@
   \texttt{jean-pierre.tchapet@facsciences-uy1.cm}
 }
 
-\date{September 9, 2026}
+\date{September 13, 2026}
 
 \begin{document}
 
@@ -88,10 +88,18 @@ semi-empirical features retain rank correlation under a source-paper split where
 fingerprints do not ($\Delta\rho = \num{0.19}$, \qty{95}{\percent} CI excluding zero
 narrowly, on a single split).
 (iii)~A measured bound on the label itself---the median gap is known only to
-\num{0.049}~eV---against which a \num{609}-core-hour TD-DFT reference and a frozen
-pretrained molecular-transformer embedding both fail to beat the structure-only model.
+\num{0.049}~eV, about half the model error---against which a \num{609}-core-hour
+TD-DFT reference and a frozen pretrained molecular-transformer embedding both fail
+to beat the structure-only model. Applying a noise-ceiling calculation
+(Crusius~\textit{et al.}) to that precision gives $R^2_\text{max} \approx
+0.71$--\num{0.91} depending on which noise floor is used; the observed $R^2 =
+0.26$ reaches only \num{28}--\num{36}\% of that ceiling, so label imprecision
+bounds what is achievable but does not by itself explain the shortfall.
 (iv)~A triage filter that enriches low-gap candidates by
-\num{1.2}--\num{1.4}$\times$ over random on held-out labelled data---useful for
+\num{1.2}--\num{1.4}$\times$ over random on held-out labelled data, though a
+bootstrap confidence interval shows this is resolved from chance only at the
+broader top-\num{50}/top-\qty{20}{\percent} cutoffs, not at the top-\num{10}/top-\num{20}
+scale a laboratory would actually shortlist from---useful for coarse
 prioritisation, not a device-level or emission-spectrum predictor.
 
 \textbf{Why this is new.}
@@ -311,7 +319,10 @@ harder split. What the signal \emph{is}: it clears a label-permutation null
 ($p = 0.001$); the Spearman $\rho = 0.36$ has a \num{95}\% CI of
 \numrange{0.24}{0.47} that excludes zero; the paired MAE advantage over the
 mean-value baseline excludes zero under scaffold CV. Actionable utility is
-therefore triage only (\num{1.2}--\num{1.4}$\times$ enrichment on labelled data),
+therefore triage only (\num{1.2}--\num{1.4}$\times$ enrichment on labelled data,
+though a bootstrap confidence interval shows this is resolved from chance only at
+the top-\num{50}/top-\qty{20}{\percent} cutoffs and not at the top-\num{10}/top-\num{20} scale a
+laboratory would actually shortlist from),
 and we no longer make any molecule-level selection claim. Under the source-paper
 (DOI-grouped) split introduced for this revision the advantage over the baseline
 is \num{0.005}~eV with a CI that crosses zero---stated in the abstract, in
@@ -321,6 +332,16 @@ $\rho = \num{0.35}$ while the fingerprint model falls to \num{0.16}, a paired
 difference of \num{0.19} with a \num{95}\% CI of $[0.04, 0.34]$ that excludes zero.
 Ordering survives the change of protocol even where the predicted value does not, which
 is what a triage filter is asked to do.
+
+We have also quantified, directly, how much of the residual gap even a perfect
+model could close. Applying the noise-ceiling framework of
+Crusius~\textit{et al.} to the label's own measurement precision gives
+$R^2_\text{max} \approx 0.71$--\num{0.91} (depending on whether the single-report
+or median-precision floor is used), so the observed $R^2 = 0.26$ reaches only
+\num{28}--\num{36}\% of what label imprecision alone would permit. Label noise
+therefore sets a real, quantified ceiling on $R^2$, but it does not by itself
+explain why the model sits well below even that ceiling; we now state both
+halves of that argument explicitly (\S\,Ceilings).
 
 \medskip
 \noindent\textbf{3.2}\quad\textit{``The dataset aggregates literature values
@@ -442,8 +463,13 @@ model provide actionable predictive utility for materials discovery?''}
 \smallskip
 \noindent\textbf{Response.}
 For point prediction of $\Delta E_\text{ST}$: no, and the manuscript now says so
-plainly. For triage: yes, within a stated bound---\num{1.2}--\num{1.4}$\times$
+plainly---a noise-ceiling calculation (Crusius~\textit{et al.}) puts the maximum
+achievable $R^2$ at \num{0.71}--\num{0.91} given the label's own measurement
+precision, and the observed $R^2 = 0.26$ reaches only \num{28}--\num{36}\% of that.
+For triage: yes, within a stated bound---\num{1.2}--\num{1.4}$\times$
 enrichment of low-gap emitters over random selection on held-out labelled data,
+though a bootstrap CI resolves this from chance only at the
+top-\num{50}/top-\qty{20}{\percent} cutoffs, not at the top-\num{10}/top-\num{20} scale,
 with conformal intervals that rule out single-molecule selection. The value of
 the paper is the calibrated ceiling and the leakage diagnosis, both of which are
 quantitative and reproducible.

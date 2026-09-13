@@ -1,0 +1,451 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Cover Letter + point-by-point response — RSC Advances (RSC)
+% Fresh submission after Digital Discovery rejection (DD-ART-07-2026-000486, 27-Aug-2026).
+% Prior review disclosed; itemised response to the three Digital Discovery referees appended.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt,a4paper]{letter}
+\usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage{mathptmx}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage[detect-all=true]{siunitx}
+\usepackage{enumitem}
+
+\signature{
+  Jean-Pierre Tchapet Njafa\\
+  (on behalf of all authors)
+}
+
+\address{
+  Department of Physics, Faculty of Science\\
+  University of Yaound\'{e}~1\\
+  P.O. Box 812, Yaound\'{e}, Cameroon\\
+  \texttt{jean-pierre.tchapet@facsciences-uy1.cm}
+}
+
+\date{September 9, 2026}
+
+\begin{document}
+
+\begin{letter}{
+  Editorial Office, \textit{RSC Advances}\\
+  Royal Society of Chemistry\\
+  Thomas Graham House, Science Park\\
+  Milton Road, Cambridge CB4 0WF, UK
+}
+
+\opening{Dear Editor,}
+
+We submit our manuscript \textbf{``Experimental Inter-Report Scatter Bounds
+Machine-Learning Accuracy for TADF Singlet--Triplet Gaps---Structure and
+Semi-Empirical Features Reach the Same Limit''} for consideration as a Full Paper in
+\textit{RSC Advances}.
+
+\textbf{What the paper reports.}
+The singlet--triplet gap $\Delta E_\text{ST}$ is the photophysical observable that
+gates thermally activated delayed fluorescence (TADF). We measure where the
+limit on predicting that observable from cheap information lies---and find it is
+set by the experimental data, not by the model. On one controlled set of
+\num{231} donor--acceptor emitters (\num{212} Bemis--Murcko scaffolds) we compare
+three levels of description against experiment: the 2D molecular structure, a
+semi-empirical excited-state calculation (GFN2-xTB/sTDA natural transition
+orbitals), and a range-separated TD-DFT reference (wB97X-D4/def2-SVP,
+Tamm--Dancoff, \num{231}/\num{231} converged, \num{609} core-hours). Structure
+alone reaches mean absolute error \num{0.091}--\num{0.100}~eV; the semi-empirical
+excited state gives \num{0.096}~eV; the TD-DFT gap gives \num{0.099}~eV after
+in-fold calibration. They converge because the binding term is the label itself:
+independent measurements of the same compound scatter by \num{0.072}~eV RMS, so
+the per-molecule median the model is trained on is known only to \num{0.049}~eV---
+about half the model error. (Computed references carry a separate functional
+dependence of up to \num{0.58}~eV between B3LYP and CAM-B3LYP; that bounds what a
+computed gap can mean and is not added into the experimental bound.) A further,
+unexpected result separates accuracy from ranking: under a source-paper
+(DOI-grouped) split, the semi-empirical features retain rank correlation the
+fingerprints lose ($\Delta\rho = \num{0.19}$, \qty{95}{\percent} CI \numrange{0.04}{0.34},
+excluding zero narrowly and on a single split), so they order candidates across
+laboratories even where they do not improve the predicted value. This is a photochemistry benchmark with a
+physical-organic conclusion---what structural information does and does not encode
+about the exchange splitting---not solely a machine-learning exercise.
+
+\textbf{Contributions.}
+(i)~A controlled measurement of feature--target leakage for a derived-energy target.
+Its severity is known to depend on the model class; we quantify that here. Regressing
+$\Delta E_\text{ST}$ on features
+containing the $S_1$ and $T_1$ energies is circular
+($\Delta E_\text{ST}\equiv E_{S_1}-E_{T_1}$): under cross-validation a linear model
+given those energies recovers the target exactly ($R^2 = 1.000$) against $R^2 = 0.36$
+without them, while an axis-aligned random forest on the identical features reports
+only $R^2 = 0.59$ and clears cross-validation unremarked. That is how a tree-based
+screening study can carry this defect without the score looking wrong.
+(ii)~Structure alone predicts the \emph{experimental} $\Delta E_\text{ST}$ as
+accurately as the semi-empirical excited state---a scaffold-validated benchmark with
+a label-permutation null ($p = 0.001$), the two representations equal to within
+\qty{0.017}{\electronvolt} on paired folds. A new finding is the
+dissociation between accuracy and ranking under laboratory transfer: the
+semi-empirical features retain rank correlation under a source-paper split where
+fingerprints do not ($\Delta\rho = \num{0.19}$, \qty{95}{\percent} CI excluding zero
+narrowly, on a single split).
+(iii)~A measured bound on the label itself---the median gap is known only to
+\num{0.049}~eV---against which a \num{609}-core-hour TD-DFT reference and a frozen
+pretrained molecular-transformer embedding both fail to beat the structure-only model.
+(iv)~A triage filter that enriches low-gap candidates by
+\num{1.2}--\num{1.4}$\times$ over random on held-out labelled data---useful for
+prioritisation, not a device-level or emission-spectrum predictor.
+
+\textbf{Why this is new.}
+The advance is conceptual, not a better error. That $\Delta E_\text{ST}$ is reported
+inconsistently has been shown for individual emitters (Shuaib \textit{et al.},
+\textit{J.~Mater.~Chem.~C} 2026, \textbf{14}, 4353); we turn it into a quantitative
+inter-laboratory variability budget over \num{231} molecules and \num{173} source
+papers (single-report scatter \num{0.072}~eV RMS, median-label precision
+\num{0.049}~eV) and show it is the term that caps every predictor we test,
+semi-empirical or TD-DFT. Two further findings we have not seen reported: under a
+source-paper split a model's accuracy advantage vanishes while the excited-state
+descriptors keep the rank order the fingerprints lose ($\Delta\rho = \num{0.19}$,
+\qty{95}{\percent} CI excluding zero narrowly, on a single split); and the
+feature--target leakage that inflates computed-gap models is fully exposed by a linear
+learner and substantially masked by a random forest. The multi-scale ML screening
+pipelines and the pretrained or multimodal TADF models of 2025--2026 make neither
+point, because none runs an experimental source-paper split or a controlled leakage
+comparison. The work is the prediction-side, statistical complement to the
+experimental measurement-methodology literature.
+
+\textbf{Prior consideration.}
+An earlier version of this manuscript was reviewed at \textit{Digital Discovery}
+(DD-ART-07-2026-000486) and declined on 27~August~2026. The three referee reports
+were constructive and we have used them to strengthen the paper. The decline cited
+insufficient novelty against existing TADF screening work; the paragraph above states
+what is new and what is not. An itemised response follows this letter. The main additions since that version are: the
+\num{609}-core-hour range-separated TD-DFT reference run (Referee~1); a full data
+and code deposit on Zenodo, previously incomplete (Referee~2); a source-paper
+split, the removal of the library shortlist, and a trimmed
+inverted-gap discussion (Referee~3).
+
+\textbf{Open science.}
+The experimental corpus, descriptor tables, trained models, SHAP analysis, TD-DFT
+outputs, and all Python code are openly available on Zenodo
+(DOI: 10.5281/zenodo.17436069) under a CC-BY-4.0 licence, with a SHA-256 manifest.
+
+\textbf{APC waiver.}
+The corresponding author is affiliated with the University of Yaound\'{e}~1,
+Cameroon, a Research4Life country; we are eligible for a full APC waiver under the
+RSC's Research4Life arrangement and will provide documentation on request.
+
+\textbf{Suggested reviewers.}
+None is a co-author or collaborator:
+\begin{itemize}[nosep]
+  \item Prof.\ Heather J.\ Kulik, Massachusetts Institute of Technology, USA
+  (\texttt{hjkulik@mit.edu}) --- ML for molecular design
+  \item Prof.\ Andrew P.\ Monkman, Durham University, UK
+  (\texttt{a.p.monkman@durham.ac.uk}) --- TADF photophysics
+  \item Prof.\ Olexandr Isayev, Carnegie Mellon University, USA
+  (\texttt{olexandr@cmu.edu}) --- ML for chemistry
+  \item Prof.\ Denis Jacquemin, Nantes Universit\'{e} / CNRS CEISAM, France
+  (\texttt{Denis.Jacquemin@univ-nantes.fr}) --- TD-DFT excited-state benchmarks
+\end{itemize}
+
+The manuscript is not published elsewhere and is not under consideration by any
+other journal. All authors have approved submission to \textit{RSC Advances}.
+
+\closing{Yours sincerely,}
+
+\end{letter}
+
+\newpage
+
+\begin{center}
+  {\large\textbf{Response to the reviewers}}\\[2pt]
+  Manuscript: ``Experimental Inter-Report Scatter Bounds Machine-Learning Accuracy
+  for TADF Singlet--Triplet Gaps---Structure and Semi-Empirical Features Reach the
+  Same Limit''\\
+  Prior review: \textit{Digital Discovery} DD-ART-07-2026-000486
+\end{center}
+
+\medskip
+\noindent
+Referee comments are in italics. Every number cited below is reproducible from the
+Zenodo deposit (DOI: 10.5281/zenodo.17436069). Section and table numbers refer to
+the revised manuscript and its Supporting Information.
+
+\bigskip
+\noindent\textbf{\large Referee 1}
+
+\medskip
+\noindent\textbf{1.1}\quad\textit{``The dataset is tiny ($<$300 molecules), so it
+is not surprising that it doesn't work.''}
+
+\smallskip
+\noindent\textbf{Response.}
+Dataset size is the object of study here, not an oversight. A correlation-test
+power analysis (Methods) shows that the observed Spearman $\rho = 0.36$ is
+resolved at \num{80}\% power with $n \approx 60$; at $n = 231$ the achieved power
+is $\approx 1$. We should be clear about the scope of that argument: it concerns the rank
+correlation only, and does not speak to the width of the $R^2$ interval, which we address
+separately and do not explain away.
+More directly, we now report a threefold corpus expansion to \num{728}
+experimental emitters through the same pipeline: the MAE \emph{rises} from
+\num{0.098} to \num{0.124}~eV, $R^2$ falls from \num{0.18} to $-0.01$, and the
+rank correlation roughly halves ($\rho$ \num{0.34} to \num{0.16})
+(\S\,Ceilings; SI Table, expansion). Adding data makes the prediction worse, which
+points at the label rather than the sample count---though we note in the manuscript that
+the added molecules come through a different structure-resolution pipeline, so chemical
+breadth and label quality are confounded in that particular test. The cleaner evidence is
+direct: the model reaches \num{0.074}~eV on molecules whose replicate reports agree and
+\num{0.106}~eV on those whose reports do not.
+
+\medskip
+\noindent\textbf{1.2}\quad\textit{``The correlation between experiment and theory
+(DFT or semi-empirical) is rather good ($r > 0.95$). It is not difficult to
+predict a computed singlet--triplet gap with ML and a large computed dataset.''}
+
+\smallskip
+\noindent\textbf{Response.}
+We now test this claim directly. A range-separated TD-DFT reference gap
+(wB97X-D4/def2-SVP, RIJCOSX, Tamm--Dancoff; ORCA~6; \texttt{nroots}~8, triplets
+included; GFN2-xTB geometry) was computed for all \num{231} molecules
+(\num{609} core-hours, \num{16.1}~min median per molecule; new Methods paragraph,
+new SI subsection S4.3). Against \emph{experiment} the raw TD-DFT gap has Pearson
+$r = 0.43$ and $R^2 = -16.3$: it is the worst predictor in the feature-comparison
+table (MAE \num{0.654}~eV), because it carries a systematic $+\num{0.65}$~eV offset. The $r > 0.95$ figures in the
+literature are theory-against-theory, or ML against a computed reference---the
+circular set-up diagnosed in contribution~(i). Predicting the \emph{measured} gap
+is the harder problem, and neither a semi-empirical nor a range-separated
+excited-state calculation solves it here.
+
+\medskip
+\noindent\textbf{1.3}\quad\textit{``Particularly strange is the refusal to use the
+computed gap as a descriptor while other computed quantities of similar cost are
+used. The semi-empirical computed gap is probably much better than the ML gap
+from structural parameters alone.''}
+
+\smallskip
+\noindent\textbf{Response.}
+We now use the computed gap as a feature, at both levels of theory, and report
+the result rather than omitting it (\S\,Benchmark; SI S4.3). The semi-empirical
+(sTDA) gap as an added feature does not change the error (NTO model
+\num{0.096} to \num{0.097}~eV; Morgan model unchanged). The TD-DFT gap as an
+added feature lowers the Morgan model from \num{0.091} to \num{0.087}~eV---a
+paired \num{95}\% CI of \numrange{0.0004}{0.0071}~eV and Wilcoxon $p = 0.016$, so
+a real effect, but a \num{4}\% reduction bought with \num{609} core-hours. Used
+alone, the semi-empirical gap is \emph{worse} than the structure-only forest
+(calibrated MAE \num{0.104}~eV vs.\ \num{0.091}~eV), contrary to the referee's
+expectation. We have also replaced the earlier assertion that the feature sets are
+``statistically indistinguishable'' with a measured equivalence bound: paired on
+identical folds, Morgan and NTO differ by \num{0.004}~eV with a \num{95}\% CI of
+$[-0.017, +0.009]$~eV, so they are equivalent to within \num{0.017}~eV rather than
+merely not separable. The energy scalars are excluded from the NTO descriptor set for a
+specific reason---including $E_{S_1}$ and $E_{T_1}$ as features is the circularity
+of contribution~(i); the spatial NTO overlap descriptors we do keep encode
+exchange-integral physics without reducing to $E_{S_1}-E_{T_1}$.
+
+\medskip
+\noindent\textbf{1.4}\quad\textit{``I cannot see a practical use of this approach,
+and the didactic value is limited.''}
+
+\smallskip
+\noindent\textbf{Response.}
+The practical use is triage: on held-out labelled data the model enriches low-gap
+emitters by \num{1.2}--\num{1.4}$\times$ over random selection---precision
+\num{0.60} among the top \num{10} ranked candidates and \num{0.68} among the top
+\num{50}, against a base rate of \num{0.49}. (These are counts of molecules, not
+percentiles; the earlier submission conflated the two conventions and we have corrected
+it.) We have re-scoped every claim to that regime and removed the projection onto the
+unlabelled filtered library (see 3.4).
+
+Two further results are directly usable. The first is a concrete recommendation: under a
+source-paper split the semi-empirical NTO descriptors hold Spearman $\rho = \num{0.35}$
+while fingerprints fall to \num{0.16}, so a group that must rank candidates against
+measurements made in another laboratory should pay for the excited-state step, while a
+group ranking within its own data need not. That is a decision the cost of those
+descriptors can be weighed against.
+
+The second is the didactic point, which we think is transferable. Under cross-validation a
+linear model given the two constituent energies recovers the target exactly
+($R^2 = \num{1.000}$) against $R^2 = \num{0.36}$ without them. More usefully, how severe
+the leak \emph{looks} depends on the learner: a random forest is axis-aligned, does not
+recover a difference of two continuous inputs exactly, and reaches only
+$R^2 = \num{0.59}$ on identical leaked features. A tree-based study can therefore carry this defect while its
+cross-validated score appears unremarkable, which may be why the failure mode persists.
+Alongside it sits the calibrated chemistry ceiling: 2D structure and the semi-empirical
+excited state land within \num{0.017}~eV of one another against experiment on paired
+folds, and a calibrated TD-DFT gap within a further \num{0.008}~eV, while the raw
+uncalibrated TD-DFT gap overestimates by \num{0.65}~eV.
+
+\bigskip
+\noindent\textbf{\large Referee 2}
+
+\medskip
+\noindent\textbf{2.1}\quad\textit{``Please provide a link to the Zenodo
+repository, and make sure the actual data is there. The .zip I downloaded only
+contained a README.md; the data was on GitHub. Please add it to Zenodo.''}
+
+\smallskip
+\noindent\textbf{Response.}
+The Zenodo record 10.5281/zenodo.17436069 now holds the full deposit, not only
+the README: the curated experimental corpus, the three descriptor tables, the
+trained random-forest models, the per-molecule SHAP output, the new TD-DFT
+reference outputs (\texttt{tddft\_reference\_231.csv} and timing), and every
+analysis and figure-generation script, with a \texttt{manifest.csv} giving a
+SHA-256 checksum for each file. The GitHub repository is retained as a mirror.
+The DOI is cited in the abstract, Methods, Conclusions, and the data-availability
+statement.
+
+\bigskip
+\noindent\textbf{\large Referee 3}
+
+\medskip
+\noindent\textbf{3.1}\quad\textit{``Predictive capacity is extremely weak and
+statistically ambiguous: $R^2 = 0.25$--$0.31$ with \num{95}\% CIs spanning into
+negative territory. A model with zero-crossing $R^2$ intervals cannot be
+distinguished from a mean-value predictor. Spearman $\rho$ is insufficient to
+claim predictive power.''}
+
+\smallskip
+\noindent\textbf{Response.}
+We agree and have made this the framing rather than a caveat. The abstract now
+states that the signal ``sits just above a mean-value baseline (MAE
+\num{0.107}~eV)''; the Conclusions say the advantage is not resolved under the
+harder split. What the signal \emph{is}: it clears a label-permutation null
+($p = 0.001$); the Spearman $\rho = 0.36$ has a \num{95}\% CI of
+\numrange{0.24}{0.47} that excludes zero; the paired MAE advantage over the
+mean-value baseline excludes zero under scaffold CV. Actionable utility is
+therefore triage only (\num{1.2}--\num{1.4}$\times$ enrichment on labelled data),
+and we no longer make any molecule-level selection claim. Under the source-paper
+(DOI-grouped) split introduced for this revision the advantage over the baseline
+is \num{0.005}~eV with a CI that crosses zero---stated in the abstract, in
+\S\,Benchmark, and as Limitations bullet~(6). One result cuts the other way and is now
+reported: under that same split the semi-empirical NTO model holds Spearman
+$\rho = \num{0.35}$ while the fingerprint model falls to \num{0.16}, a paired
+difference of \num{0.19} with a \num{95}\% CI of $[0.04, 0.34]$ that excludes zero.
+Ordering survives the change of protocol even where the predicted value does not, which
+is what a triage filter is asked to do.
+
+\medskip
+\noindent\textbf{3.2}\quad\textit{``The dataset aggregates literature values
+across unrecorded conditions (hosts, solvents, temperatures, techniques).
+Compiling medians from uncontrolled environments degrades the target. Test or
+discuss a solvent- and condition-controlled subset rather than blaming data
+noise.''}
+
+\smallskip
+\noindent\textbf{Response.}
+Methods now states explicitly that the corpus does not record measurement medium
+per value, so the per-molecule median is a consensus over uncontrolled
+conditions. We address the referee's test with the repeat-measured subset: for
+the \num{102} molecules with independent reports, \num{58}\% have zero
+inter-report spread, and this cleaner-label subset gives the study's
+\emph{lowest} MAE, \num{0.080}~eV (\S\,Benchmark). We must be careful with that number
+rather than offer it as support: a mean-value predictor restricted to the same
+\num{102} molecules scores \num{0.089}~eV, so the model's advantage there is
+\num{0.009}~eV with a confidence interval spanning zero, and the low absolute error
+reflects the narrower spread of those labels rather than better prediction.
+We tested the referee's proposition directly and it did not survive. An earlier
+``clean-label'' subset of \num{208} molecules was mis-specified---it assigned zero spread
+to the \num{129} compounds with no replicate at all, discarding only \num{23}.
+Restricting properly to replicated molecules gives \num{0.074}~eV where reports agree and
+\num{0.106}~eV where they do not, but a constant predictor fitted within each stratum
+reproduces that ordering to within \num{0.001}~eV, because the strata differ in the
+dispersion of the target. We therefore report no stratified evidence that label noise sets
+the ceiling, and say so in the manuscript. On the referee's specific request we have gone further than stating a limitation. A
+strictly solvent-controlled subset cannot be built: \texttt{phase} and
+\texttt{atmosphere} are populated for \num{0} of the \num{1520} extracted rows. We
+therefore ran the closest test the data permits, splitting on source paper, since values
+drawn from a single publication share one laboratory's conditions. The model's advantage
+over a constant predictor fitted within each group is \num{0.0071}~eV for the
+\num{218} single-source molecules and \num{0.0024}~eV for the \num{13} multi-source
+ones, a difference of \num{0.005}~eV whose \num{95}\% interval includes zero. The
+result is null and we report it as such, noting that \num{13} molecules give the test
+little power. We have also, throughout, compared every subset against a constant
+predictor fitted within that subset, having found that an earlier subset argument of ours
+was reproduced entirely by target dispersion.
+
+\medskip
+\noindent\textbf{3.3}\quad\textit{``With \num{212} scaffolds for \num{231}
+molecules, \num{92.9}\% of scaffolds are singletons, so the GroupKFold scaffold
+split is essentially a random split. On expansion to \num{728} molecules $R^2$
+collapses to $-0.01$ and MAE worsens to \num{0.124}~eV, showing the model does
+not generalise. The triage claim must be re-evaluated.''}
+
+\smallskip
+\noindent\textbf{Response.}
+The singleton fraction is now stated in Methods and the SI, and we have added a
+source-paper (DOI-grouped) \texttt{GroupKFold} over \num{173} papers as the
+harder transfer test: it holds out a synthetic series and a laboratory's shared practice
+together. Under it the Morgan model gives MAE \num{0.102}~eV ($R^2 = 0.18$) and
+its advantage over the mean-value baseline is not statistically resolved
+(\S\,Benchmark). The \num{728}-molecule expansion is promoted to its own Results
+paragraph and read as the referee reads it---evidence against generalisation and
+for a label ceiling. The triage claim is now explicitly restricted to held-out
+labelled molecules, with the projection onto the filtered library removed.
+
+\medskip
+\noindent\textbf{3.4}\quad\textit{``The top-100 shortlist from the
+\num{22194}-molecule library has a split-conformal \num{90}\% interval of
+$\pm\num{0.18}$~eV, while the predicted gaps are \num{0.02}--\num{0.05}~eV. The
+uncertainty engulfs the prediction; this offers no prioritisation value.''}
+
+\smallskip
+\noindent\textbf{Response.}
+We agree and have removed the shortlist. No ranked candidate list is deposited.
+The text (\S\,Library) now states that the split-conformal \num{90}\% interval
+spans \num{0.36}~eV---about \num{7.6} times the predicted gap, a mean half-width of
+\num{0.18}~eV---and that for every one of the \num{100} lowest-predicted molecules the
+interval's lower bound is a negative (inverted) gap. Conformal prediction refuses
+molecule-level selection at this accuracy; the filtered set is kept only to indicate
+the scale of the chemical space the labelled-data triage would operate over. The
+corresponding SI table has been deleted.
+
+\medskip
+\noindent\textbf{3.5}\quad\textit{``NTO descriptors are computed at ground-state
+vertical geometries and miss excited-state relaxation and spin--orbit coupling.
+Dismissing the \num{0.195}~eV adiabatic deviation as a rank-preserving offset is
+inadequate; this likely explains why NTO features do not beat 2D fingerprints.''}
+
+\smallskip
+\noindent\textbf{Response.}
+We have removed the dismissive wording. The \num{14}-molecule vertical-vs-adiabatic
+comparison (CAM-B3LYP/def2-TZVP, MAE \num{0.195}~eV) is now reported as a bound on
+the vertical approximation, not waved away, and the equivalence of NTO and 2D
+features is now stated as a measured equivalence bound (\num{0.017}~eV on paired
+folds) rather than as ``mechanistically informative''. Limitations bullet~(6) states
+that the descriptors are ground-state vertical, carry no excited-state relaxation and
+no spin--orbit coupling, and that this is a plausible part of why they do not
+outperform 2D fingerprints. We agree that
+missing excited-state relaxation is a plausible contributor to the NTO ceiling and
+say so.
+
+\medskip
+\noindent\textbf{3.6}\quad\textit{``The single-determinant GFN2-xTB/sTDA framework
+enforces Aufbau occupation and cannot capture the double-excitation character of
+gap inversion; it predicts positive gaps for all inverted-gap candidates. The
+INVEST narrative should be streamlined or removed.''}
+
+\smallskip
+\noindent\textbf{Response.}
+Agreed, and the discussion is now short and factually corrected. A literature screen
+flags five corpus compounds with an inverted report; for two of them (HAP-3MF,
+TPA-NZP) the consensus median we train on is itself negative, and these are the only two
+negative labels among the \num{231}. The model returns a positive gap for all five, so it
+carries the wrong sign for both molecules whose own label is negative. We now state that
+this is representational rather than statistical---the descriptors carry no signal that
+separates an inverted-gap molecule from a conventional one, since the semi-empirical step
+is computed under Aufbau ordering---and the ``expected falsification'' narrative is
+removed. The earlier submission described these as
+``external test cases'', which was wrong: they are inside the corpus.
+
+\medskip
+\noindent\textbf{3.7}\quad\textit{``An $R^2$ interval encompassing zero---does the
+model provide actionable predictive utility for materials discovery?''}
+
+\smallskip
+\noindent\textbf{Response.}
+For point prediction of $\Delta E_\text{ST}$: no, and the manuscript now says so
+plainly. For triage: yes, within a stated bound---\num{1.2}--\num{1.4}$\times$
+enrichment of low-gap emitters over random selection on held-out labelled data,
+with conformal intervals that rule out single-molecule selection. The value of
+the paper is the calibrated ceiling and the leakage diagnosis, both of which are
+quantitative and reproducible.
+
+\end{document}

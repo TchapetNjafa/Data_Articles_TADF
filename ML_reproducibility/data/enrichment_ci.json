@@ -1,0 +1,57 @@
+{
+  "threshold_eV": 0.1,
+  "base_rate": 0.4935,
+  "n": 231,
+  "point": {
+    "top10": {
+      "k": 10,
+      "precision": 0.6,
+      "enrichment": 1.216
+    },
+    "top20": {
+      "k": 20,
+      "precision": 0.6,
+      "enrichment": 1.216
+    },
+    "top20pct": {
+      "k": 46,
+      "precision": 0.674,
+      "enrichment": 1.366
+    },
+    "top50": {
+      "k": 50,
+      "precision": 0.68,
+      "enrichment": 1.378
+    }
+  },
+  "bootstrap_ci": {
+    "top10": {
+      "enrichment_ci95": [
+        0.63,
+        1.89
+      ],
+      "n_boot": 5000
+    },
+    "top20": {
+      "enrichment_ci95": [
+        0.8,
+        1.7
+      ],
+      "n_boot": 5000
+    },
+    "top20pct": {
+      "enrichment_ci95": [
+        1.08,
+        1.61
+      ],
+      "n_boot": 5000
+    },
+    "top50": {
+      "enrichment_ci95": [
+        1.1,
+        1.6
+      ],
+      "n_boot": 5000
+    }
+  }
+}

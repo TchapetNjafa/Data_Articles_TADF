@@ -366,3 +366,56 @@ diagnostic is retained in the working repository.
 - **Claims:** strengthens C-capacity (no higher-capacity learner or pretrained
   representation beats the forest). New wording in results subsec:ceilings and
   Limitations bullet (6). Manuscript number: 0.109-0.113 eV for the pretrained encoder.
+
+### A-014 — Bootstrap CI on triage/enrichment precision (audit item 10.3, AUDIT_REPORT.md 2026-09-12)
+- **Source:** `code/enrichment_ci.py` -> `data/enrichment_ci.json`. Reuses
+  `enrichment_curve.py`'s Morgan-FP RF, scaffold-CV (GroupKFold 5) out-of-fold
+  predictions on the 231-molecule benchmark, threshold <=0.10 eV.
+- **Method.** Nonparametric bootstrap, 5000 resamples of the 231 molecules with
+  replacement; within each resample the ranking is re-derived from the fixed
+  out-of-fold predicted gap and precision/enrichment recomputed at k=10, 20, 50 and
+  the top-20%-of-benchmark cut (k=46). The RF itself is not refit per resample (same
+  convention as other paired CIs in this repo, e.g. A-002/A-006).
+- **Numbers.**
+  | cutoff | k | precision | enrichment | 95% CI (enrichment) | excludes 1.0? |
+  |---|---|---|---|---|---|
+  | top-10 | 10 | 0.600 | 1.22x | [0.63, 1.89] | no |
+  | top-20 | 20 | 0.600 | 1.22x | [0.80, 1.70] | no |
+  | top-20% | 46 | 0.674 | 1.37x | [1.08, 1.61] | yes |
+  | top-50 | 50 | 0.680 | 1.38x | [1.10, 1.60] | yes |
+  Point estimates reproduce the published 0.600/0.680/1.22/1.38 (A-006b) exactly.
+- **Interpretation.** The enrichment claim in the main text (1.2-1.4x) is real only
+  at the broader cutoffs (top-50, top-20%): the CI excludes no-enrichment (factor
+  1.0). At the smaller, more actionable cutoffs a laboratory would actually
+  shortlist from (top-10, top-20), the 95% CI includes 1.0 -- the enrichment is not
+  statistically distinguishable from chance at n=231. This is the exact concern
+  AUDIT_REPORT.md \S10.3 raised (small-k precision estimates reported without a CI).
+- **Caveats.** (i) Bootstrap resamples molecules, not folds; it treats the
+  out-of-fold predictions as fixed and does not propagate model-refit variance --
+  consistent with other CI conventions in this repo, but a lower bound on total
+  uncertainty. (ii) Percentile bootstrap (not BCa); with n=231 and rare-event counts
+  at k=10 this can be somewhat conservative/liberal at the tails, not expected to
+  flip the qualitative significant/non-significant split reported here.
+- **Claims:** adds a CI to the enrichment numbers stated in
+  `sections/results_rsc_advances.tex` (\S3.4, "Modest triage utility" and
+  "Quantifying triage utility" paragraphs) and the parallel Introduction
+  Contributions paragraph. No headline number changed; qualification added.
+
+### A-015 — Maximum achievable R² from label noise (Crusius et al. framework)
+- **Date:** 2026-09-13. **Trigger:** AUDIT_REPORT.md §17 (item 13 in audit pass): adding the Crusius citation without running the NoiseEstimator calculation leaves the quantitative argument incomplete.
+- **Method.** `R²_max = 1 − σ²_noise / σ²_y` (the standard noise-ceiling result applied by Crusius et al., Faraday Discuss. 256, 304-321, 2025, §3). Two noise floors are evaluated: (i) the **regression-relevant** floor — RMS SEM of the per-molecule median label (0.049 eV, from A-003/A-008b) — which is the aleatoric limit for predicting the target actually regressed on; (ii) the **corpus-heterogeneity** floor — RMS of a single report about its molecule's median (0.0905 eV, from A-003) — which is not the regression floor but contextualises how far any single measurement can be from the truth.  σ_y derived from the out-of-fold predictions in `data/final_model_scaffold_predictions.csv` (n=231, σ_y = 0.167 eV). Bootstrap CI: 5000 resamples of molecules, fixed OOF predictions (same convention as A-002/A-006/A-014).
+- **Source:** `data/a015_noise_floor_r2_bound.json`.
+
+| quantity | value | 95% CI |
+|---|---|---|
+| σ_y (target SD) | 0.167 eV | — |
+| R²_observed | 0.257 | [0.008, 0.450] |
+| R²_max (SEM floor, 0.049 eV) | **0.914** | [0.847, 0.944] |
+| R²_max (single-report floor, 0.0905 eV) | **0.706** | [0.477, 0.808] |
+| % ceiling captured (SEM) | 28.1% | — |
+| % ceiling captured (single-report) | 36.4% | — |
+
+- **Interpretation.** The result is more nuanced than the noise-floor narrative in the current manuscript implies. The SEM floor (0.049 eV) gives R²_max = 0.91 — the target is in principle highly predictable if label precision could be improved. The observed R² = 0.26 is only 28% of that ceiling. This means label noise is **not** the dominant constraint: the model sits far below the noise-floor-limited ceiling, and something else — structural features unable to fully encode the gap, the modest n=231, or deeper physics — drives the gap. Using the single-report scatter (0.0905 eV) as the noise floor — which is the quantity Crusius et al. would use if treating each report as an independent measurement — gives R²_max = 0.71, and the model captures 36%. Both readings confirm the observed R² = 0.26 is consistent with label noise playing a role, but not that label noise alone explains it. The honest manuscript sentence is therefore: label noise sets a ceiling at R²≈0.71–0.91 depending on which floor applies; the model at R²=0.26 is well below it; progress requires both better data **and** better features/models, with the data argument justified by the 0.049 eV precision floor.
+- **Caveats.** (i) The formula assumes noise is additive, independent of x, and homoscedastic — none of which is fully satisfied (the noise is heteroscedastic: 57.8% of molecules have zero spread). (ii) σ_y is measured on 231 molecules, not on the underlying distribution; the bootstrap CI on R²_max is wide accordingly. (iii) This calculation was not done with the original Crusius `NoiseEstimator` tool (not available on PyPI); the formula is implemented from first principles.
+- **Consequence for manuscript.** The existing noise-floor sentence in §3.3 ("Label imprecision is therefore a real term in the error budget but does not by itself account for it, and we do not claim the forest sits at a noise floor") is **correct** and is strengthened by this calculation. Add one sentence after that sentence quantifying the bound. Also add a sentence to the `\paragraph{Structure alone predicts...}` in the introduction where Crusius is cited, to give the number.
+- **Claims:** new **C-019** (R²_max = 0.71–0.91 depending on noise estimator; observed R²=0.26 is 28–36% of the ceiling; model is not at the noise floor).

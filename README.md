@@ -43,7 +43,7 @@ of molecular architecture, geometry, and electronic structure, it identifies
 
 ---
 
-### Article 3: How Far Can Structure-Based Machine Learning Predict Experimental Singlet–Triplet Gaps? An Honest Benchmark for TADF Emitter Triage
+### Article 3: Experimental Inter-Report Scatter Bounds Machine-Learning Accuracy for TADF Singlet–Triplet Gaps — Structure and Semi-Empirical Features Reach the Same Limit
 **Status:** 📝 Under submission to *RSC Advances* (September 2026)
 **Prior submission:** *Digital Discovery*, RSC — declined 27 Aug 2026; the referee
 reports were addressed and the manuscript substantially revised (see below)
@@ -96,6 +96,8 @@ spans a negative gap, so the procedure refuses molecule-level selection.
 | Vertical vs adiabatic | MAE 0.195 eV, largely additive (slope 1.00, ρ 0.71) but residual RMS 0.245 eV, n = 14 |
 | Triplet manifold | T₁–T₂ for 14 emitters (CAM-B3LYP); sTDA-vs-CAM agreement unresolved (ρ = 0.43, p = 0.40, n = 6) |
 | Triage | 1.2–1.4× enrichment on held-out labelled data; **no ranked shortlist deposited** (conformal intervals refuse molecule-level selection) |
+| Triage enrichment CI | bootstrap 95% CI excludes no-enrichment (1.0×) only at the broader cutoffs (top-50, top-20%); at top-10/top-20 the CI includes 1.0 — not distinguishable from chance at n = 231 |
+| Noise ceiling on R² | R²_max = 0.71–0.91 depending on which label-noise floor is used (Crusius et al. framework); observed R² = 0.26 is 28–36% of that ceiling — label noise bounds accuracy but does not by itself explain the residual gap |
 | Condition-controlled test | source-paper proxy (no solvent metadata exists): **null**, Δ advantage 0.005 eV, CI −0.014 to 0.035 |
 | Circularity / leakage | quantified: linear model given the constituent energies recovers the target exactly (CV R² = 1.000) vs 0.36 without; an axis-aligned random forest reaches only 0.59 on the same leaked features, so the leak passes CV unremarked |
 | Estimator selection | nested CV reproduces the reported MAE exactly; selection optimism 0.000 eV |
@@ -112,7 +114,11 @@ earlier internal check had wrongly rejected; **A-010** corrects run-cost figures
 a power-law projection quoted as a measurement (604 → 609 core-hours, median 18.2 → 16.1
 min); **A-013** adds a frozen pretrained-transformer (ChemBERTa-77M) baseline that also
 fails to beat the hand-built descriptors (MAE 0.109–0.113 eV; paired vs Morgan +0.022 eV,
-CI 0.008–0.034). Superseded entries are in `ML_reproducibility/analysis-ledger-archive/`.
+CI 0.008–0.034); **A-014** adds a bootstrap CI to the triage/enrichment numbers, showing
+the effect is significant only at the broader cutoffs; **A-015** computes the maximum
+achievable R² under the Crusius et al. label-noise framework (R²_max = 0.71–0.91), showing
+the observed R² = 0.26 sits well below even the most permissive noise ceiling. Superseded
+entries are in `ML_reproducibility/analysis-ledger-archive/`.
 
 **A note on the enrichment files.** Three deposited files report enrichment under
 different but individually correct conventions: `enrichment_curve.json` is the Morgan
@@ -428,8 +434,9 @@ If you use this data or scripts, please cite the relevant article(s):
 }
 
 @article{tchapet2026ml,
-  title   = {How Far Can Structure-Based Machine Learning Predict Experimental
-             Singlet--Triplet Gaps? An Honest Benchmark for TADF Emitter Triage},
+  title   = {Experimental Inter-Report Scatter Bounds Machine-Learning Accuracy for
+             TADF Singlet--Triplet Gaps---Structure and Semi-Empirical Features Reach
+             the Same Limit},
   author  = {Tchapet Njafa, Jean-Pierre and Teguia Kouam, Steve Cabrel and
              Mvoto Kongo, Patrick Sorrel and Samafou, Panebei and
              Nana Engo, Serge Guy},
@@ -456,15 +463,23 @@ jean-pierre.tchapet@facsciences-uy1.cm
 
 ---
 
-*Last updated: September 2026 — Article 3 manuscript sources updated to reflect
-the pre-submission audit revision (September 2026). Key changes incorporated:
-(i) conclusions restructured into two explicit messages (data quality bounds
-accuracy; curated dataset needed to push past the ceiling); (ii) SHAP
-feature interpretations expanded for all top NTO descriptors; (iii) Butina
-cluster-CV Spearman ρ range (0.31–0.40) now explicitly reported in the main
-text; (iv) inter-report scatter attributed to uncontrolled measurement
-conditions, citing Dang et al. (Dalton Trans., 2025); (v) bibliography header
-corrected to RSC Advances; (vi) numerical consistency check file updated to
-RSC Advances numbers (231 molecules, MAE 0.096 eV). Sources in
-`ARTICLEs_TADF/Article3_TADF-Emitter-Triage-Honest-Benchmark/sections/`
-reflect the submission-ready state of the manuscript.*
+*Last updated: 13 September 2026 — synced to the post-audit revision round
+(AUDIT_REPORT.md, 2026-09-12/13). Key changes incorporated this round:
+(i) manuscript title changed to the noise-floor-led framing, "Experimental
+Inter-Report Scatter Bounds Machine-Learning Accuracy for TADF Singlet–Triplet
+Gaps — Structure and Semi-Empirical Features Reach the Same Limit" (title and
+citation entries above updated to match; the deposited `title_options.tex`
+records the full title history); (ii) main/SI/cover-letter sources, PDFs and
+the cover letter itself added to `ARTICLEs_TADF/Article3_.../` (previously
+missing from this deposit); (iii) **A-014** adds a bootstrap CI to the
+triage/enrichment numbers (significant only at top-50/top-20%, not at
+top-10/top-20); (iv) **A-015** computes the Crusius et al. noise-ceiling
+R²_max = 0.71–0.91, showing the observed R² = 0.26 is 28–36% of that ceiling;
+both are new rows in the Key Results table and new entries in
+`ML_reproducibility/analysis-ledger.md`, with their code/data
+(`code/enrichment_ci.py`, `data/enrichment_ci.json`,
+`data/a015_noise_floor_r2_bound.json`) added to `ML_reproducibility/`;
+(v) funding declaration and AI-assistance disclosure rewritten (the latter now
+also names ChatGPT and the A-013 pretrained-encoder baseline explicitly).
+Sources in `ARTICLEs_TADF/Article3_TADF-Emitter-Triage-Honest-Benchmark/sections/`
+reflect the current submission-ready state of the manuscript.*

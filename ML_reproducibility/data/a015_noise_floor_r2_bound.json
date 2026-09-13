@@ -1,0 +1,33 @@
+{
+  "description": "A-015: Maximum achievable R2 from label noise. R2_max = 1 - sigma2_noise / sigma2_y.",
+  "method": "Crusius et al. (Faraday Discuss., 2025, 10.1039/D4FD00091A) framework: R2_max = 1 - sigma2_noise/sigma2_y. sigma_y from OOF predictions; sigma_noise from label_noise_reconciled.json.",
+  "n_molecules": 231,
+  "sigma_y_eV": 0.16695,
+  "sigma2_y": 0.027874,
+  "r2_observed": 0.2567,
+  "r2_obs_CI95": [
+    0.008,
+    0.45
+  ],
+  "noise_floor_SEM": {
+    "label": "RMS SEM of per-molecule median \u2014 regression-relevant floor",
+    "sigma_noise_eV": 0.049,
+    "r2_max": 0.9139,
+    "r2_max_CI95": [
+      0.847,
+      0.944
+    ],
+    "pct_ceiling_captured": 28.1
+  },
+  "noise_floor_single_report": {
+    "label": "RMS single report about molecule median \u2014 corpus heterogeneity context",
+    "sigma_noise_eV": 0.0905,
+    "r2_max": 0.7062,
+    "r2_max_CI95": [
+      0.477,
+      0.808
+    ],
+    "pct_ceiling_captured": 36.4
+  },
+  "n_bootstrap": 5000
+}
